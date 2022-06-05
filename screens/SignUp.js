@@ -70,7 +70,7 @@ const SignUp = ({ navigation }) => {
                     }}
                 />
 
-                <Text style={{ marginLeft: SIZES.padding * 1.5, color: COLORS.white, ...FONTS.h4 }}>Sign Up</Text>
+                <Text style={{ marginLeft: SIZES.padding * 1.5, color: COLORS.white, ...FONTS.h4 }}>Navi</Text>
             </TouchableOpacity>
         )
     }
