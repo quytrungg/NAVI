@@ -43,6 +43,7 @@
              </Stack.Navigator>
          </NavigationContainer>
      )
+     
  }
  
  export default App;
