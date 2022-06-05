@@ -76,7 +76,7 @@ const SignUp = ({ navigation }) => {
             ...FONTS.h4,
           }}
         >
-          NAVI
+          Sign up
         </Text>
       </TouchableOpacity>
     );
