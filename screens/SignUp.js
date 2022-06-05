@@ -42,48 +42,12 @@ const SignUp = ({ navigation }) => {
                 if (areaData.length > 0) {
                     let defaultData = areaData.filter(a => a.code == "US")
 
-<<<<<<< Updated upstream
                     if (defaultData.length > 0) {
                         setSelectedArea(defaultData[0])
                     }
                 }
             })
     }, [])
-=======
-        <Text
-          style={{
-            marginLeft: SIZES.padding * 1.5,
-            color: COLORS.white,
-            ...FONTS.h4,
-          }}
-        >
-          Sign up
-        </Text>
-      </TouchableOpacity>
-    );
-  }
-
-  function renderLogo() {
-    return (
-      <View
-        style={{
-          marginTop: SIZES.padding * 5,
-          height: 100,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <Image
-          source={images.wallieLogo}
-          resizeMode="contain"
-          style={{
-            width: "60%",
-          }}
-        />
-      </View>
-    );
-  }
->>>>>>> Stashed changes
 
     function renderHeader() {
         return (
