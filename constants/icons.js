@@ -1,3 +1,4 @@
+const back = require("../assets/icons/back.png");
 const bell = require("../assets/icons/bell.png");
 const bill = require("../assets/icons/bill.png");
 const close = require("../assets/icons/close.png");
