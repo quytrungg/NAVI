@@ -1,23 +1,15 @@
-import React from "react";
-import {
-    SafeAreaView,
-    View,
-    Text,
-    Image,
-    FlatList,
-    TouchableOpacity
-} from "react-native"
+import React, {useEffect, useState} from "react";
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity } from "react-native"
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 
 const Home = () => {
-
     const featuresData = [
         {
             id: 1,
             icon: icons.reload,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
-            description: "Top Up"
+            description: "Refresh"
         },
         {
             id: 2,
@@ -70,44 +62,21 @@ const Home = () => {
         },
     ]
 
-    const specialPromoData = [
-        {
-            id: 1,
-            img: images.promoBanner,
-            title: "Bonus Cashback1",
-            description: "Don't miss it. Grab it now!"
-        },
-        {
-            id: 2,
-            img: images.promoBanner,
-            title: "Bonus Cashback2",
-            description: "Don't miss it. Grab it now!"
-        },
-        {
-            id: 3,
-            img: images.promoBanner,
-            title: "Bonus Cashback3",
-            description: "Don't miss it. Grab it now!"
-        },
-        {
-            id: 4,
-            img: images.promoBanner,
-            title: "Bonus Cashback4",
-            description: "Don't miss it. Grab it now!"
-        },
-    ]
+    const [features, setFeatures] = useState(featuresData);
 
-    const [features, setFeatures] = React.useState(featuresData)
-    const [specialPromos, setSpecialPromos] = React.useState(specialPromoData)
+    const handelNotification = () =>{
+      return(
+        alert("cc")
+      )
+    }
 
     function renderHeader() {
         return (
             <View style={{ flexDirection: 'row', marginVertical: SIZES.padding * 2 }}>
                 <View style={{ flex: 1 }}>
-                    <Text style={{ ...FONTS.h1 }}>Hello!</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>ByProgrammers</Text>
+                    <Text style={{ ...FONTS.h1 }}>Welcome Back!</Text>
+                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>quytrungg</Text>
                 </View>
-
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                     <TouchableOpacity
                         style={{
@@ -115,15 +84,16 @@ const Home = () => {
                             width: 40,
                             justifyContent: 'center',
                             alignItems: 'center',
-                            backgroundColor: COLORS.lightGray
-                        }}
-                    >
+                            backgroundColor: COLORS.blueback,
+                            borderColor: COLORS.bluetext,
+                            borderWidth: 1.5,
+                        }} onPress = {() => handelNotification()}>
                         <Image
                             source={icons.bell}
                             style={{
                                 width: 20,
                                 height: 20,
-                                tintColor: COLORS.secondary
+                                tintColor: COLORS.bluetext
                             }}
                         />
                         <View
@@ -147,19 +117,18 @@ const Home = () => {
 
     function renderBanner() {
         return (
-            <View
-                style={{
-                    height: 120,
-                    borderRadius: 20,
-                }}
-            >
+            <View style={{ height: 120, borderRadius: 10}}>
+                <View style={{ marginBottom: SIZES.padding }}>
+                  <Text style={{ ...FONTS.h3 }}>Balance: $1200.65</Text>
+                </View>
                 <Image
-                    source={images.banner}
+                    source={icons.barcode}
                     resizeMode="cover"
                     style={{
                         width: "100%",
-                        height: "100%",
-                        borderRadius: 20
+                        height: "80%",
+                        alignSelf: "center",
+                        borderRadius: 20,
                     }}
                 />
             </View>
@@ -167,13 +136,11 @@ const Home = () => {
     }
 
     function renderFeatures() {
-
         const Header = () => (
             <View style={{ marginBottom: SIZES.padding * 2 }}>
                 <Text style={{ ...FONTS.h3 }}>Features</Text>
             </View>
         )
-
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{ marginBottom: SIZES.padding * 2, width: 60, alignItems: 'center' }}
@@ -220,7 +187,7 @@ const Home = () => {
     function renderPromos() {
 
         const HeaderComponent = () => (
-            <View>
+            <View style={{backgroundColor: COLORS.blueback}}>
                 {renderHeader()}
                 {renderBanner()}
                 {renderFeatures()}
@@ -246,58 +213,51 @@ const Home = () => {
             </View>
 
         )
-
+/*
         const renderItem = ({ item }) => (
             <TouchableOpacity
                 style={{
                     marginVertical: SIZES.base,
                     width: SIZES.width / 2.5
                 }}
-                onPress={() => console.log(item.title)}
-            >
+                onPress={() => console.log(item.title)}>
                 <View
                     style={{
                         height: 80,
                         borderTopLeftRadius: 20,
                         borderTopRightRadius: 20,
-                        backgroundColor: COLORS.primary
-                    }}
-                >
+                        backgroundColor: COLORS.blueback,
+                    }}>
                     <Image
-                        source={images.promoBanner}
+                        source={images.navilogo}
                         resizeMode="cover"
                         style={{
                             width: "100%",
                             height: "100%",
                             borderTopLeftRadius: 20,
                             borderTopRightRadius: 20
-                        }}
-                    />
+                        }}/>
                 </View>
-
                 <View
                     style={{
                         padding: SIZES.padding,
-                        backgroundColor: COLORS.lightGray,
+                        backgroundColor: COLORS.bluesec,
                         borderBottomLeftRadius: 20,
                         borderBottomRightRadius: 20
-                    }}
-                >
+                    }}>
                     <Text style={{ ...FONTS.h4 }}>{item.title}</Text>
                     <Text style={{ ...FONTS.body4 }}>{item.description}</Text>
                 </View>
             </TouchableOpacity>
-        )
-
+            )
+*/
         return (
             <FlatList
                 ListHeaderComponent={HeaderComponent}
                 contentContainerStyle={{ paddingHorizontal: SIZES.padding * 3 }}
                 numColumns={2}
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
-                data={specialPromos}
                 keyExtractor={item => `${item.id}`}
-                renderItem={renderItem}
                 showsVerticalScrollIndicator={false}
                 ListFooterComponent={
                     <View style={{ marginBottom: 80 }}>
@@ -308,7 +268,7 @@ const Home = () => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.blueback }}>
             {renderPromos()}
         </SafeAreaView>
     )

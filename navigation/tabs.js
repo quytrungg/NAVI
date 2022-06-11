@@ -1,25 +1,16 @@
 import React from "react";
-import {
-    View,
-    Image,
-    TouchableOpacity,
-    StyleSheet
-} from "react-native";
-import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs"
-import Svg, {
-    Path
-} from 'react-native-svg'
-import { isIphoneX } from 'react-native-iphone-x-helper'
+import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
+import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs";
+import Svg, {Path} from 'react-native-svg';
+import { isIphoneX } from 'react-native-iphone-x-helper';
+import { Home, Scan, SignUp, SignIn, StartUp, BankAccount } from "../screens";
+import { COLORS, icons } from "../constants";
 
-import { Home, Scan } from "../screens"
-import { COLORS, icons } from "../constants"
-
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator();
 
 const TabBarCustomButton = ({ accessibilityLabel, accessibilityState, children, onPress }) => {
 
-    var isSelected = accessibilityState.selected
-
+    var isSelected = accessibilityState.selected;
     if (isSelected) {
         return (
             <View style={{ flex: 1, alignItems: 'center' }}>
@@ -27,10 +18,10 @@ const TabBarCustomButton = ({ accessibilityLabel, accessibilityState, children, 
                     style={{
                         flexDirection: 'row',
                         position: 'absolute',
-                        top: 0
+                        top: 0,
                     }}
                 >
-                    <View style={{ flex: 1, backgroundColor: COLORS.white }}></View>
+                    <View style={{ flex: 1, backgroundColor: COLORS.blueback }}></View>
                     <Svg
                         width={75}
                         height={61}
@@ -38,10 +29,10 @@ const TabBarCustomButton = ({ accessibilityLabel, accessibilityState, children, 
                     >
                         <Path
                             d="M75.2 0v61H0V0c4.1 0 7.4 3.1 7.9 7.1C10 21.7 22.5 33 37.7 33c15.2 0 27.7-11.3 29.7-25.9.5-4 3.9-7.1 7.9-7.1h-.1z"
-                            fill={COLORS.white}
+                            fill={COLORS.blueback}
                         />
                     </Svg>
-                    <View style={{ flex: 1, backgroundColor: COLORS.white }}></View>
+                    <View style={{ flex: 1, backgroundColor: COLORS.blueback }}></View>
                 </View>
 
                 <TouchableOpacity
@@ -52,7 +43,7 @@ const TabBarCustomButton = ({ accessibilityLabel, accessibilityState, children, 
                         width: 50,
                         height: 50,
                         borderRadius: 25,
-                        backgroundColor: COLORS.primary,
+                        backgroundColor: COLORS.blueprim,
                         ...styles.shadow
                     }}
                     onPress={onPress}
@@ -70,7 +61,7 @@ const TabBarCustomButton = ({ accessibilityLabel, accessibilityState, children, 
                     alignItems: 'center',
                     width: 50,
                     height: 50,
-                    backgroundColor: COLORS.white
+                    backgroundColor: COLORS.blueback
                 }}
                 activeOpacity={1}
                 onPress={onPress}
@@ -136,7 +127,7 @@ const Tabs = () => {
                             style={{
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? COLORS.white : COLORS.secondary
+                                tintColor: focused ? COLORS.white : COLORS.bluesec
                             }}
                         />
                     ),
@@ -171,7 +162,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="User"
-                component={Home}
+                component={BankAccount}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <Image
