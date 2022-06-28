@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, TouchableOpacity, TouchableWithoutFeedback, Image, TextInput, Modal, FlatList, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
-const SignUp = ({ navigation }) => {
-
-  const [showPassword, setShowPassword] = useState(false);
+const BankDescription = ({ navigation }) => {
 
   function renderHeader() {
     return (
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: "center", marginTop: SIZES.padding * 6,
-paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("StartUp")}>
+paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Home")}>
           <Image source={icons.back} resizeMode="contain" style={{ width: 15, height: 15, tintColor: COLORS.black}}/>
-          <Text style={{ marginLeft: SIZES.padding, color: COLORS.black, ...FONTS.h4 }} onPress={() => navigation.navigate("StartUp")}>Sign Up</Text>
+          <Text style={{ marginLeft: SIZES.padding, color: COLORS.black, ...FONTS.h4 }} onPress={() => navigation.navigate("Home")}>Back </Text>
         </TouchableOpacity>
     );
   }
@@ -153,7 +151,7 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Start
                         justifyContent: 'center',
                         borderColor: COLORS.blueprim,
                     }}
-                    onPress={() => handleSignUp()}>
+                    onPress={() => handleSignUp}>
                     <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
@@ -165,15 +163,13 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Start
             behavior={Platform.OS === "ios" ? "padding" : null}
             style={{ flex: 1 }}>
             <LinearGradient colors={[COLORS.blueback]} style={{ flex: 1 }}>
-                <ScrollView style={{backgroundColor: COLORS.blueback}}>
+                <ScrollView style = {{backgroundColor: COLORS.blueback}}>
                     {renderHeader()}
                     {renderLogo()}
-                    {renderForm()}
-                    {renderButton()}
                 </ScrollView>
             </LinearGradient>
         </KeyboardAvoidingView>
     )
 }
 
-export default SignUp;
+export default BankDescription;

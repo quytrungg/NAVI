@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity } from "react-native"
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
+import { COLORS, SIZES, FONTS, icons } from "../constants"
 
 const Home = () => {
     const featuresData = [
@@ -9,64 +9,36 @@ const Home = () => {
             icon: icons.reload,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
-            description: "Refresh"
+            description: "Bank Withdraw"
         },
         {
             id: 2,
             icon: icons.send,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
-            description: "Transfer"
+            description: "Wallet Withdraw"
         },
         {
             id: 3,
             icon: icons.internet,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "Internet"
+            description: "Transfer"
         },
         {
             id: 4,
             icon: icons.wallet,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
-            description: "Wallet"
-        },
-        {
-            id: 5,
-            icon: icons.bill,
-            color: COLORS.yellow,
-            backgroundColor: COLORS.lightyellow,
-            description: "Bill"
-        },
-        {
-            id: 6,
-            icon: icons.game,
-            color: COLORS.primary,
-            backgroundColor: COLORS.lightGreen,
-            description: "Games"
-        },
-        {
-            id: 7,
-            icon: icons.phone,
-            color: COLORS.red,
-            backgroundColor: COLORS.lightRed,
-            description: "Mobile Prepaid"
-        },
-        {
-            id: 8,
-            icon: icons.more,
-            color: COLORS.purple,
-            backgroundColor: COLORS.lightpurple,
-            description: "More"
-        },
+            description: "Bank Account"
+        }
     ]
 
     const [features, setFeatures] = useState(featuresData);
 
     const handelNotification = () =>{
       return(
-        alert("cc")
+        Alert.alert("Notifications", "No notifications")
       )
     }
 

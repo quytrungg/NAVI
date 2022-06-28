@@ -4,32 +4,32 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 import { FontAwesome } from '@expo/vector-icons'; 
 
-const BankAccount = (navigator) => {
+const BankAccount = ({navigation}) => {
   const bankData = [
         {
             id: 1,
-            icon: icons.bankIcon,
+            icon: icons.bill,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "MB"
         },
         {
             id: 2,
-            icon: icons.send,
+            icon: icons.bill,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "VCB"
         },
         {
             id: 3,
-            icon: icons.internet,
+            icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "TP"
         },
         {
             id: 4,
-            icon: icons.wallet,
+            icon: icons.bill,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
             description: "VP"
@@ -43,21 +43,21 @@ const BankAccount = (navigator) => {
         },
         {
             id: 6,
-            icon: icons.game,
+            icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "TCB"
         },
         {
             id: 7,
-            icon: icons.phone,
+            icon: icons.bill,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
             description: "AB"
         },
         {
             id: 8,
-            icon: icons.more,
+            icon: icons.bill,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "More"
@@ -68,7 +68,7 @@ const BankAccount = (navigator) => {
 
     const handelNotification = () =>{
       return(
-        alert("There is no notifications at the moment")
+        Alert.alert("Notifications", "There is no notifications at the moment")
       )
     }
 
@@ -103,13 +103,13 @@ const BankAccount = (navigator) => {
         )
         const renderItem = ({ item }) => (
             <TouchableOpacity
-                style={{ marginBottom: SIZES.padding * 2, width: 60, alignItems: 'center' }}
-                onPress={() => console.log(item.description)}
+                style={{ marginBottom: SIZES.padding * 2, width: 111, alignItems: 'center' }}
+                onPress={() => Alert.alert("Warning", "Bank is not opened yet")}
             >
                 <View
                     style={{
                         height: 50,
-                        width: 50,
+                        width: 100,
                         marginBottom: 5,
                         borderRadius: 20,
                         backgroundColor: item.backgroundColor,
@@ -135,7 +135,7 @@ const BankAccount = (navigator) => {
           <FlatList
                 ListHeaderComponent={Header}
                 data={bank}
-                numColumns={4}
+                numColumns={2}
                 columnWrapperStyle={{ justifyContent: 'space-between' }}
                 keyExtractor={item => `${item.id}`}
                 renderItem={renderItem}
@@ -158,6 +158,7 @@ const BankAccount = (navigator) => {
                         justifyContent: 'center',
                         borderColor: COLORS.blueprim,
                     }}
+                    onPress = {() => navigation.push("BankDescription")}
                     >
                     <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Choose</Text>
                 </TouchableOpacity>
@@ -165,8 +166,7 @@ const BankAccount = (navigator) => {
         )
     }
 
-    function renderPromos() {
-
+    function renderBank() {
         const HeaderComponent = () => (
             <View style={{backgroundColor: COLORS.blueback}}>
                 {renderHeader()}
@@ -174,7 +174,6 @@ const BankAccount = (navigator) => {
                 {renderFeatures()}
             </View>
         )
-        
         return (
             <FlatList
                 ListHeaderComponent={HeaderComponent}
@@ -193,7 +192,7 @@ const BankAccount = (navigator) => {
 
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.blueback }}>
-        {renderPromos()}
+        {renderBank()}
         {renderButton()}
       </SafeAreaView>
     )

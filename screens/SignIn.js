@@ -96,6 +96,10 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Start
       );
     }
 
+    const handleSignIn = () => {
+      navigation.navigate("Home");
+    }
+
     function renderButton() {
         return (
             <View style={{ margin: SIZES.padding * 2 }}>
@@ -110,7 +114,7 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Start
                         justifyContent: 'center',
                         borderColor: COLORS.blueprim,
                     }}
-                    onPress={() => navigation.navigate("Home")}
+                    onPress={() => handleSignIn()}
                 >
                     <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Sign In</Text>
                 </TouchableOpacity>
@@ -129,14 +133,14 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Start
             behavior={Platform.OS === "ios" ? "padding" : null}
             style={{ flex: 1 }}>
             <LinearGradient
-                colors={[COLORS.blueback,]}
+                colors={[COLORS.blueback]}
                 style={{ flex: 1 }}>
-                <View>
+                <ScrollView style={{backgroundColor: COLORS.blueback}}>
                     {renderHeader()}
                     {renderLogo()}
                     {renderForm()}
                     {renderButton()}
-                </View>
+                </ScrollView>
             </LinearGradient>
         </KeyboardAvoidingView>
     )

@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs";
 import Svg, {Path} from 'react-native-svg';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-import { Home, Scan, SignUp, SignIn, StartUp, BankAccount } from "../screens";
+import { Home, Scan,BankAccount } from "../screens";
 import { COLORS, icons } from "../constants";
 
 const Tab = createBottomTabNavigator();
@@ -18,7 +18,7 @@ const TabBarCustomButton = ({ accessibilityLabel, accessibilityState, children, 
                     style={{
                         flexDirection: 'row',
                         position: 'absolute',
-                        top: 0,
+                        top: 0
                     }}
                 >
                     <View style={{ flex: 1, backgroundColor: COLORS.blueback }}></View>
@@ -43,7 +43,7 @@ const TabBarCustomButton = ({ accessibilityLabel, accessibilityState, children, 
                         width: 50,
                         height: 50,
                         borderRadius: 25,
-                        backgroundColor: COLORS.blueprim,
+                        backgroundColor: COLORS.primary,
                         ...styles.shadow
                     }}
                     onPress={onPress}
@@ -83,7 +83,7 @@ const CustomTabBar = (props) => {
                         left: 0,
                         right: 0,
                         height: 30,
-                        backgroundColor: COLORS.white
+                        backgroundColor: COLORS.blueback
                     }}
                 ></View>
                 <BottomTabBar {...props.props} />
@@ -127,7 +127,7 @@ const Tabs = () => {
                             style={{
                                 width: 25,
                                 height: 25,
-                                tintColor: focused ? COLORS.white : COLORS.bluesec
+                                tintColor: focused ? COLORS.white : COLORS.secondary
                             }}
                         />
                     ),
@@ -161,7 +161,7 @@ const Tabs = () => {
                 }}
             />
             <Tab.Screen
-                name="User"
+                name="BankAccount"
                 component={BankAccount}
                 options={{
                     tabBarIcon: ({ focused }) => (

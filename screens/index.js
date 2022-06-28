@@ -4,6 +4,7 @@ import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import StartUp from "./StartUp";
 import BankAccount from "./BankAccount";
+import BankDescription from "./BankDescription";
 
 export {
     Home,
@@ -12,4 +13,5 @@ export {
     SignIn,
     StartUp,
     BankAccount,
+    BankDescription,
 };
