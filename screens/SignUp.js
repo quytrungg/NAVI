@@ -164,7 +164,7 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Start
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : null}
             style={{ flex: 1 }}>
-            <LinearGradient colors={[COLORS.blueback]} style={{ flex: 1 }}>
+            <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{ flex: 1 }}>
                 <ScrollView style={{backgroundColor: COLORS.blueback}}>
                     {renderHeader()}
                     {renderLogo()}

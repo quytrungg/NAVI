@@ -133,13 +133,9 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Home"
         )
     }
 
-    const handleSignUp = () => {
-      navigation.navigate("Home");
-    }
-
     function renderButton() {
         return (
-            <View style={{ margin: SIZES.padding * 2 }}>
+            <View style={{ margin: SIZES.padding * 6 }}>
                 <TouchableOpacity
                     style={{
                         height: 60,
@@ -151,8 +147,8 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Home"
                         justifyContent: 'center',
                         borderColor: COLORS.blueprim,
                     }}
-                    onPress={() => handleSignUp}>
-                    <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Sign Up</Text>
+                    onPress={() => navigation.navigate("StartUp")}>
+                    <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Reset</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -166,6 +162,7 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Home"
                 <ScrollView style = {{backgroundColor: COLORS.blueback}}>
                     {renderHeader()}
                     {renderLogo()}
+                    {renderButton()}
                 </ScrollView>
             </LinearGradient>
         </KeyboardAvoidingView>

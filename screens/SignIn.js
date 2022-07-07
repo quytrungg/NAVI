@@ -5,9 +5,6 @@ import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 const SignIn = ({ navigation }) => {
 
   const [showPassword, setShowPassword] = useState(false);
-  const [areas, setAreas] = useState([]);
-  const [selectedArea, setSelectedArea] = useState(null);
-  const [modalVisible, setModalVisible] = useState(false);
 
     function renderHeader() {
       return (
@@ -96,8 +93,19 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Start
       );
     }
 
-    const handleSignIn = () => {
-      navigation.navigate("Home");
+    function randomNum(){
+      return Math.floor(Math.random() * 100) + 1;
+    }
+
+    function handleSignIn(){
+      let RandomNumber = randomNum();
+      console.log(RandomNumber);
+      if(RandomNumber % 2 == 0){
+        navigation.navigate("Home");
+      }
+      else if(RandomNumber % 2 == 1){
+        navigation.navigate("HomeAdmin");
+      }
     }
 
     function renderButton() {
@@ -133,7 +141,7 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Start
             behavior={Platform.OS === "ios" ? "padding" : null}
             style={{ flex: 1 }}>
             <LinearGradient
-                colors={[COLORS.blueback]}
+                colors={[COLORS.blueback, COLORS.blueback]}
                 style={{ flex: 1 }}>
                 <ScrollView style={{backgroundColor: COLORS.blueback}}>
                     {renderHeader()}

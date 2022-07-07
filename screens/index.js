@@ -5,6 +5,7 @@ import SignIn from "./SignIn";
 import StartUp from "./StartUp";
 import BankAccount from "./BankAccount";
 import BankDescription from "./BankDescription";
+import HomeAdmin from "./HomeAdmin";
 
 export {
     Home,
@@ -14,4 +15,5 @@ export {
     StartUp,
     BankAccount,
     BankDescription,
+    HomeAdmin,
 };
