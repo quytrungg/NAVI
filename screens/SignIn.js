@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
-import { LinearGradient } from 'expo-linear-gradient'
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import { LinearGradient } from 'expo-linear-gradient';
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
-const SignUp = ({ navigation }) => {
+const SignIn = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   function renderHeader(){
-    return (
+    return(
       <TouchableOpacity style={{flexDirection: 'row', 
                                 alignItems: "center", 
                                 marginTop: SIZES.padding * 6,
@@ -18,17 +18,17 @@ const SignUp = ({ navigation }) => {
                 style={{width: 15, 
                         height: 15, 
                         tintColor: COLORS.black}}/>
-        <Text style={{marginLeft: SIZES.padding, 
+        <Text style={{marginLeft: SIZES.padding,
                       color: COLORS.black, 
-                      ...FONTS.h4}}
-              onPress={() => navigation.navigate("StartUp")}>Sign Up</Text>
-        </TouchableOpacity>
-    );
+                      ...FONTS.h4 }} 
+              onPress={() => navigation.navigate("StartUp")}>Sign In</Text>
+      </TouchableOpacity>
+    )
   }
 
   function renderLogo(){
-    return (
-      <View style={{marginTop: SIZES.padding * 5, 
+    return(
+      <View style={{marginTop: SIZES.padding * 7, 
                     height: 90, 
                     alignItems: 'center', 
                     justifyContent: 'center'}}>
@@ -36,47 +36,16 @@ const SignUp = ({ navigation }) => {
                 resizeMode="contain" 
                 style={{width: "60%"}}/>
       </View>
-    );
-  }
-
-  function handleEmailInput(text){
-    return (
-      Alert.alert("Notification", "finished")
     )
-  }
-
-  function handlePasswordInput(text){
-    return (
-      Alert.alert("Notification", "finished")
-    )
-  }
-
-  function handleName (){
-    return(
-      Alert.alert("Notification", "finished")
-    );
   }
 
   function renderForm(){
     return (
-      <View style={{marginTop: SIZES.padding * 3, 
+      <View style={{marginTop: SIZES.padding * 7, 
                     marginHorizontal: SIZES.padding * 3}}>
-        {/* Full Name */}
-        <View style={{ marginTop: SIZES.padding * 3 }}>
-          <Text style={{color: COLORS.black, ...FONTS.body3 }}>Full Name</Text>
-          <TextInput  style={{marginVertical: SIZES.padding, 
-                            borderBottomColor: COLORS.black, 
-                            borderBottomWidth: 1, height: 40, 
-                            color: COLORS.black, 
-                            ...FONTS.body3}} 
-                      placeholder="Enter Full Name" 
-                      placeholderTextColor={COLORS.gray} 
-                      selectionColor={COLORS.black}
-                      onBlur = {() => handleName()}/>
-        </View>
         {/* Phone Number */}
         <View style={{marginTop: SIZES.padding * 2}}>
-          <Text style={{color: COLORS.black, ...FONTS.body3 }}>Phone Number</Text>
+          <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Phone Number</Text>
           <View style={{ flexDirection: 'row' }}>
             <TextInput  style={{flex: 1,
                                 marginVertical: SIZES.padding,
@@ -86,31 +55,13 @@ const SignUp = ({ navigation }) => {
                                 color: COLORS.black,
                                 ...FONTS.body3}}
                         keyboardType="number-pad"
-                        maxLength={11}
                         placeholder="Enter Phone Number"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}/>
           </View>
         </View>
-        {/* Email */}
-        <View style={{marginTop: SIZES.padding * 2}}>
-          <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Email</Text>
-          <View style={{ flexDirection: 'row' }}>
-            <TextInput  style={{flex: 1,
-                                marginVertical: SIZES.padding,
-                                borderBottomColor: COLORS.black,
-                                borderBottomWidth: 1,
-                                height: 40,
-                                color: COLORS.black,
-                                ...FONTS.body3}}
-                        placeholder="Enter Email"
-                        onBlur = {(text) => handleEmailInput(text)}
-                        placeholderTextColor={COLORS.gray}
-                        selectionColor={COLORS.black}/>
-          </View>
-        </View>
         {/* Password */}
-        <View style={{ marginTop: SIZES.padding * 2 }}>
+        <View style={{marginTop: SIZES.padding * 2}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Password</Text>
           <TextInput  style={{marginVertical: SIZES.padding,
                               borderBottomColor: COLORS.black,
@@ -119,7 +70,6 @@ const SignUp = ({ navigation }) => {
                               color: COLORS.black,
                               ...FONTS.body3}}
                       placeholder="Enter Password"
-                      onBlur = {(text) => handlePasswordInput(text)}
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}/>
@@ -139,13 +89,25 @@ const SignUp = ({ navigation }) => {
     )
   }
 
-  function handleSignUp(){
-    navigation.navigate("HomeAdmin");
+  function handleForgetPassword(){
+    return(
+      Alert.alert('Warning','50k please! ( ͡° ͜ʖ ͡°)', 'OK')
+    );
   }
 
-  function renderButton() {
+  function randomNum(){
+    return Math.floor(Math.random() * 100) + 1;
+  }
+
+  function handleSignIn(){
+    let RandomNumber = randomNum();
+    console.log(RandomNumber);
+    navigation.navigate("HomeAdmin");
+  }
+  
+  function renderButton(){
     return(
-      <View style={{margin: SIZES.padding * 2}}>
+      <View style={{ margin: SIZES.padding * 2 }}>
         <TouchableOpacity style={{height: 60,
                                   width: 180,
                                   alignSelf: "center",
@@ -154,17 +116,25 @@ const SignUp = ({ navigation }) => {
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   borderColor: COLORS.blueprim}}
-                          onPress={() => handleSignUp()}>
-          <Text style={{color: COLORS.white, ...FONTS.h3}}>Sign Up</Text>
+                          onPress={() => handleSignIn()}>
+          <Text style={{color: COLORS.white, ...FONTS.h3}}>Sign In</Text>
         </TouchableOpacity>
+        <View style={{margin: SIZES.padding*2, 
+                      alignSelf: "center"}}>
+          <TouchableOpacity onPress = {() => handleForgetPassword()}>
+            <Text style={{color: COLORS.bluetext, 
+                          ...FONTS.h4body, 
+                          textDecorationLine: 'underline'}}>Forget password?</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
 
-  return (
+  return(
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
                           style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]}
                       style={{flex: 1}}>
         <ScrollView style={{backgroundColor: COLORS.blueback}}>
           {renderHeader()}
@@ -177,4 +147,4 @@ const SignUp = ({ navigation }) => {
   )
 }
 
-export default SignUp;
+export default SignIn;

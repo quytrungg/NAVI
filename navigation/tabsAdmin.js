@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs";
 import Svg, {Path} from 'react-native-svg';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-import { Home, Scan,BankAccount } from "../screens";
+import { HomeAdmin, Scan,BankAccount } from "../screens";
 import { COLORS, icons } from "../constants";
 
 const Tab = createBottomTabNavigator();
@@ -11,13 +11,14 @@ const Tab = createBottomTabNavigator();
 const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
 
     var isSelected = accessibilityState.selected;
+
     if (isSelected){
-        return(
+        return (
             <View style={{flex: 1, alignItems: 'center'}}>
                 <View   style={{flexDirection: 'row',
                                 position: 'absolute',
                                 top: 0}}>
-                <View style={{flex: 1, backgroundColor: COLORS.blueback}}></View>
+                    <View style={{flex: 1, backgroundColor: COLORS.blueback}}></View>
                     <Svg    width={75}
                             height={61}
                             viewBox="0 0 75 61">
@@ -58,7 +59,7 @@ const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
 
 const CustomTabBar = (props) => {
     if (isIphoneX()){
-        return(
+        return (
             <View>
                 <View   style={{position: 'absolute',
                                 bottom: 0,
@@ -71,14 +72,14 @@ const CustomTabBar = (props) => {
             </View>
         )
     } 
-    else{
+    else {
         return (
             <BottomTabBar {...props.props} />
         )
     }
 }
 
-const Tabs = () => {
+const TabsAdmin = () => {
     return(
         <Tab.Navigator
             tabBarOptions={{
@@ -97,8 +98,8 @@ const Tabs = () => {
             )}
         >
             <Tab.Screen
-                name="Homepage"
-                component={Home}
+                name="Admin"
+                component={HomeAdmin}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image  source={icons.more}
@@ -116,7 +117,7 @@ const Tabs = () => {
                 name="Scan"
                 component={Scan}
                 options={{
-                    tabBarIcon: ({focused}) => (
+                    tabBarIcon: ({ focused }) => (
                         <Image  source={icons.scan}
                                 resizeMode="contain"
                                 style={{width: 25,
@@ -132,7 +133,7 @@ const Tabs = () => {
                 name="BankAccount"
                 component={BankAccount}
                 options={{
-                    tabBarIcon: ({focused}) => (
+                    tabBarIcon: ({ focused }) => (
                         <Image  source={icons.user}
                                 resizeMode="contain"
                                 style={{width: 25,
@@ -149,7 +150,7 @@ const Tabs = () => {
 }
 
 const styles = StyleSheet.create({
-    shadow:{
+    shadow: {
         shadowColor: COLORS.primary,
         shadowOffset: {
             width: 0,
@@ -161,4 +162,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Tabs;
+export default TabsAdmin;

@@ -1,0 +1,34 @@
+<TouchableOpacity style={{
+                                width: 100,
+                                height: 50,
+                                marginHorizontal: 5,
+                                borderBottomColor: COLORS.black,
+                                borderBottomWidth: 1,
+                                flexDirection: 'row',
+                                ...FONTS.body2}}
+                            onPress={() => setModalVisible(true)}>
+                            <View style={{ justifyContent: 'center' }}>
+                                <Image source={icons.down}
+                                style={{width: 11, height: 11, tintColor: COLORS.black}}/>
+                            </View>
+                            <View style={{ justifyContent: 'center', marginLeft: 5 }}>
+                                <Image
+                                    source={{ uri: selectedArea?.flag }}
+                                    resizeMode="contain"
+                                    style={{
+                                        width: 30,
+                                        height: 30
+                                    }}
+                                />
+                            </View>
+
+                            <View style={{ justifyContent: 'center', marginLeft: 5 }}>
+                                <Text style={{ color: COLORS.black, ...FONTS.body3 }}>{selectedArea?.callingCode}</Text>
+                            </View>
+</TouchableOpacity>
+
+tabBarShowLabel: false,
+                    tabBarStyle:[{
+                        display: "flex"
+                    },
+                    null],

@@ -2,31 +2,31 @@ import React, {useState} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 
-const Home = () => {
+const HomeAdmin = () => {
     const featuresData = [
         {   id: 1,
             icon: icons.reload,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
-            description: "Bank Withdraw"
+            description: "Modify Balance"
         },
         {   id: 2,
             icon: icons.send,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
-            description: "Wallet Withdraw"
+            description: "View Transaction"
         },
         {   id: 3,
             icon: icons.internet,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "Transfer"
+            description: "Add Bank"
         },
         {   id: 4,
             icon: icons.wallet,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
-            description: "Bank Account"
+            description: "Remove Bank"
         }
     ]
 
@@ -158,7 +158,6 @@ const Home = () => {
                 columnWrapperStyle={{justifyContent: 'space-between'}}
                 keyExtractor={item => `${item.id}`}
                 showsVerticalScrollIndicator={false}
-                //pay attention to this
                 ListFooterComponent={
                     <View style={{marginBottom: 80}}>
                     </View>
@@ -174,4 +173,4 @@ const Home = () => {
     )
 }
 
-export default Home;
+export default HomeAdmin;
