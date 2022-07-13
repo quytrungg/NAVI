@@ -1,15 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
-const BankDescription = ({ navigation }) => {
+
+const BankDescription = ({navigation}) => {
 
   function renderHeader() {
     return (
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: "center", marginTop: SIZES.padding * 6,
-paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("Home")}>
+paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("HomeAdmin")}>
           <Image source={icons.back} resizeMode="contain" style={{ width: 15, height: 15, tintColor: COLORS.black}}/>
-          <Text style={{ marginLeft: SIZES.padding, color: COLORS.black, ...FONTS.h4 }} onPress={() => navigation.navigate("Home")}>Back </Text>
+          <Text style={{ marginLeft: SIZES.padding, color: COLORS.black, ...FONTS.h4 }} onPress={() => navigation.navigate("HomeAdmin")}>Back </Text>
         </TouchableOpacity>
     );
   }

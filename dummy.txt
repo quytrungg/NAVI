@@ -26,3 +26,9 @@
                                 <Text style={{ color: COLORS.black, ...FONTS.body3 }}>{selectedArea?.callingCode}</Text>
                             </View>
 </TouchableOpacity>
+
+tabBarShowLabel: false,
+                    tabBarStyle:[{
+                        display: "flex"
+                    },
+                    null],

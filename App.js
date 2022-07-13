@@ -11,7 +11,7 @@ const theme = {
     colors: {
         ...DefaultTheme.colors,
         border: "transparent",
-    },
+    }
 };
 
 const Stack = createStackNavigator();
@@ -25,27 +25,30 @@ const App = () => {
     if(!loaded){
         return null;
     }
-    return (
+    return(
         <NavigationContainer theme={theme}>
             <Stack.Navigator
                 screenOptions={{
-                    "tabBarShowLabel": false,
-                    "tabBarStyle":[{
-                        "display": "flex"
+                    tabBarShowLabel: false,
+                    tabBarStyle:[{
+                        display: "flex"
                     },
                     null],
                     headerShown: false,
                 }}
                 initialRouteName={'StartUp'}>
-                <Stack.Screen name="BankDescription" component={BankDescription} />
-                <Stack.Screen name="StartUp" component={StartUp} />
-                <Stack.Screen name="SignUp" component={SignUp} />
-                <Stack.Screen name="SignIn" component={SignIn} />
+
+                <Stack.Screen name="BankDescription" component={BankDescription}/>
+                <Stack.Screen name="StartUp" component={StartUp}/>
+                <Stack.Screen name="SignUp" component={SignUp}/>
+                <Stack.Screen name="SignIn" component={SignIn}/>
                 <Stack.Screen name="BankAccount" component={BankAccount}/>
                 <Stack.Screen name="HomeAdmin" component={TabsAdmin}/>
-                <Stack.Screen name="Home" component={Tabs} />
+                <Stack.Screen name="Home" component={Tabs}/>
+
             </Stack.Navigator>
         </NavigationContainer>
+        
     )
 }
 

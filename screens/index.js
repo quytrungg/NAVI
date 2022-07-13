@@ -15,5 +15,5 @@ export {
     StartUp,
     BankAccount,
     BankDescription,
-    HomeAdmin,
+    HomeAdmin
 };
