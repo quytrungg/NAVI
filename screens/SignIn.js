@@ -3,7 +3,16 @@ import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Sc
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
 const SignIn = ({ navigation }) => {
+  var state = {
+    fakeEmail: "",
+    password: "",
+  };
+
   const [showPassword, setShowPassword] = useState(false);
 
   function renderHeader(){
@@ -57,7 +66,10 @@ const SignIn = ({ navigation }) => {
                         keyboardType="number-pad"
                         placeholder="Enter Phone Number"
                         placeholderTextColor={COLORS.gray}
-                        selectionColor={COLORS.black}/>
+                        selectionColor={COLORS.black}
+                        onChangeText={(phoneNumber) =>
+                          (state.fakeEmail = phoneNumber + "@gmail.com")
+                        }/>
           </View>
         </View>
         {/* Password */}
@@ -72,7 +84,8 @@ const SignIn = ({ navigation }) => {
                       placeholder="Enter Password"
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
-                      secureTextEntry={!showPassword}/>
+                      secureTextEntry={!showPassword}
+                      onChangeText={(password) => (state.password = password)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
@@ -99,12 +112,23 @@ const SignIn = ({ navigation }) => {
     return Math.floor(Math.random() * 100) + 1;
   }
 
-  function handleSignIn(num){
-    console.log(num);
-    if(num % 2 == 0){
-      navigation.navigate("Home");
-    }
-    else navigation.navigate("HomeAdmin");
+  function handleSignIn(num) {
+    const { fakeEmail, password } = state;
+    console.log(fakeEmail);
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(fakeEmail, password)
+      .then((result) => {
+        console.log(result);
+        if(num % 2 == 0){
+          navigation.navigate("Home");
+        }
+        else navigation.navigate("HomeAdmin");;
+      })
+      .catch((error) => {
+        console.log(error);
+        //woooooooooooooooooooooooooooooo
+      });
   }
   
   function renderButton(){

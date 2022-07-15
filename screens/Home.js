@@ -2,35 +2,48 @@ import React, {useState} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 
-const Home = ({navigation}) => {
-    const featuresData = [
-        {   id: 1,
-            icon: icons.reload,
-            color: COLORS.purple,
-            backgroundColor: COLORS.lightpurple,
-            description: "Withdraw"
-        },
-        {   id: 2,
-            icon: icons.send,
-            color: COLORS.yellow,
-            backgroundColor: COLORS.lightyellow,
-            description: "Deposit"
-        },
-        {   id: 3,
-            icon: icons.internet,
-            color: COLORS.primary,
-            backgroundColor: COLORS.lightGreen,
-            description: "Transfer"
-        },
-        {   id: 4,
-            icon: icons.wallet,
-            color: COLORS.red,
-            backgroundColor: COLORS.lightRed,
-            description: "Bank Account"
-        }
-    ]
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
-    const [features, setFeatures] = useState(featuresData);
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchUser } from "../redux/actions/index";
+
+const Home = ({navigation}) => {
+  var loaded = false;
+  const userDocument = fetchUser(loaded);
+  console.log("2.5");
+  //while (loaded == false) continue;
+  console.log("3");
+  console.log(userDocument);
+
+  const featuresData = [
+    {   id: 1,
+        icon: icons.reload,
+        color: COLORS.purple,
+        backgroundColor: COLORS.lightpurple,
+        description: "Withdraw"
+    },
+    {   id: 2,
+        icon: icons.send,
+        color: COLORS.yellow,
+        backgroundColor: COLORS.lightyellow,
+        description: "Deposit"
+    },
+    {   id: 3,
+        icon: icons.internet,
+        color: COLORS.primary,
+        backgroundColor: COLORS.lightGreen,
+        description: "Transfer"
+    },
+    {   id: 4,
+        icon: icons.wallet,
+        color: COLORS.red,
+        backgroundColor: COLORS.lightRed,
+        description: "Bank Account"
+    }
+]
 
     function handelNotification(){
       return(
