@@ -3,10 +3,10 @@ import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs";
 import Svg, {Path} from 'react-native-svg';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-import { HomeAdmin, Scan,BankAccount } from "../screens";
+import { Admin, Scan,BankAccount } from "../screens";
 import { COLORS, icons } from "../constants";
 
-const Tab = createBottomTabNavigator();
+const TabAd = createBottomTabNavigator();
 
 const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
 
@@ -81,7 +81,7 @@ const CustomTabBar = (props) => {
 
 const TabsAdmin = () => {
     return(
-        <Tab.Navigator
+        <TabAd.Navigator
             tabBarOptions={{
                 showLabel: false,
                 style: {
@@ -97,9 +97,9 @@ const TabsAdmin = () => {
                 <CustomTabBar props={props}/>
             )}
         >
-            <Tab.Screen
-                name="Admin"
-                component={HomeAdmin}
+            <TabAd.Screen
+                name="Admin Page"
+                component={Admin}
                 options={{
                     tabBarIcon: ({focused}) => (
                         <Image  source={icons.more}
@@ -113,7 +113,7 @@ const TabsAdmin = () => {
                     )
                 }}
             />
-            <Tab.Screen
+            <TabAd.Screen
                 name="Scan"
                 component={Scan}
                 options={{
@@ -129,7 +129,7 @@ const TabsAdmin = () => {
                     )
                 }}
             />
-            <Tab.Screen
+            <TabAd.Screen
                 name="BankAccount"
                 component={BankAccount}
                 options={{
@@ -145,7 +145,7 @@ const TabsAdmin = () => {
                     )
                 }}
             />
-        </Tab.Navigator>
+        </TabAd.Navigator>
     )
 }
 

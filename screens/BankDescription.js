@@ -7,10 +7,13 @@ const BankDescription = ({navigation}) => {
 
   function renderHeader() {
     return (
-        <TouchableOpacity style={{ flexDirection: 'row', alignItems: "center", marginTop: SIZES.padding * 6,
-paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("HomeAdmin")}>
+        <TouchableOpacity   style={{flexDirection: 'row', 
+                                    alignItems: "center", 
+                                    marginTop: SIZES.padding * 6,
+                                    paddingHorizontal: SIZES.padding * 2}} 
+                            onPress={() => navigation.navigate("Admin")}>
           <Image source={icons.back} resizeMode="contain" style={{ width: 15, height: 15, tintColor: COLORS.black}}/>
-          <Text style={{ marginLeft: SIZES.padding, color: COLORS.black, ...FONTS.h4 }} onPress={() => navigation.navigate("HomeAdmin")}>Back </Text>
+          <Text style={{ marginLeft: SIZES.padding, color: COLORS.black, ...FONTS.h4 }} onPress={() => navigation.navigate("Admin")}>Back </Text>
         </TouchableOpacity>
     );
   }
@@ -134,9 +137,14 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("HomeA
         )
     }
 
+    function handleBankAccount(){
+      navigation.navigate("Home")
+    }
+
     function renderButton() {
         return (
             <View style={{ margin: SIZES.padding * 6 }}>
+              <View style={{ margin: SIZES.padding * 2 }}>
                 <TouchableOpacity
                     style={{
                         height: 60,
@@ -149,8 +157,25 @@ paddingHorizontal: SIZES.padding * 2}} onPress={() => navigation.navigate("HomeA
                         borderColor: COLORS.blueprim,
                     }}
                     onPress={() => navigation.navigate("StartUp")}>
-                    <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Reset</Text>
+                    <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Sign Out</Text>
                 </TouchableOpacity>
+              </View>
+              <View style={{ margin: SIZES.padding * 1 }}>
+                <TouchableOpacity
+                    style={{
+                        height: 60,
+                        width: 180,
+                        alignSelf: "center",
+                        backgroundColor: COLORS.bluesec,
+                        borderRadius: SIZES.radius / 1.5,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderColor: COLORS.blueprim,
+                    }}
+                    onPress={() => handleBankAccount()}>
+                    <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Finish</Text>
+                </TouchableOpacity>
+              </View>
             </View>
         )
     }

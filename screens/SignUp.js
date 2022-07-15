@@ -57,6 +57,12 @@ const SignUp = ({ navigation }) => {
     );
   }
 
+  function handlePhoneNumber(){
+    return(
+      console.log("Phone number")
+    )
+  }
+
   function renderForm(){
     return (
       <View style={{marginTop: SIZES.padding * 3, 
@@ -89,7 +95,8 @@ const SignUp = ({ navigation }) => {
                         maxLength={11}
                         placeholder="Enter Phone Number"
                         placeholderTextColor={COLORS.gray}
-                        selectionColor={COLORS.black}/>
+                        selectionColor={COLORS.black}
+                        onBlur = {() => handlePhoneNumber()}/>
           </View>
         </View>
         {/* Email */}
@@ -140,7 +147,7 @@ const SignUp = ({ navigation }) => {
   }
 
   function handleSignUp(){
-    navigation.navigate("HomeAdmin");
+    navigation.navigate("BankAccount");
   }
 
   function renderButton() {
@@ -166,7 +173,7 @@ const SignUp = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
                       style={{flex: 1}}>
-        <ScrollView style={{backgroundColor: COLORS.blueback}}>
+        <ScrollView>
           {renderHeader()}
           {renderLogo()}
           {renderForm()}

@@ -8,61 +8,91 @@ const BankAccount = ({navigation}) => {
             icon: icons.bill,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
-            description: "MB"
+            description: "MB Bank",
         },
         {   id: 2,
             icon: icons.bill,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
-            description: "VCB"
+            description: "VCB Bank",
         },
         {   id: 3,
             icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "TP"
+            description: "TP Bank",
         },
         {   id: 4,
             icon: icons.bill,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
-            description: "VP"
+            description: "VP Bank",
         },
         {   id: 5,
             icon: icons.bill,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
-            description: "BIDV"
+            description: "BIDV",
         },
         {   id: 6,
             icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "TCB"
-        },
-        {   id: 7,
-            icon: icons.bill,
-            color: COLORS.red,
-            backgroundColor: COLORS.lightRed,
-            description: "AB"
-        },
-        {   id: 8,
-            icon: icons.bill,
-            color: COLORS.purple,
-            backgroundColor: COLORS.lightpurple,
-            description: "More"
-        },
+            description: "TCB Bank",
+        }
     ]
 
     const [bank, setBank] = useState(bankData);
+    const [showBox, setShowBox] = useState(true);
+
+    function handleBackToHome(){
+        return Alert.alert(
+            "Warning",
+            "Are you sure you want to go to Home screen?",
+            [
+              // The "Yes" button
+              {
+                text: "Yes",
+                onPress: () => {
+                    navigation.navigate("Home");
+                },
+              },
+              // The "No" button
+              // Does nothing but dismiss the dialog when tapped
+              {
+                text: "No",
+              },
+            ]
+        );
+    }
+
+    function renderTop(){
+        return(
+          <TouchableOpacity style={{flexDirection: 'row', 
+                                    alignItems: "center", 
+                                    marginTop: SIZES.padding,
+                                    marginLeft: 0}} 
+                            onPress={() => handleBackToHome()}>
+            <Image  source={icons.back} 
+                    resizeMode="contain" 
+                    style={{width: 15, 
+                            height: 15, 
+                            tintColor: COLORS.black}}/>
+            <Text style={{marginLeft: SIZES.padding,
+                          color: COLORS.black, 
+                          ...FONTS.h4 }} 
+                  onPress={() => handleBackToHome()}>Home</Text>
+          </TouchableOpacity>
+        )
+      }
 
     function renderHeader() {
         return (
-            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 5}}>
-                <View style={{flex: 1}}>
-                    <Text style={{...FONTS.h1}}>Bank Linking!</Text>
-                </View>
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 4}}>
+                <View   style={{flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center'}}>
+                    <Text style={{...FONTS.h1}}>Bank Linking</Text>
                 </View>
             </View>
         )
@@ -71,7 +101,7 @@ const BankAccount = ({navigation}) => {
     function renderBanner() {
         return (
             <View style={{height: 120, borderRadius: 10}}>
-                <View style={{ marginBottom: SIZES.padding }}>
+                <View style={{ marginBottom: SIZES.padding * 2 }}>
                   <Text style={{...FONTS.h3}}>An account can connect to 1 or many bank accounts.</Text>
                 </View>
                 <Text style={{...FONTS.h3, color: COLORS.gray}}>Choose one of the banks below to link with your account.</Text>
@@ -79,21 +109,26 @@ const BankAccount = ({navigation}) => {
         )
     }
 
+    function handleBank(item){
+        Alert.alert("Warning", "Bank is closed");
+    }
+
     function renderFeatures() {
         const Header = () => (
-            <View style={{marginBottom: SIZES.padding * 2, marginTop: SIZES.padding * 5}}>
+            <View style={{marginBottom: SIZES.padding * 2, marginTop: SIZES.padding * 3}}>
                 <Text style={{...FONTS.h3}}>Banks</Text>
             </View>
         )
         const renderItem = ({item}) => (
-            <TouchableOpacity   style={{marginBottom: SIZES.padding * 2, 
+            <TouchableOpacity   style={{marginBottom: SIZES.padding * 1.5, 
                                         width: 111, 
                                         alignItems: 'center' }}
-                                onPress={() => Alert.alert("Warning", "Bank is not opened yet")}>
+                                onPress={() => handleBank(item)}>
                 <View   style={{height: 50,
                                 width: 100,
                                 marginBottom: 5,
-                                borderRadius: 20,
+                                borderRadius: 10,
+                                borderColor: COLORS.black,
                                 backgroundColor: item.backgroundColor,
                                 alignItems: 'center',
                                 justifyContent: 'center'}}>
@@ -141,6 +176,7 @@ const BankAccount = ({navigation}) => {
     function renderBank(){
         const HeaderComponent = () => (
             <View style={{backgroundColor: COLORS.blueback}}>
+                {renderTop()}
                 {renderHeader()}
                 {renderBanner()}
                 {renderFeatures()}

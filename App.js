@@ -1,10 +1,10 @@
 import React from 'react';
-import { SignUp, SignIn, StartUp, BankAccount, BankDescription } from "./screens";
+import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import Tabs from "./navigation/tabs";
-import TabsAdmin from "./navigation/tabs";
+import TabsAdmin from "./navigation/tabsAdmin";
 
 const theme = {
     ...DefaultTheme,
@@ -29,23 +29,20 @@ const App = () => {
         <NavigationContainer theme={theme}>
             <Stack.Navigator
                 screenOptions={{
-                    tabBarShowLabel: false,
-                    tabBarStyle:[{
-                        display: "flex"
-                    },
-                    null],
                     headerShown: false,
                 }}
                 initialRouteName={'StartUp'}>
 
-                <Stack.Screen name="BankDescription" component={BankDescription}/>
+                <Stack.Screen options={{headerShown: false}} name="BankDescription" component={BankDescription}/>
                 <Stack.Screen name="StartUp" component={StartUp}/>
                 <Stack.Screen name="SignUp" component={SignUp}/>
                 <Stack.Screen name="SignIn" component={SignIn}/>
                 <Stack.Screen name="BankAccount" component={BankAccount}/>
                 <Stack.Screen name="HomeAdmin" component={TabsAdmin}/>
                 <Stack.Screen name="Home" component={Tabs}/>
-
+                
+                <Stack.Screen name="Withdraw" component={Withdraw}/>
+                <Stack.Screen name="Deposit" component={Deposit}/>
             </Stack.Navigator>
         </NavigationContainer>
         

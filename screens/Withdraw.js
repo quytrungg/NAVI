@@ -1,104 +1,71 @@
 import React, {useState} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
-import { COLORS, SIZES, FONTS, icons } from "../constants"
+import { TextInput } from "react-native-gesture-handler";
+import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 
-const Home = ({navigation}) => {
+const Withdraw = ({navigation}) => {
     const featuresData = [
         {   id: 1,
             icon: icons.reload,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
-            description: "Withdraw"
-        },
-        {   id: 2,
-            icon: icons.send,
-            color: COLORS.yellow,
-            backgroundColor: COLORS.lightyellow,
-            description: "Deposit"
-        },
-        {   id: 3,
-            icon: icons.internet,
-            color: COLORS.primary,
-            backgroundColor: COLORS.lightGreen,
-            description: "Transfer"
-        },
-        {   id: 4,
-            icon: icons.wallet,
-            color: COLORS.red,
-            backgroundColor: COLORS.lightRed,
             description: "Bank Account"
         }
     ]
 
     const [features, setFeatures] = useState(featuresData);
 
-    function handelNotification(){
-      return(
-        Alert.alert("Notifications", "No notifications")
-      )
-    }
-
     function renderHeader(){
         return(
-            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
-                <View style={{flex: 1}}>
-                    <Text style={{ ...FONTS.h1 }}>Welcome Back!</Text>
+            <View   style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
+                <TouchableOpacity style={{flexDirection: 'row', 
+                                alignItems: "center", 
+                                marginTop: SIZES.padding * 6,
+                                paddingHorizontal: SIZES.padding * 2}} 
+                        onPress={() => navigation.goBack("Home")}>
+                    <Image  source={icons.back} 
+                resizeMode="contain" 
+                style={{width: 15, 
+                        height: 15, 
+                        tintColor: COLORS.black}}/>
+                </TouchableOpacity>
+                <View style={{flex: 1, 
+                            justifyContent: 'center',
+                            alignItems: 'center'}}>
+                    <Text style={{ ...FONTS.h1 }}>Withdraw Money</Text>
                     <Text style={{ ...FONTS.body2, color: COLORS.gray }}>quytrungg</Text>
-                </View>
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <TouchableOpacity   style={{height: 40,
-                                                width: 40,
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                backgroundColor: COLORS.blueback,
-                                                borderColor: COLORS.bluetext,
-                                                borderWidth: 1.5}}
-                                        onPress = {() => handelNotification()}>
-                        <Image  source={icons.bell}
-                                style={{width: 20,
-                                        height: 20,
-                                        tintColor: COLORS.bluetext}}/>
-                        <View   style={{position: 'absolute',
-                                        top: -5,
-                                        right: -5,
-                                        height: 10,
-                                        width: 10,
-                                        backgroundColor: COLORS.red,
-                                        borderRadius: 5}}>
-                        </View>
-                    </TouchableOpacity>
                 </View>
             </View>
         )
     }
+
+    // Phần đầu của rút tiền
 
     function renderBanner(){
         return (
-            <View style={{height: 120, borderRadius: 10}}>
-                <View style={{marginBottom: SIZES.padding}}>
-                  <Text style={{...FONTS.h3}}>Balance: $1200.65</Text>
+            <View style={{height: 120, borderRadius: 10, backgroundColor: COLORS.bluesec}}>
+                
+                <View>
+                    <Image  source={images.navilogo}
+                            style={{height: 22, width: 22}}/>
+                    <Text>Balance: $1200.65</Text>
                 </View>
-                <Image  source={icons.barcode}
-                        resizeMode="cover"
-                        style={{width: "100%",
-                                height: "80%",
-                                alignSelf: "center",
-                                borderRadius: 20}}/>
+                <View>
+                    <Text style={{color: COLORS.black, ...FONTS.body3 }}>Withdraw amount</Text>
+                    <TextInput  style={{marginVertical: SIZES.padding, 
+                                        borderBottomColor: COLORS.black, 
+                                        borderBottomWidth: 1, height: 40, 
+                                        color: COLORS.black, 
+                                        ...FONTS.body3}} 
+                                placeholder="Enter Withdraw Amount" 
+                                placeholderTextColor={COLORS.gray} 
+                                selectionColor={COLORS.black}/>
+                </View>
             </View>
         )
     }
 
-    function handleFeature(item){
-        console.log(item.description)
-        if(item.description == 'Withdraw'){
-            navigation.navigate("Withdraw");
-        }
-        if(item.description == 'Deposit'){
-            navigation.navigate("Deposit");
-        }
-    }
-
-    function renderFeatures(){
+    function renderWithdrawSource(){
         const Header = () => (
             <View style={{marginBottom: SIZES.padding * 2}}>
                 <Text style={{...FONTS.h3}}>Features</Text>
@@ -107,7 +74,7 @@ const Home = ({navigation}) => {
         const renderItem = ({item}) => (
             <TouchableOpacity   style={{marginBottom: SIZES.padding * 2, 
                                         width: 60, alignItems: 'center'}}
-                                onPress={() => handleFeature(item)}>
+                                onPress={() => console.log(item.description)}>
                 <View style={{  height: 50,
                                 width: 50,
                                 marginBottom: 5,
@@ -131,7 +98,7 @@ const Home = ({navigation}) => {
             <FlatList
                 ListHeaderComponent={Header}
                 data={features}
-                numColumns={4}
+                numColumns={2}
                 columnWrapperStyle={{justifyContent: 'space-between'}}
                 keyExtractor={item => `${item.id}`}
                 renderItem={renderItem}
@@ -145,7 +112,7 @@ const Home = ({navigation}) => {
             <View style={{backgroundColor: COLORS.blueback}}>
                 {renderHeader()}
                 {renderBanner()}
-                {renderFeatures()}
+                {renderWithdrawSource()}
                 {renderPromoHeader()}
             </View>
         )
@@ -184,4 +151,4 @@ const Home = ({navigation}) => {
     )
 }
 
-export default Home;
+export default Withdraw;

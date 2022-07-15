@@ -2,31 +2,31 @@ import React, {useState} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 
-const Home = ({navigation}) => {
+const Admin = () => {
     const featuresData = [
         {   id: 1,
             icon: icons.reload,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
-            description: "Withdraw"
+            description: "Modify Balance"
         },
         {   id: 2,
             icon: icons.send,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
-            description: "Deposit"
+            description: "View Transaction"
         },
         {   id: 3,
             icon: icons.internet,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "Transfer"
+            description: "Add Bank"
         },
         {   id: 4,
             icon: icons.wallet,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
-            description: "Bank Account"
+            description: "Remove Bank"
         }
     ]
 
@@ -75,9 +75,6 @@ const Home = ({navigation}) => {
     function renderBanner(){
         return (
             <View style={{height: 120, borderRadius: 10}}>
-                <View style={{marginBottom: SIZES.padding}}>
-                  <Text style={{...FONTS.h3}}>Balance: $1200.65</Text>
-                </View>
                 <Image  source={icons.barcode}
                         resizeMode="cover"
                         style={{width: "100%",
@@ -86,16 +83,6 @@ const Home = ({navigation}) => {
                                 borderRadius: 20}}/>
             </View>
         )
-    }
-
-    function handleFeature(item){
-        console.log(item.description)
-        if(item.description == 'Withdraw'){
-            navigation.navigate("Withdraw");
-        }
-        if(item.description == 'Deposit'){
-            navigation.navigate("Deposit");
-        }
     }
 
     function renderFeatures(){
@@ -107,7 +94,7 @@ const Home = ({navigation}) => {
         const renderItem = ({item}) => (
             <TouchableOpacity   style={{marginBottom: SIZES.padding * 2, 
                                         width: 60, alignItems: 'center'}}
-                                onPress={() => handleFeature(item)}>
+                                onPress={() => console.log(item.description)}>
                 <View style={{  height: 50,
                                 width: 50,
                                 marginBottom: 5,
@@ -168,7 +155,6 @@ const Home = ({navigation}) => {
                 columnWrapperStyle={{justifyContent: 'space-between'}}
                 keyExtractor={item => `${item.id}`}
                 showsVerticalScrollIndicator={false}
-                //pay attention to this
                 ListFooterComponent={
                     <View style={{marginBottom: 80}}>
                     </View>
@@ -184,4 +170,4 @@ const Home = ({navigation}) => {
     )
 }
 
-export default Home;
+export default Admin;

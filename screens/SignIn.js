@@ -99,10 +99,12 @@ const SignIn = ({ navigation }) => {
     return Math.floor(Math.random() * 100) + 1;
   }
 
-  function handleSignIn(){
-    let RandomNumber = randomNum();
-    console.log(RandomNumber);
-    navigation.navigate("HomeAdmin");
+  function handleSignIn(num){
+    console.log(num);
+    if(num % 2 == 0){
+      navigation.navigate("Home");
+    }
+    else navigation.navigate("HomeAdmin");
   }
   
   function renderButton(){
@@ -116,7 +118,7 @@ const SignIn = ({ navigation }) => {
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   borderColor: COLORS.blueprim}}
-                          onPress={() => handleSignIn()}>
+                          onPress={() => handleSignIn(randomNum())}>
           <Text style={{color: COLORS.white, ...FONTS.h3}}>Sign In</Text>
         </TouchableOpacity>
         <View style={{margin: SIZES.padding*2, 
@@ -136,7 +138,7 @@ const SignIn = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]}
                       style={{flex: 1}}>
-        <ScrollView style={{backgroundColor: COLORS.blueback}}>
+        <ScrollView>
           {renderHeader()}
           {renderLogo()}
           {renderForm()}
