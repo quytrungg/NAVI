@@ -66,10 +66,9 @@ const SignIn = ({ navigation }) => {
                         keyboardType="number-pad"
                         placeholder="Enter Phone Number"
                         placeholderTextColor={COLORS.gray}
+                        maxLength={11}
                         selectionColor={COLORS.black}
-                        onChangeText={(phoneNumber) =>
-                          (state.fakeEmail = phoneNumber + "@gmail.com")
-                        }/>
+                        onChangeText={(phoneNumber) => (state.fakeEmail = phoneNumber + "@gmail.com")}/>
           </View>
         </View>
         {/* Password */}
@@ -115,6 +114,7 @@ const SignIn = ({ navigation }) => {
   function handleSignIn(num) {
     const { fakeEmail, password } = state;
     console.log(fakeEmail);
+    console.log(num);
     firebase
       .auth()
       .signInWithEmailAndPassword(fakeEmail, password)

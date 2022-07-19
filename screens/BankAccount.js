@@ -43,25 +43,21 @@ const BankAccount = ({navigation}) => {
     ]
 
     const [bank, setBank] = useState(bankData);
-    const [showBox, setShowBox] = useState(true);
 
     function handleBackToHome(){
         return Alert.alert(
             "Warning",
             "Are you sure you want to go to Home screen?",
             [
-              // The "Yes" button
-              {
-                text: "Yes",
-                onPress: () => {
-                    navigation.navigate("Home");
+                {
+                    text: "No",
                 },
-              },
-              // The "No" button
-              // Does nothing but dismiss the dialog when tapped
-              {
-                text: "No",
-              },
+                {
+                    text: "Yes",
+                    onPress: () => {
+                        navigation.navigate("Home");
+                    },
+                },
             ]
         );
     }

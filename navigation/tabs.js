@@ -83,9 +83,9 @@ const Tabs = () => {
         <Tab.Navigator
             tabBarOptions={{
                 tabBarShowLabel: false,
-                "tabBarstyle": [
+                tabBarstyle: [
                     {
-                        "display": "flex"
+                        display: "flex"
                     },
                     null
                 ]

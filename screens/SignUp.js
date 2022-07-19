@@ -18,7 +18,7 @@ const SignUp = ({ navigation }) => {
     balance: "",
     role: "",
   };
-  
+
   const [showPassword, setShowPassword] = useState(false);
 
   function renderHeader(){
@@ -163,7 +163,7 @@ const SignUp = ({ navigation }) => {
     )
   }
 
-  const handleSignUp = () => {
+  function handleSignUp(){
     const {
       fakeEmail,
       password,

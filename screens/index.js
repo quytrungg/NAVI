@@ -7,7 +7,8 @@ import BankAccount from "./BankAccount";
 import BankDescription from "./BankDescription";
 import Admin from "./Admin";
 import Withdraw from "./Withdraw";
-import Deposit from "./Deposit"
+import Deposit from "./Deposit";
+import Loading from "./Loading";
 
 export {
     Home,
@@ -19,5 +20,6 @@ export {
     BankDescription,
     Admin,
     Withdraw,
-    Deposit
+    Deposit,
+    Loading
 };

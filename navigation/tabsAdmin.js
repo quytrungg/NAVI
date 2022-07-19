@@ -83,15 +83,13 @@ const TabsAdmin = () => {
     return(
         <TabAd.Navigator
             tabBarOptions={{
-                showLabel: false,
-                style: {
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    backgroundColor: "transparent",
-                    elevation: 0
-                }
+                tabBarShowLabel: false,
+                tabBarstyle: [
+                    {
+                        display: "flex"
+                    },
+                    null
+                ]
             }}
             tabBar={(props) => (
                 <CustomTabBar props={props}/>
@@ -101,6 +99,8 @@ const TabsAdmin = () => {
                 name="Admin Page"
                 component={Admin}
                 options={{
+                    headerShown: false,
+                    tabBarShowLabel: false,
                     tabBarIcon: ({focused}) => (
                         <Image  source={icons.more}
                                 resizeMode="contain"
@@ -117,6 +117,8 @@ const TabsAdmin = () => {
                 name="Scan"
                 component={Scan}
                 options={{
+                    headerShown: false,
+                    tabBarShowLabel: false,
                     tabBarIcon: ({ focused }) => (
                         <Image  source={icons.scan}
                                 resizeMode="contain"
@@ -133,6 +135,8 @@ const TabsAdmin = () => {
                 name="BankAccount"
                 component={BankAccount}
                 options={{
+                    headerShown: false,
+                    tabBarShowLabel: false,
                     tabBarIcon: ({ focused }) => (
                         <Image  source={icons.user}
                                 resizeMode="contain"

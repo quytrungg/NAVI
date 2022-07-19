@@ -124,7 +124,7 @@ const Home = ({navigation}) => {
                 <View style={{  height: 50,
                                 width: 50,
                                 marginBottom: 5,
-                                borderRadius: 20,
+                                borderRadius: 10,
                                 backgroundColor: item.backgroundColor,
                                 alignItems: 'center',
                                 justifyContent: 'center'}}>
@@ -143,7 +143,7 @@ const Home = ({navigation}) => {
         return (
             <FlatList
                 ListHeaderComponent={Header}
-                data={features}
+                data={featuresData}
                 numColumns={4}
                 columnWrapperStyle={{justifyContent: 'space-between'}}
                 keyExtractor={item => `${item.id}`}
