@@ -122,6 +122,7 @@ const Scan = ({ navigation }) => {
 
     function onBarCodeRead(result) {
         console.log(result.data)
+        
     }
 
     return (

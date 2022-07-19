@@ -2,48 +2,35 @@ import React, {useState} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+const Admin = () => {
+    const featuresData = [
+        {   id: 1,
+            icon: icons.reload,
+            color: COLORS.purple,
+            backgroundColor: COLORS.lightpurple,
+            description: "Modify Balance"
+        },
+        {   id: 2,
+            icon: icons.send,
+            color: COLORS.yellow,
+            backgroundColor: COLORS.lightyellow,
+            description: "View Transaction"
+        },
+        {   id: 3,
+            icon: icons.internet,
+            color: COLORS.primary,
+            backgroundColor: COLORS.lightGreen,
+            description: "Add Bank"
+        },
+        {   id: 4,
+            icon: icons.wallet,
+            color: COLORS.red,
+            backgroundColor: COLORS.lightRed,
+            description: "Remove Bank"
+        }
+    ]
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { fetchUser } from "../redux/actions/index";
-
-const Home = ({navigation}) => {
-  var loaded = false;
-  const userDocument = fetchUser(loaded);
-  console.log("2.5");
-  //while (loaded == false) continue;
-  console.log("3");
-  console.log(userDocument);
-
-  const featuresData = [
-    {   id: 1,
-        icon: icons.reload,
-        color: COLORS.purple,
-        backgroundColor: COLORS.lightpurple,
-        description: "Withdraw"
-    },
-    {   id: 2,
-        icon: icons.send,
-        color: COLORS.yellow,
-        backgroundColor: COLORS.lightyellow,
-        description: "Deposit"
-    },
-    {   id: 3,
-        icon: icons.internet,
-        color: COLORS.primary,
-        backgroundColor: COLORS.lightGreen,
-        description: "Transfer"
-    },
-    {   id: 4,
-        icon: icons.wallet,
-        color: COLORS.red,
-        backgroundColor: COLORS.lightRed,
-        description: "Bank Account"
-    }
-]
+    const [features, setFeatures] = useState(featuresData);
 
     function handelNotification(){
       return(
@@ -56,7 +43,7 @@ const Home = ({navigation}) => {
             <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
                 <View style={{flex: 1}}>
                     <Text style={{ ...FONTS.h1 }}>Welcome Back!</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>quytrungg</Text>
+                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>administrator</Text>
                 </View>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                     <TouchableOpacity   style={{height: 40,
@@ -88,9 +75,6 @@ const Home = ({navigation}) => {
     function renderBanner(){
         return (
             <View style={{height: 120, borderRadius: 10}}>
-                <View style={{marginBottom: SIZES.padding}}>
-                  <Text style={{...FONTS.h3}}>Balance: $1200.65</Text>
-                </View>
                 <Image  source={icons.barcode}
                         resizeMode="cover"
                         style={{width: "100%",
@@ -99,16 +83,6 @@ const Home = ({navigation}) => {
                                 borderRadius: 20}}/>
             </View>
         )
-    }
-
-    function handleFeature(item){
-        console.log(item.description)
-        if(item.description == 'Withdraw'){
-            navigation.navigate("Withdraw");
-        }
-        if(item.description == 'Deposit'){
-            navigation.navigate("Deposit");
-        }
     }
 
     function renderFeatures(){
@@ -120,11 +94,11 @@ const Home = ({navigation}) => {
         const renderItem = ({item}) => (
             <TouchableOpacity   style={{marginBottom: SIZES.padding * 2, 
                                         width: 60, alignItems: 'center'}}
-                                onPress={() => handleFeature(item)}>
+                                onPress={() => console.log(item.description)}>
                 <View style={{  height: 50,
                                 width: 50,
                                 marginBottom: 5,
-                                borderRadius: 10,
+                                borderRadius: 20,
                                 backgroundColor: item.backgroundColor,
                                 alignItems: 'center',
                                 justifyContent: 'center'}}>
@@ -143,7 +117,7 @@ const Home = ({navigation}) => {
         return (
             <FlatList
                 ListHeaderComponent={Header}
-                data={featuresData}
+                data={features}
                 numColumns={4}
                 columnWrapperStyle={{justifyContent: 'space-between'}}
                 keyExtractor={item => `${item.id}`}
@@ -165,7 +139,7 @@ const Home = ({navigation}) => {
         const renderPromoHeader = () => (
             <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
                 <View style={{flex: 1}}>
-                    <Text style={{...FONTS.h3}}>Special Promos</Text>
+                    <Text style={{...FONTS.h3}}>What's New</Text>
                 </View>
                 <TouchableOpacity onPress={() => console.log("View All")}>
                     <Text style={{color: COLORS.gray, ...FONTS.body4}}>View All</Text>
@@ -181,7 +155,6 @@ const Home = ({navigation}) => {
                 columnWrapperStyle={{justifyContent: 'space-between'}}
                 keyExtractor={item => `${item.id}`}
                 showsVerticalScrollIndicator={false}
-                //pay attention to this
                 ListFooterComponent={
                     <View style={{marginBottom: 80}}>
                     </View>
@@ -197,4 +170,4 @@ const Home = ({navigation}) => {
     )
 }
 
-export default Home;
+export default Admin;

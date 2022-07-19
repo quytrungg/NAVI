@@ -3,10 +3,10 @@ import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs";
 import Svg, {Path} from 'react-native-svg';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-import { HomeAdmin, Scan,BankAccount } from "../screens";
+import { Admin, Scan,BankAccount } from "../screens";
 import { COLORS, icons } from "../constants";
 
-const Tab = createBottomTabNavigator();
+const TabAd = createBottomTabNavigator();
 
 const TabBarCustomButton = ({accessibilityState, children, onPress}) => {
 
@@ -81,26 +81,26 @@ const CustomTabBar = (props) => {
 
 const TabsAdmin = () => {
     return(
-        <Tab.Navigator
+        <TabAd.Navigator
             tabBarOptions={{
-                showLabel: false,
-                style: {
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    backgroundColor: "transparent",
-                    elevation: 0
-                }
+                tabBarShowLabel: false,
+                tabBarstyle: [
+                    {
+                        display: "flex"
+                    },
+                    null
+                ]
             }}
             tabBar={(props) => (
                 <CustomTabBar props={props}/>
             )}
         >
-            <Tab.Screen
-                name="Admin"
-                component={HomeAdmin}
+            <TabAd.Screen
+                name="Admin Page"
+                component={Admin}
                 options={{
+                    headerShown: false,
+                    tabBarShowLabel: false,
                     tabBarIcon: ({focused}) => (
                         <Image  source={icons.more}
                                 resizeMode="contain"
@@ -113,10 +113,12 @@ const TabsAdmin = () => {
                     )
                 }}
             />
-            <Tab.Screen
+            <TabAd.Screen
                 name="Scan"
                 component={Scan}
                 options={{
+                    headerShown: false,
+                    tabBarShowLabel: false,
                     tabBarIcon: ({ focused }) => (
                         <Image  source={icons.scan}
                                 resizeMode="contain"
@@ -129,10 +131,12 @@ const TabsAdmin = () => {
                     )
                 }}
             />
-            <Tab.Screen
+            <TabAd.Screen
                 name="BankAccount"
                 component={BankAccount}
                 options={{
+                    headerShown: false,
+                    tabBarShowLabel: false,
                     tabBarIcon: ({ focused }) => (
                         <Image  source={icons.user}
                                 resizeMode="contain"
@@ -145,7 +149,7 @@ const TabsAdmin = () => {
                     )
                 }}
             />
-        </Tab.Navigator>
+        </TabAd.Navigator>
     )
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { StatusBar } from 'expo-status-bar';
 import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, images } from "../constants";
@@ -34,7 +35,7 @@ const StartUp = ({ navigation }) => {
                     marginHorizontal: SIZES.padding * 3}}>
         {/* Phone Number */}
         <View style={{marginTop: SIZES.padding * 2}}>
-          <Text style={{color: COLORS.black, ...FONTS.body3 }}>Phone Number</Text>
+          <Text style={{color: COLORS.black, ...FONTS.body3}}>Phone Number</Text>
           <View style={{flexDirection: 'row'}}>
             <TextInput  style={{flex: 1,
                               marginVertical: SIZES.padding,
@@ -95,11 +96,12 @@ const StartUp = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
                       style={{flex:1 }}>
-        <ScrollView style={{backgroundColor: COLORS.blueback}}>
+        <ScrollView>
           {renderHeader()}
           {renderLogo()}
           {renderForm()}
           {renderButton()}
+          <StatusBar style='auto'/>
         </ScrollView>
       </LinearGradient>
     </KeyboardAvoidingView>

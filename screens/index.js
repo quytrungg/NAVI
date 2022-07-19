@@ -5,7 +5,10 @@ import SignIn from "./SignIn";
 import StartUp from "./StartUp";
 import BankAccount from "./BankAccount";
 import BankDescription from "./BankDescription";
-import HomeAdmin from "./HomeAdmin";
+import Admin from "./Admin";
+import Withdraw from "./Withdraw";
+import Deposit from "./Deposit";
+import Loading from "./Loading";
 
 export {
     Home,
@@ -15,5 +18,8 @@ export {
     StartUp,
     BankAccount,
     BankDescription,
-    HomeAdmin
+    Admin,
+    Withdraw,
+    Deposit,
+    Loading
 };

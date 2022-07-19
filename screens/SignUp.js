@@ -3,7 +3,22 @@ import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Sc
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
 const SignUp = ({ navigation }) => {
+  var state = {
+    fakeEmail: "",
+    password: "",
+    email: "",
+    phoneNumber: "",
+    name: "",
+    dob: "",
+    balance: "",
+    role: "",
+  };
+
   const [showPassword, setShowPassword] = useState(false);
 
   function renderHeader(){
@@ -57,6 +72,11 @@ const SignUp = ({ navigation }) => {
     );
   }
 
+  function handlePhoneNumber(phoneNumber) {
+    state.phoneNumber = phoneNumber;
+    state.fakeEmail = phoneNumber + "@gmail.com";
+  }
+
   function renderForm(){
     return (
       <View style={{marginTop: SIZES.padding * 3, 
@@ -72,7 +92,8 @@ const SignUp = ({ navigation }) => {
                       placeholder="Enter Full Name" 
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
-                      onBlur = {() => handleName()}/>
+                      onBlur = {() => handleName()}
+                      onChangeText={(name) => (state.name = name)}/>
         </View>
         {/* Phone Number */}
         <View style={{marginTop: SIZES.padding * 2}}>
@@ -89,7 +110,8 @@ const SignUp = ({ navigation }) => {
                         maxLength={11}
                         placeholder="Enter Phone Number"
                         placeholderTextColor={COLORS.gray}
-                        selectionColor={COLORS.black}/>
+                        selectionColor={COLORS.black}
+                        onChangeText={(phoneNumber) => handlePhoneNumber(phoneNumber)}/>
           </View>
         </View>
         {/* Email */}
@@ -106,7 +128,8 @@ const SignUp = ({ navigation }) => {
                         placeholder="Enter Email"
                         onBlur = {(text) => handleEmailInput(text)}
                         placeholderTextColor={COLORS.gray}
-                        selectionColor={COLORS.black}/>
+                        selectionColor={COLORS.black}
+                        onChangeText={(email) => (state.email = email)}/>
           </View>
         </View>
         {/* Password */}
@@ -122,7 +145,8 @@ const SignUp = ({ navigation }) => {
                       onBlur = {(text) => handlePasswordInput(text)}
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
-                      secureTextEntry={!showPassword}/>
+                      secureTextEntry={!showPassword}
+                      onChangeText={(password) => (state.password = password)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
@@ -140,8 +164,39 @@ const SignUp = ({ navigation }) => {
   }
 
   function handleSignUp(){
-    navigation.navigate("HomeAdmin");
-  }
+    const {
+      fakeEmail,
+      password,
+      email,
+      phoneNumber,
+      name,
+      dob,
+      balance,
+      role,
+    } = state;
+    console.log(fakeEmail);
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(fakeEmail, password)
+      .then((result) => {
+        firebase
+          .firestore()
+          .collection("user")
+          .doc(firebase.auth().currentUser.uid)
+          .set({
+            email,
+            phoneNumber,
+            name,
+          });
+        console.log(result);
+        console.log(firebase.auth().currentUser.uid);
+        navigation.navigate("Home");
+      })
+      .catch((error) => {
+        console.log(error);
+        //woooooooooooooooooooooooooooooo
+      });
+  };
 
   function renderButton() {
     return(
@@ -166,7 +221,7 @@ const SignUp = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
                       style={{flex: 1}}>
-        <ScrollView style={{backgroundColor: COLORS.blueback}}>
+        <ScrollView>
           {renderHeader()}
           {renderLogo()}
           {renderForm()}
