@@ -16,31 +16,42 @@ import thunk from "redux-thunk";
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD-U8hYj3kzXCYECo_5OWvtij5qB7unRD0",
-  authDomain: "instaclone-75dc2.firebaseapp.com",
-  projectId: "instaclone-75dc2",
-  storageBucket: "instaclone-75dc2.appspot.com",
-  messagingSenderId: "886924551037",
-  appId: "1:886924551037:web:f66ece62d64657abed2214",
-  measurementId: "G-SRJBL28KF6",
+    apiKey: "AIzaSyC3XhF93xG5JnJSzRbfl__WOnJyIK5HyCo",
+    authDomain: "fir-test-c9f0a.firebaseapp.com",
+    projectId: "fir-test-c9f0a",
+    storageBucket: "fir-test-c9f0a.appspot.com",
+    messagingSenderId: "1057415065385",
+    appId: "1:1057415065385:web:5a839943956446ce51d138",
+    measurementId: "G-9N3VJ0NH3Q"
 };
+//Tam's firebase
+// apiKey: "AIzaSyC3XhF93xG5JnJSzRbfl__WOnJyIK5HyCo",
+// authDomain: "fir-test-c9f0a.firebaseapp.com",
+// projectId: "fir-test-c9f0a",
+// storageBucket: "fir-test-c9f0a.appspot.com",
+// messagingSenderId: "1057415065385",
+// appId: "1:1057415065385:web:5a839943956446ce51d138",
+// measurementId: "G-9N3VJ0NH3Q"
+
+//Cien's firebase
+// apiKey: "AIzaSyD-U8hYj3kzXCYECo_5OWvtij5qB7unRD0",
+// authDomain: "instaclone-75dc2.firebaseapp.com",
+// projectId: "instaclone-75dc2",
+// storageBucket: "instaclone-75dc2.appspot.com",
+// messagingSenderId: "886924551037",
+// appId: "1:886924551037:web:f66ece62d64657abed2214",
+// measurementId: "G-SRJBL28KF6",
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
 }
-
-import { SignUp } from "./screens";
-import { createStackNavigator } from "@react-navigation/stack";
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import Tabs from "./navigation/tabs";
 
 const theme = {
     ...DefaultTheme,
     colors: {
         ...DefaultTheme.colors,
         border: "transparent",
-    },
+    }
 };
 
 const Stack = createStackNavigator();
