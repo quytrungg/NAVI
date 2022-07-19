@@ -16,13 +16,13 @@ import thunk from "redux-thunk";
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const firebaseConfig = {
-    apiKey: "AIzaSyC3XhF93xG5JnJSzRbfl__WOnJyIK5HyCo",
-    authDomain: "fir-test-c9f0a.firebaseapp.com",
-    projectId: "fir-test-c9f0a",
-    storageBucket: "fir-test-c9f0a.appspot.com",
-    messagingSenderId: "1057415065385",
-    appId: "1:1057415065385:web:5a839943956446ce51d138",
-    measurementId: "G-9N3VJ0NH3Q"
+  apiKey: "AIzaSyD-U8hYj3kzXCYECo_5OWvtij5qB7unRD0",
+  authDomain: "instaclone-75dc2.firebaseapp.com",
+  projectId: "instaclone-75dc2",
+  storageBucket: "instaclone-75dc2.appspot.com",
+  messagingSenderId: "886924551037",
+  appId: "1:886924551037:web:f66ece62d64657abed2214",
+  measurementId: "G-SRJBL28KF6",
 };
 
 if (firebase.apps.length === 0) {
@@ -46,24 +46,29 @@ const App = () => {
         "Roboto-Regular" : require('./assets/fonts/Roboto-Regular.ttf'),
     })
     if(!loaded){
-    return null;
+        return null;
     }
-    return (
+    return(
         <NavigationContainer theme={theme}>
             <Stack.Navigator
                 screenOptions={{
-                    headerShown: false
+                    headerShown: false,
                 }}
-                initialRouteName={'SignUp'}
-            >
-                <Stack.Screen name="SignUp" component={SignUp} />
+                initialRouteName={"StartUp"}>
 
-                {/* Tabs */}
-                <Stack.Screen name="Home" component={Tabs} />
-
-                {/* <Stack.Screen name="Scan" component={Scan} /> */}
+                <Stack.Screen options={{headerShown: false}} name="BankDescription" component={BankDescription}/>
+                <Stack.Screen name="StartUp" component={StartUp}/>
+                <Stack.Screen name="SignUp" component={SignUp}/>
+                <Stack.Screen name="SignIn" component={SignIn}/>
+                <Stack.Screen name="BankAccount" component={BankAccount}/>
+                <Stack.Screen name="HomeAdmin" component={TabsAdmin}/>
+                <Stack.Screen name="Home" component={Tabs}/>
+                <Stack.Screen name="Loading" component={Loading}/>
+                <Stack.Screen name="Withdraw" component={Withdraw}/>
+                <Stack.Screen name="Deposit" component={Deposit}/>
             </Stack.Navigator>
         </NavigationContainer>
+        
     )
 }
 
