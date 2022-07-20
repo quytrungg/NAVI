@@ -11,12 +11,15 @@ import { bindActionCreators } from "redux";
 import { fetchUser } from "../redux/actions/index";
 
 const Home = ({navigation}) => {
-  var loaded = false;
+  
+  /*  var loaded = false;
   const userDocument = fetchUser(loaded);
   console.log("2.5");
   //while (loaded == false) continue;
   console.log("3");
-  console.log(userDocument);
+  console.log(userDocument);*/
+
+  var balance = 1200.65;
 
   const featuresData = [
     {   id: 1,
@@ -86,10 +89,20 @@ const Home = ({navigation}) => {
     }
 
     function renderBanner(){
+        const [showPassword, setShowPassword] = useState(false);
         return (
             <View style={{height: 120, borderRadius: 10}}>
-                <View style={{marginBottom: SIZES.padding}}>
-                  <Text style={{...FONTS.h3}}>Balance: $1200.65</Text>
+                <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
+                    <Text style={{...FONTS.h3}}>Balance: $</Text>
+                    <Text style={{...FONTS.h3}}>{balance}</Text>
+                    <TouchableOpacity style={{position: 'absolute',
+                                            right: 0}}
+                                    onPress={() => setShowPassword(!showPassword)}>
+                        <Image  source={showPassword ? icons.disable_eye : icons.eye}
+                                style={{height: 22,
+                                        width: 22,
+                                        tintColor: COLORS.black}}/>
+                    </TouchableOpacity>
                 </View>
                 <Image  source={icons.barcode}
                         resizeMode="cover"

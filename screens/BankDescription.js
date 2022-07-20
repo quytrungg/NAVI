@@ -14,7 +14,7 @@ const BankDescription = ({navigation}) => {
                                     paddingHorizontal: SIZES.padding * 2}} 
                             onPress={() => navigation.goBack()}>
           <Image source={icons.back} resizeMode="contain" style={{ width: 15, height: 15, tintColor: COLORS.black}}/>
-          <Text style={{ marginLeft: SIZES.padding / 2, color: COLORS.black, ...FONTS.h4 }} onPress={() => navigation.goBack()}>Back</Text>
+          <Text style={{ marginLeft: SIZES.padding / 2, color: COLORS.black, ...FONTS.h4 }}>Back</Text>
         </TouchableOpacity>
     );
   }

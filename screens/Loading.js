@@ -10,13 +10,14 @@ import { fetchUser } from "../redux/actions/index";
 
 const Loading = ({navigation}) => {
 
-  /*var loaded = false;
+  var loaded = false;
   const userDocument = fetchUser(loaded);
   console.log("2.5");
-  //while (loaded == false) continue;
   console.log("3");
   console.log(userDocument);
-  navigation.navigate("Home");*/
+  setTimeout(() => {
+    navigation.navigate("Home");
+    }, 1000);
 
   function renderLogo(){
     return(

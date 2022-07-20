@@ -9,36 +9,42 @@ const BankAccount = ({navigation}) => {
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "MB Bank",
+            choice: 0
         },
         {   id: 2,
             icon: icons.bill,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "Vietcombank",
+            choice: 0
         },
         {   id: 3,
             icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "TP Bank",
+            choice: 0
         },
         {   id: 4,
             icon: icons.bill,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
             description: "VP Bank",
+            choice: 0
         },
         {   id: 5,
             icon: icons.bill,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "BIDV",
+            choice: 0
         },
         {   id: 6,
             icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "Techcombank",
+            choice: 0
         }
     ]
 
@@ -67,7 +73,7 @@ const BankAccount = ({navigation}) => {
           <TouchableOpacity style={{flexDirection: 'row', 
                                     alignItems: "center", 
                                     margin: SIZES.padding / 2,
-                                    marginLeft: -7}} 
+                                    marginLeft: -10}} 
                             onPress={() => handleBackToHome()}>
             <Image  source={icons.back} 
                     resizeMode="contain" 
@@ -76,8 +82,7 @@ const BankAccount = ({navigation}) => {
                             tintColor: COLORS.black}}/>
             <Text style={{marginLeft: SIZES.padding / 2,
                           color: COLORS.black, 
-                          ...FONTS.h4 }} 
-                  onPress={() => handleBackToHome()}>Home</Text>
+                          ...FONTS.h4 }}>Home</Text>
           </TouchableOpacity>
         )
       }
@@ -176,6 +181,7 @@ const BankAccount = ({navigation}) => {
                 {renderHeader()}
                 {renderBanner()}
                 {renderFeatures()}
+                {renderButton()}
             </View>
         )
         return (
@@ -197,7 +203,6 @@ const BankAccount = ({navigation}) => {
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
         {renderBank()}
-        {renderButton()}
       </SafeAreaView>
     )
 }

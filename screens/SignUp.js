@@ -36,8 +36,7 @@ const SignUp = ({ navigation }) => {
                         tintColor: COLORS.black}}/>
         <Text style={{marginLeft: SIZES.padding / 2, 
                       color: COLORS.black, 
-                      ...FONTS.h4}}
-              onPress={() => navigation.navigate("SignIn")}>Sign In</Text>
+                      ...FONTS.h4}}>Sign In</Text>
         </TouchableOpacity>
     );
   }
@@ -56,21 +55,15 @@ const SignUp = ({ navigation }) => {
   }
 
   function handleEmailInput(text){
-    return (
-      Alert.alert("Notification", "finished")
-    )
+    
   }
 
   function handlePasswordInput(text){
-    return (
-      Alert.alert("Notification", "finished")
-    )
+    
   }
 
   function handleName (){
-    return(
-      Alert.alert("Notification", "finished")
-    );
+    
   }
 
   function handlePhoneNumber(phoneNumber) {
@@ -93,7 +86,6 @@ const SignUp = ({ navigation }) => {
                       placeholder="Enter Full Name" 
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
-                      onBlur = {() => handleName()}
                       onChangeText={(name) => (state.name = name)}/>
         </View>
         {/* Phone Number */}
@@ -127,7 +119,6 @@ const SignUp = ({ navigation }) => {
                                 color: COLORS.black,
                                 ...FONTS.body3}}
                         placeholder="Enter Email"
-                        onBlur = {(text) => handleEmailInput(text)}
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
                         onChangeText={(email) => (state.email = email)}/>
@@ -143,7 +134,6 @@ const SignUp = ({ navigation }) => {
                               color: COLORS.black,
                               ...FONTS.body3}}
                       placeholder="Enter Password"
-                      onBlur = {(text) => handlePasswordInput(text)}
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}

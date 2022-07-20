@@ -11,7 +11,8 @@ const Password = ({ navigation }) => {
 
   var password = "";
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   function renderHeader(){
     return(
@@ -28,8 +29,7 @@ const Password = ({ navigation }) => {
                         tintColor: COLORS.black}}/>
         <Text style={{marginLeft: SIZES.padding / 2,
                       color: COLORS.black, 
-                      ...FONTS.h4 }}
-                onPress={() => navigation.goBack()}>Back</Text>
+                      ...FONTS.h4 }}>Back</Text>
       </TouchableOpacity>
     )
   }
@@ -48,7 +48,10 @@ const Password = ({ navigation }) => {
   }
 
   function handleConfirm(text){
-
+    if (text == password){
+      console.log("correct");
+    }
+    else console.log("incorrect");
   }
 
   function renderForm(){
@@ -67,16 +70,16 @@ const Password = ({ navigation }) => {
                                 ...FONTS.body3}}
                         placeholder="Enter Password"
                         placeholderTextColor={COLORS.gray}
-                        maxLength={11}
+                        secureTextEntry={!showPassword1}
                         selectionColor={COLORS.black}
-                        onChangeText={(text) => password = text}/>
+                        onBlur={(text) => password = text}/>
             <TouchableOpacity style={{position: 'absolute',
                                         right: 0,
                                         bottom: 10,
                                         height: 30,
                                         width: 30}}
-                                onPress={() => setShowPassword(!showPassword)}>
-                <Image  source={showPassword ? icons.disable_eye : icons.eye}
+                                onPress={() => setShowPassword1(!showPassword1)}>
+                <Image  source={showPassword1 ? icons.disable_eye : icons.eye}
                         style={{height: 22,
                                 width: 22,
                                 tintColor: COLORS.black}}/>
@@ -94,15 +97,15 @@ const Password = ({ navigation }) => {
                       placeholder="Enter Password"
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
-                      secureTextEntry={!showPassword}
-                      onChangeText={(text) => handleConfirm(text)}/>
+                      secureTextEntry={!showPassword2}
+                      onBlur={(text) => handleConfirm(text)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
                                     height: 30,
                                     width: 30}}
-                            onPress={() => setShowPassword(!showPassword)}>
-            <Image  source={showPassword ? icons.disable_eye : icons.eye}
+                            onPress={() => setShowPassword2(!showPassword2)}>
+            <Image  source={showPassword2 ? icons.disable_eye : icons.eye}
                     style={{height: 22,
                             width: 22,
                             tintColor: COLORS.black}}/>
@@ -110,6 +113,10 @@ const Password = ({ navigation }) => {
         </View>
       </View>
     )
+  }
+
+  function handleChangePassword(){
+    console.log("Change password");
   }
   
   function renderButton(){
@@ -123,7 +130,7 @@ const Password = ({ navigation }) => {
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   borderColor: COLORS.blueprim}}
-                          onPress={() => handleSignIn(randomNum())}>
+                          onPress={() => handleChangePassword()}>
           <Text style={{color: COLORS.white, ...FONTS.h3}}>Confirm</Text>
         </TouchableOpacity>
       </View>

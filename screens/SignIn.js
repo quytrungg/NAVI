@@ -117,7 +117,7 @@ const SignIn = ({ navigation }) => {
       .then((result) => {
         console.log(result);
         if(num % 2 == 0){
-          navigation.navigate("Home");
+          navigation.navigate("Loading");
         }
         else navigation.navigate("HomeAdmin");;
       })
