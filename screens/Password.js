@@ -7,35 +7,36 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-const SignIn = ({ navigation }) => {
-  var state = {
-    fakeEmail: "",
-    password: "",
-  };
+const Password = ({ navigation }) => {
+
+  var password = "";
 
   const [showPassword, setShowPassword] = useState(false);
 
   function renderHeader(){
     return(
       <TouchableOpacity style={{flexDirection: 'row', 
-                                alignItems: "center", 
-                                marginTop: SIZES.padding * 6,
-                                paddingHorizontal: SIZES.padding * 2}}>
+                                alignItems: "center",
+                                marginTop: SIZES.padding * 5,
+                                marginBottom: SIZES.padding,
+                                paddingHorizontal: SIZES.padding * 2}}
+                        onPress={() => navigation.goBack()}>
         <Image  source={icons.back} 
                 resizeMode="contain" 
                 style={{width: 15, 
                         height: 15, 
-                        tintColor: COLORS.blueback}}/>
-        <Text style={{marginLeft: SIZES.padding,
-                      color: COLORS.blueback, 
-                      ...FONTS.h4 }}>Sign In</Text>
+                        tintColor: COLORS.black}}/>
+        <Text style={{marginLeft: SIZES.padding / 2,
+                      color: COLORS.black, 
+                      ...FONTS.h4 }}
+                onPress={() => navigation.goBack()}>Back</Text>
       </TouchableOpacity>
     )
   }
 
   function renderLogo(){
     return(
-      <View style={{marginTop: SIZES.padding * 5, 
+      <View style={{marginTop: SIZES.padding * 10, 
                     height: 90, 
                     alignItems: 'center', 
                     justifyContent: 'center'}}>
@@ -46,13 +47,16 @@ const SignIn = ({ navigation }) => {
     )
   }
 
+  function handleConfirm(text){
+
+  }
+
   function renderForm(){
     return (
       <View style={{marginTop: SIZES.padding * 7, 
                     marginHorizontal: SIZES.padding * 3}}>
-        {/* Phone Number */}
         <View style={{marginTop: SIZES.padding * 2}}>
-          <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Phone Number</Text>
+          <Text style={{ color: COLORS.black, ...FONTS.body3 }}>New Password</Text>
           <View style={{ flexDirection: 'row' }}>
             <TextInput  style={{flex: 1,
                                 marginVertical: SIZES.padding,
@@ -61,17 +65,26 @@ const SignIn = ({ navigation }) => {
                                 height: 40,
                                 color: COLORS.black,
                                 ...FONTS.body3}}
-                        keyboardType="number-pad"
-                        placeholder="Enter Phone Number"
+                        placeholder="Enter Password"
                         placeholderTextColor={COLORS.gray}
                         maxLength={11}
                         selectionColor={COLORS.black}
-                        onChangeText={(phoneNumber) => (state.fakeEmail = phoneNumber + "@gmail.com")}/>
+                        onChangeText={(text) => password = text}/>
+            <TouchableOpacity style={{position: 'absolute',
+                                        right: 0,
+                                        bottom: 10,
+                                        height: 30,
+                                        width: 30}}
+                                onPress={() => setShowPassword(!showPassword)}>
+                <Image  source={showPassword ? icons.disable_eye : icons.eye}
+                        style={{height: 22,
+                                width: 22,
+                                tintColor: COLORS.black}}/>
+            </TouchableOpacity>
           </View>
         </View>
-        {/* Password */}
         <View style={{marginTop: SIZES.padding * 2}}>
-          <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Password</Text>
+          <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Confirm New Password</Text>
           <TextInput  style={{marginVertical: SIZES.padding,
                               borderBottomColor: COLORS.black,
                               borderBottomWidth: 1,
@@ -82,7 +95,7 @@ const SignIn = ({ navigation }) => {
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
-                      onChangeText={(password) => (state.password = password)}/>
+                      onChangeText={(text) => handleConfirm(text)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
@@ -98,38 +111,10 @@ const SignIn = ({ navigation }) => {
       </View>
     )
   }
-
-  function handleForgetPassword(){
-    navigation.navigate("Password")
-  }
-
-  function randomNum(){
-    return Math.floor(Math.random() * 100) + 1;
-  }
-
-  function handleSignIn(num) {
-    const { fakeEmail, password } = state;
-    console.log(fakeEmail);
-    console.log(num);
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(fakeEmail, password)
-      .then((result) => {
-        console.log(result);
-        if(num % 2 == 0){
-          navigation.navigate("Home");
-        }
-        else navigation.navigate("HomeAdmin");;
-      })
-      .catch((error) => {
-        console.log(error);
-        //woooooooooooooooooooooooooooooo
-      });
-  }
   
   function renderButton(){
     return(
-      <View style={{ margin: SIZES.padding * 5 }}>
+      <View style={{ margin: SIZES.padding * 7 }}>
         <TouchableOpacity style={{height: 60,
                                   width: 180,
                                   alignSelf: "center",
@@ -139,27 +124,8 @@ const SignIn = ({ navigation }) => {
                                   justifyContent: 'center',
                                   borderColor: COLORS.blueprim}}
                           onPress={() => handleSignIn(randomNum())}>
-          <Text style={{color: COLORS.white, ...FONTS.h3}}>Sign In</Text>
+          <Text style={{color: COLORS.white, ...FONTS.h3}}>Confirm</Text>
         </TouchableOpacity>
-        <View style={{marginTop: SIZES.padding / 1.5,
-                      marginBottom: SIZES.padding * 5, 
-                      alignSelf: "center"}}>
-          <TouchableOpacity onPress = {() => handleForgetPassword()}>
-            <Text style={{color: COLORS.bluetext, 
-                          ...FONTS.h4body, 
-                          textDecorationLine: 'underline'}}>Forget password?</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{margin: SIZES.padding / 2, flexDirection: 'row', alignSelf: "center"}}>
-          <View style={{alignSelf: "center"}}>
-            <Text style={{color: COLORS.bluetext, ...FONTS.h4body}}>Don't have an account? </Text>
-          </View>
-          <TouchableOpacity onPress = {() => navigation.navigate("SignUp")}>
-            <Text style={{color: COLORS.bluesec, 
-                          ...FONTS.h4, 
-                          textDecorationLine: 'underline'}}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
       </View>
     )
   }
@@ -180,4 +146,4 @@ const SignIn = ({ navigation }) => {
   )
 }
 
-export default SignIn;
+export default Password;

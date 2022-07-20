@@ -14,7 +14,7 @@ const BankAccount = ({navigation}) => {
             icon: icons.bill,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
-            description: "VCB Bank",
+            description: "Vietcombank",
         },
         {   id: 3,
             icon: icons.bill,
@@ -38,7 +38,7 @@ const BankAccount = ({navigation}) => {
             icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "TCB Bank",
+            description: "Techcombank",
         }
     ]
 
@@ -66,15 +66,15 @@ const BankAccount = ({navigation}) => {
         return(
           <TouchableOpacity style={{flexDirection: 'row', 
                                     alignItems: "center", 
-                                    marginTop: SIZES.padding,
-                                    marginLeft: 0}} 
+                                    margin: SIZES.padding / 2,
+                                    marginLeft: -7}} 
                             onPress={() => handleBackToHome()}>
             <Image  source={icons.back} 
                     resizeMode="contain" 
                     style={{width: 15, 
                             height: 15, 
                             tintColor: COLORS.black}}/>
-            <Text style={{marginLeft: SIZES.padding,
+            <Text style={{marginLeft: SIZES.padding / 2,
                           color: COLORS.black, 
                           ...FONTS.h4 }} 
                   onPress={() => handleBackToHome()}>Home</Text>

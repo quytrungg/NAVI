@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Sc
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 
-const BankDescription = ({navigation}) => {
+const Profile = ({navigation}) => {
 
   function renderHeader() {
     return (
@@ -27,6 +27,10 @@ const BankDescription = ({navigation}) => {
     );
   }
 
+  function signOut(){
+    navigation.navigate("SignIn");
+  }
+
   function handleSignOut(){
     return Alert.alert(
         "Warning",
@@ -38,7 +42,7 @@ const BankDescription = ({navigation}) => {
           {
             text: "Yes",
             onPress: () => {
-                navigation.navigate("StartUp");
+                signOut();
             },
           },
         ]
@@ -66,22 +70,6 @@ const BankDescription = ({navigation}) => {
                     <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Sign Out</Text>
                 </TouchableOpacity>
               </View>
-              <View style={{ margin: SIZES.padding * 1 }}>
-                <TouchableOpacity
-                    style={{
-                        height: 60,
-                        width: 180,
-                        alignSelf: "center",
-                        backgroundColor: COLORS.bluesec,
-                        borderRadius: SIZES.radius / 1.5,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderColor: COLORS.blueprim,
-                    }}
-                    onPress={() => handleBankAccount()}>
-                    <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Finish</Text>
-                </TouchableOpacity>
-              </View>
             </View>
         )
     }
@@ -101,4 +89,4 @@ const BankDescription = ({navigation}) => {
     )
 }
 
-export default BankDescription;
+export default Profile;

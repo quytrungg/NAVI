@@ -25,18 +25,19 @@ const SignUp = ({ navigation }) => {
     return (
       <TouchableOpacity style={{flexDirection: 'row', 
                                 alignItems: "center", 
-                                marginTop: SIZES.padding * 6,
+                                marginTop: SIZES.padding * 5,
+                                marginBottom: SIZES.padding,
                                 paddingHorizontal: SIZES.padding * 2}} 
-                        onPress={() => navigation.navigate("StartUp")}>
+                        onPress={() => navigation.navigate("SignIn")}>
         <Image  source={icons.back} 
                 resizeMode="contain" 
                 style={{width: 15, 
                         height: 15, 
                         tintColor: COLORS.black}}/>
-        <Text style={{marginLeft: SIZES.padding, 
+        <Text style={{marginLeft: SIZES.padding / 2, 
                       color: COLORS.black, 
                       ...FONTS.h4}}
-              onPress={() => navigation.navigate("StartUp")}>Sign Up</Text>
+              onPress={() => navigation.navigate("SignIn")}>Sign In</Text>
         </TouchableOpacity>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Loading } from "./screens";
+import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Loading, Password, Profile } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -52,11 +52,11 @@ const App = () => {
         <NavigationContainer theme={theme}>
             <Stack.Navigator
                 screenOptions={{
-                    headerShown: false,
+                    headerShown: false
                 }}
-                initialRouteName={"StartUp"}>
+                initialRouteName={"Loading"}>
 
-                <Stack.Screen options={{headerShown: false}} name="BankDescription" component={BankDescription}/>
+                <Stack.Screen name="BankDescription" component={BankDescription}/>
                 <Stack.Screen name="StartUp" component={StartUp}/>
                 <Stack.Screen name="SignUp" component={SignUp}/>
                 <Stack.Screen name="SignIn" component={SignIn}/>
@@ -66,6 +66,8 @@ const App = () => {
                 <Stack.Screen name="Loading" component={Loading}/>
                 <Stack.Screen name="Withdraw" component={Withdraw}/>
                 <Stack.Screen name="Deposit" component={Deposit}/>
+                <Stack.Screen name="Password" component={Password}/>
+                <Stack.Screen name="Profile" component={Profile}/>
             </Stack.Navigator>
         </NavigationContainer>
         

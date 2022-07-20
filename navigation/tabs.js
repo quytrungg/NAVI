@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs";
 import Svg, {Path} from 'react-native-svg';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-import { Home, Admin, Scan,BankAccount } from "../screens";
+import { Home, Admin, Scan,BankAccount, Profile } from "../screens";
 import { COLORS, icons } from "../constants";
 
 const Tab = createBottomTabNavigator();
@@ -132,7 +132,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="History"
-                component={Admin}
+                component={BankAccount}
                 options={{
                     headerShown: false,
                     tabBarShowLabel: false,
@@ -150,7 +150,7 @@ const Tabs = () => {
             />
             <Tab.Screen
                 name="Profile"
-                component={BankAccount}
+                component={Profile}
                 options={{
                     headerShown: false,
                     tabBarShowLabel: false,

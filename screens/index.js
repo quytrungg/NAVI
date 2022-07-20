@@ -9,6 +9,8 @@ import Admin from "./Admin";
 import Withdraw from "./Withdraw";
 import Deposit from "./Deposit";
 import Loading from "./Loading";
+import Password from "./Password";
+import Profile from "./Profile";
 
 export {
     Home,
@@ -21,5 +23,7 @@ export {
     Admin,
     Withdraw,
     Deposit,
-    Loading
+    Loading,
+    Password,
+    Profile
 };

@@ -6,8 +6,17 @@ import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { fetchUser } from "../redux/actions/index";
 
 const Loading = ({navigation}) => {
+
+  /*var loaded = false;
+  const userDocument = fetchUser(loaded);
+  console.log("2.5");
+  //while (loaded == false) continue;
+  console.log("3");
+  console.log(userDocument);
+  navigation.navigate("Home");*/
 
   function renderLogo(){
     return(
@@ -31,7 +40,7 @@ const Loading = ({navigation}) => {
                                   alignItems: 'center',
                                   justifyContent: 'center'}}
                           onPress={() => navigation.navigate("HomeAdmin")}>
-          <Text style={{color: COLORS.blueprim, ...FONTS.h4}}>Loading...</Text>
+          <Text style={{color: COLORS.bluesec, ...FONTS.h4}}>Loading...</Text>
         </TouchableOpacity>
       </View>
     )
