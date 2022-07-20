@@ -2,7 +2,8 @@ import React, {useState} from "react";
 import { SafeAreaView, View, ScrollView, Text, Image, FlatList, TouchableOpacity, StyleSheet } from "react-native"
 import { TextInput } from "react-native-gesture-handler";
 import { ImageBackground } from "react-native-web";
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import UserAvatar from 'react-native-user-avatar'
 
 const Profile = ({navigation}) => {
     const featuresData = [
@@ -41,17 +42,71 @@ const Profile = ({navigation}) => {
     function renderHeader(){
         return(
             <View>
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false} >
                     <View style = {{height: 200, alignItems: 'center', justifyContent: 'center'}}>
                         <Image source = {images.navilogo} style = {{width: "100%", resizeMode:'contain', aspectRatio:0.7}}></Image>
                         <View></View>
                         <View></View>
                     </View>
                     <View style={{alignItems: 'center'}}>
-                        <Image source = {images.avatar} style = {{width:150, height:150,
-                        borderRadius:100, marginTop:50}}></Image>
-
+                        {/* <Image source = {images.avatar} style = {{width:150, height:150,
+                        borderRadius:100, marginTop:-50}}></Image> */}
+                        <UserAvatar size={100} name="ABCDEFG" style = {{width:150, height:150,
+                        borderRadius:100, marginTop:-50, backgroundColor:COLORS.blueback}} textColor={'#000'}/>
+                        <Text style = {{fontSize:25, fontWeight:'bold', padding:10}}>
+                            Name Here 
+                        </Text>
+                        <Text style = {{fontSize:15, fontWeight:'bold', color:COLORS.bluetext}}>
+                            Information Here 
+                        </Text>
                     </View>
+                    <View style = {{
+                                alignSelf:'center',
+                                flexDirection:'row',
+                                justifyContent:'center',
+                                backgroundColor:COLORS.blueback,
+                                width: '90%',
+                                padding:20,
+                                paddingBottom:22,
+                                borderRadius:10,
+                                shadowOpacity:80,
+                                elevation:15,
+                                marginTop:20
+                                }}>
+                        <Text>Product Designer</Text>
+                    </View>
+                    <View style = {{
+                                alignSelf:'center',
+                                flexDirection:'row',
+                                justifyContent:'center',
+                                backgroundColor:COLORS.blueback,
+                                width: '90%',
+                                padding:20,
+                                paddingBottom:22,
+                                borderRadius:10,
+                                shadowOpacity:80,
+                                elevation:15,
+                                marginTop:20
+                                }}>
+                        <Text style = {{fontSize:15, color:COLORS.bluetext, fontWeight:'bold', marginLeft:10}}>Country</Text>
+                    </View>
+                    <TouchableOpacity style = {{
+                                alignSelf:'center',
+                                flexDirection:'row',
+                                justifyContent:'center',
+                                backgroundColor:COLORS.blueback,
+                                width: '90%',
+                                padding:20,
+                                paddingBottom:22,
+                                borderRadius:10,
+                                shadowOpacity:80,
+                                elevation:15,
+                                marginTop:20,
+                                marginBottom:40,
+                                backgroundColor:'#000'
+                                }}>
+                        <Text style = {{fontSize:15, color:'#000', fontWeight:'bold', marginLeft:10}}>Logout</Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </View>
 
