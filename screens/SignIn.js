@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
@@ -169,12 +169,12 @@ const SignIn = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]}
                       style={{flex: 1}}>
-        <ScrollView>
+        <SafeAreaView>
           {renderHeader()}
           {renderLogo()}
           {renderForm()}
           {renderButton()}
-        </ScrollView>
+        </SafeAreaView>
       </LinearGradient>
     </KeyboardAvoidingView>
   )

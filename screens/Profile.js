@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, ScrollView, Text, Image, FlatList, TouchableOpacity, StyleSheet } from "react-native"
+import { SafeAreaView, View, ScrollView, Text, Image, FlatList, TouchableOpacity, StyleSheet, Alert } from "react-native"
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 import {Avatar, Colors} from 'react-native-paper'
 

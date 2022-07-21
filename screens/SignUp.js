@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, SafeAreaView, Platform} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 
@@ -181,7 +181,7 @@ const SignUp = ({ navigation }) => {
           });
         console.log(result);
         console.log(firebase.auth().currentUser.uid);
-        navigation.navigate("Home");
+        navigation.navigate("Loading");
       })
       .catch((error) => {
         console.log(error);
@@ -212,12 +212,12 @@ const SignUp = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
                       style={{flex: 1}}>
-        <ScrollView>
+        <SafeAreaView>
           {renderHeader()}
           {renderLogo()}
           {renderForm()}
           {renderButton()}
-        </ScrollView>
+        </SafeAreaView>
       </LinearGradient>
     </KeyboardAvoidingView>
   )
