@@ -1,91 +1,156 @@
-import React from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
-import { LinearGradient } from 'expo-linear-gradient'
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import React, {useState} from "react";
+import { SafeAreaView, View, ScrollView, Text, Image, FlatList, TouchableOpacity, StyleSheet } from "react-native"
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import {Avatar, Colors} from 'react-native-paper'
 
-const Profile = ({navigation}) => {
+const Profile = ({navigation}) => { 
 
-  function renderHeader() {
-    return (
-        <TouchableOpacity   style={{flexDirection: 'row', 
-                                    alignItems: "center", 
-                                    marginTop: SIZES.padding * 5,
-                                    marginBottom: SIZES.padding,
-                                    paddingHorizontal: SIZES.padding * 2}} 
-                            onPress={() => navigation.goBack()}>
-          <Image source={icons.back} resizeMode="contain" style={{ width: 15, height: 15, tintColor: COLORS.black}}/>
-          <Text style={{ marginLeft: SIZES.padding / 2, color: COLORS.black, ...FONTS.h4 }}>Back</Text>
-        </TouchableOpacity>
-    );
-  }
+    const styles = StyleSheet.create({
+        avatar: {
+            flexDirection:'row',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:100,
+            marginVertical:5,
+            marginLeft:20,
+            padding:5,
+            borderWidth:5,
+            borderColor:COLORS.blueprim,
+        },
 
-  function renderLogo() {
-    return (
-        <View style={{marginTop: SIZES.padding * 5, height: 90, alignItems: 'center', justifyContent: 'center'}}>
-          <Image source={images.navilogo} resizeMode="contain" style={{width: "60%"}}/>
-        </View>
-    );
-  }
+        avatarBox: {
+            flexDirection:'row', 
+            alignItems:'center',
+            borderWidth:1,
+            marginTop:30,
+            marginHorizontal:10,
+            paddingVertical:10,
+            borderColor:COLORS.blueprim,
+        },
 
-  function signOut(){
-    navigation.navigate("SignIn");
-  }
+        nameText: {
+            ...FONTS.h1,
+            padding:10,
+            marginLeft:5,
+            marginTop: -10,
+        },
 
-  function handleSignOut(){
-    return Alert.alert(
-        "Log out",
-        "Are you sure you want to sign out?",
-        [
-          {
-            text: "No",
-          },
-          {
-            text: "Yes",
-            onPress: () => {
-                signOut();
-            },
-          },
-        ]
-      );
-  }
+        inforText: {
+            ...FONTS.h3,
+            padding:10,
+            marginTop:-20,
+            marginLeft: 5,
+        },
 
-  
+        editProfileButton: {
+            alignSelf:'center',
+            flexDirection:'row',
+            justifyContent:'center',
+            backgroundColor:COLORS.white,
+            borderColor:COLORS.blueprim,
+            borderWidth:1,
+            width: '50%',
+            paddingVertical:15,
+            borderRadius:10,
+            marginTop:20,
+        },
+
+        editProfileText: {
+            color:COLORS.bluetext, 
+            ...FONTS.h4, 
+            fontWeight:'bold', 
+        },
+
+        addAccountButton: {
+            alignSelf:'center',
+            flexDirection:'row',
+            justifyContent:'center',
+            backgroundColor:COLORS.white,
+            borderColor:COLORS.blueprim,
+            borderWidth:1,
+            width: '50%',
+            paddingVertical:15,
+            borderRadius:10,
+            marginTop:20,
+        },
+
+        addAccountText: {
+            color:COLORS.bluetext, 
+            ...FONTS.h4, 
+            fontWeight:'bold', 
+        },
+
+        logoutButton: {
+            alignSelf:'center',
+            flexDirection:'row',
+            justifyContent:'center',
+            borderWidth:1,
+            borderColor:COLORS.blueprim,
+            backgroundColor:COLORS.bluesec,
+            width: '70%',
+            paddingVertical:15,
+            borderRadius: SIZES.radius / 1.5,
+            marginTop: 180,
+        },
+
+        logoutText: {
+            alignItems:'center',
+            ...FONTS.h2, 
+            color:COLORS.white,
+        },
+    });
+
+    // function renderHeader(){
+    //     return(
+    //         <View style={styles.header}>
+    //             <View style = {{height: 20, marginTop: 25, alignItems: 'center', justifyContent: 'center'}}>
+    //                 <Image source = {images.navilogo} style = {{width: '20%', resizeMode:'contain'}}></Image>
+    //             </View>
+    //         </View>
+    //     );
+    // }
+
+    function renderAvatar() {
+        return (
+            <View style={styles.avatarBox}>
+                <Avatar.Image medium rounded source={images.avatar} size={160} containerStyle={{borderWidth:2, borderColor:'black'}}
+                                avatarStyle={{borderWidth:2, borderColor: 'black'}}
+ style = {styles.avatar}/>
+
+                <View>
+                    <Text style = {styles.nameText}>
+                        Name Here
+                    </Text>
+                    <Text style = {styles.inforText}>
+                        User ID Here
+                    </Text>
+                </View>
+            </View>
+        );
+    }
 
     function renderButton() {
         return (
-            <View style={{ margin: SIZES.padding * 6 }}>
-              <View style={{ margin: SIZES.padding * 2 }}>
-                <TouchableOpacity
-                    style={{
-                        height: 60,
-                        width: 180,
-                        alignSelf: "center",
-                        backgroundColor: COLORS.bluesec,
-                        borderRadius: SIZES.radius / 1.5,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderColor: COLORS.blueprim,
-                    }}
-                    onPress={() => handleSignOut()}>
-                    <Text style={{ color: COLORS.white, ...FONTS.h3 }}>Sign Out</Text>
+            <View>
+                <TouchableOpacity style = {styles.editProfileButton}>
+                    <Text style = {styles.editProfileText}>Edit Profile</Text>
                 </TouchableOpacity>
-              </View>
-            </View>
-        )
+                <TouchableOpacity style = {styles.addAccountButton}>
+                    <Text style = {styles.addAccountText}>Add Account</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style = {styles.logoutButton}>
+                    <Text style = {styles.logoutText}>Logout</Text>
+                </TouchableOpacity>  
+            </View> 
+        );
     }
 
     return (
-        <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : null}
-            style={{ flex: 1 }}>
-            <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{ flex: 1 }}>
-                <ScrollView style = {{backgroundColor: COLORS.blueback}}>
-                    {renderHeader()}
-                    {renderLogo()}
-                    {renderButton()}
-                </ScrollView>
-            </LinearGradient>
-        </KeyboardAvoidingView>
+        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
+            {/*renderHeader()*/}
+            {renderAvatar()}
+            {renderButton()}
+        </SafeAreaView>
     )
 }
 
