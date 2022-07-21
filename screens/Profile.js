@@ -4,16 +4,6 @@ import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 import {Avatar, Colors} from 'react-native-paper'
 
 const Profile = ({navigation}) => {
-    const featuresData = [
-        {   id: 1,
-            icon: icons.reload,
-            color: COLORS.purple,
-            backgroundColor: COLORS.lightpurple,
-            description: "Bank Account"
-        }
-    ]
-
-    const [features, setFeatures] = useState(featuresData);
 
     const styles = StyleSheet.create({
         avatar: {
@@ -125,11 +115,8 @@ const Profile = ({navigation}) => {
     function renderAvatar() {
         return (
             <View style={styles.avatarBox}>
-                {/* <Image source = {images.avatar} style = {{width:150, height:150,
-                borderRadius:100, marginTop:-50}}></Image> */}
                 <Avatar.Image medium rounded source={images.avatar} size={160} containerStyle={{borderWidth:2, borderColor:'black'}}
-                                avatarStyle={{borderWidth:2, borderColor: 'black'}}
- style = {styles.avatar}/>
+                                avatarStyle={{borderWidth:2, borderColor: 'black'}} style = {styles.avatar}/>
                 <Text style = {styles.nameText}>
                     Name Here
                 </Text>
