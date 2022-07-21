@@ -100,16 +100,6 @@ const Profile = ({navigation}) => {
         },
     });
 
-    // function renderHeader(){
-    //     return(
-    //         <View style={styles.header}>
-    //             <View style = {{height: 20, marginTop: 25, alignItems: 'center', justifyContent: 'center'}}>
-    //                 <Image source = {images.navilogo} style = {{width: '20%', resizeMode:'contain'}}></Image>
-    //             </View>
-    //         </View>
-    //     );
-    // }
-
     function renderAvatar() {
         return (
             <View style={styles.avatarBox}>
@@ -129,6 +119,28 @@ const Profile = ({navigation}) => {
         );
     }
 
+    function signOut(){
+      navigation.navigate("SignIn");
+    }
+  
+    function handleSignOut(){
+      return Alert.alert(
+          "Log out",
+          "Are you sure you want to sign out?",
+          [
+            {
+              text: "No",
+            },
+            {
+              text: "Yes",
+              onPress: () => {
+                  signOut();
+              },
+            },
+          ]
+        );
+    }
+
     function renderButton() {
         return (
             <View>
@@ -138,7 +150,8 @@ const Profile = ({navigation}) => {
                 <TouchableOpacity style = {styles.addAccountButton}>
                     <Text style = {styles.addAccountText}>Add Account</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style = {styles.logoutButton}>
+                <TouchableOpacity style = {styles.logoutButton}
+                                  onPress={handleSignOut()}>
                     <Text style = {styles.logoutText}>Logout</Text>
                 </TouchableOpacity>  
             </View> 
@@ -147,7 +160,6 @@ const Profile = ({navigation}) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
-            {/*renderHeader()*/}
             {renderAvatar()}
             {renderButton()}
         </SafeAreaView>
