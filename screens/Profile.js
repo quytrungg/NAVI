@@ -1,9 +1,7 @@
 import React, {useState} from "react";
 import { SafeAreaView, View, ScrollView, Text, Image, FlatList, TouchableOpacity, StyleSheet } from "react-native"
-import { TextInput } from "react-native-gesture-handler";
-import { ImageBackground } from "react-native-web";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
-import UserAvatar from 'react-native-user-avatar'
+import {Avatar, Colors} from 'react-native-paper'
 
 const Profile = ({navigation}) => {
     const featuresData = [
@@ -18,209 +16,151 @@ const Profile = ({navigation}) => {
     const [features, setFeatures] = useState(featuresData);
 
     const styles = StyleSheet.create({
-        root: {
-            flex: 1,
-        },
-    
-        images: {
-            flex: 1,
-            flexDirection: 'column',
+        avatar: {
+            flexDirection:'row',
+            alignItems:'center',
+            justifyContent:'center',
+            borderRadius:100,
+            marginVertical:5,
+            marginLeft:20,
+            padding:5,
+            borderWidth:5,
+            borderColor:COLORS.blueprim,
         },
 
-        banner: {
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'center',
-            padding: 5,
-            backgroundColor: COLORS.white,
-            marginHorizontal: 10,
-            marginVertical: 20,
-            borderRadius: 16,
+        avatarBox: {
+            flexDirection:'row', 
+            alignItems:'center',
+            borderWidth:1,
+            marginTop:30,
+            marginHorizontal:10,
+            paddingVertical:10,
+            borderColor:COLORS.blueprim,
+        },
+
+        nameText: {
+            fontSize:25,
+            fontWeight:'bold',
+            padding:10,
+            marginLeft:5,
+            marginTop:-50,
+        },
+
+        inforText: {
+            fontSize:25,
+            fontWeight:'bold',
+            padding:10,
+            marginTop:60,
+            marginLeft:-150,
+        },
+
+        editProfileButton: {
+            alignSelf:'center',
+            flexDirection:'row',
+            justifyContent:'center',
+            backgroundColor:COLORS.white,
+            borderColor:COLORS.blueprim,
+            borderWidth:1,
+            width: '50%',
+            paddingVertical:15,
+            borderRadius:10,
+            marginTop:20,
+        },
+
+        editProfileText: {
+            color:COLORS.bluetext, 
+            ...FONTS.h4, 
+            fontWeight:'bold', 
+        },
+
+        addAccountButton: {
+            alignSelf:'center',
+            flexDirection:'row',
+            justifyContent:'center',
+            backgroundColor:COLORS.white,
+            borderColor:COLORS.blueprim,
+            borderWidth:1,
+            width: '50%',
+            paddingVertical:15,
+            borderRadius:10,
+            marginTop:20,
+        },
+
+        addAccountText: {
+            color:COLORS.bluetext, 
+            ...FONTS.h4, 
+            fontWeight:'bold', 
+        },
+
+        logoutButton: {
+            alignSelf:'center',
+            flexDirection:'row',
+            justifyContent:'center',
+            borderWidth:1,
+            borderColor:COLORS.blueprim,
+            backgroundColor:COLORS.bluesec,
+            width: '70%',
+            paddingVertical:15,
+            borderRadius: SIZES.radius / 1.5,
+            marginTop: 200,
+        },
+
+        logoutText: {
+            alignItems:'center',
+            ...FONTS.h2, 
+            color:COLORS.white,
         },
     });
 
     function renderHeader(){
         return(
-            <View>
-                <ScrollView showsVerticalScrollIndicator={false} >
-                    <View style = {{height: 200, alignItems: 'center', justifyContent: 'center'}}>
-                        <Image source = {images.navilogo} style = {{width: "100%", resizeMode:'contain', aspectRatio:0.7}}></Image>
-                        <View></View>
-                        <View></View>
-                    </View>
-                    <View style={{alignItems: 'center'}}>
-                        {/* <Image source = {images.avatar} style = {{width:150, height:150,
-                        borderRadius:100, marginTop:-50}}></Image> */}
-                        <UserAvatar size={100} name="ABCDEFG" style = {{width:150, height:150,
-                        borderRadius:100, marginTop:-50, backgroundColor:COLORS.blueback}} textColor={'#000'}/>
-                        <Text style = {{fontSize:25, fontWeight:'bold', padding:10}}>
-                            Name Here 
-                        </Text>
-                        <Text style = {{fontSize:15, fontWeight:'bold', color:COLORS.bluetext}}>
-                            Information Here 
-                        </Text>
-                    </View>
-                    <View style = {{
-                                alignSelf:'center',
-                                flexDirection:'row',
-                                justifyContent:'center',
-                                backgroundColor:COLORS.blueback,
-                                width: '90%',
-                                padding:20,
-                                paddingBottom:22,
-                                borderRadius:10,
-                                shadowOpacity:80,
-                                elevation:15,
-                                marginTop:20
-                                }}>
-                        <Text>Product Designer</Text>
-                    </View>
-                    <View style = {{
-                                alignSelf:'center',
-                                flexDirection:'row',
-                                justifyContent:'center',
-                                backgroundColor:COLORS.blueback,
-                                width: '90%',
-                                padding:20,
-                                paddingBottom:22,
-                                borderRadius:10,
-                                shadowOpacity:80,
-                                elevation:15,
-                                marginTop:20
-                                }}>
-                        <Text style = {{fontSize:15, color:COLORS.bluetext, fontWeight:'bold', marginLeft:10}}>Country</Text>
-                    </View>
-                    <TouchableOpacity style = {{
-                                alignSelf:'center',
-                                flexDirection:'row',
-                                justifyContent:'center',
-                                backgroundColor:COLORS.blueback,
-                                width: '90%',
-                                padding:20,
-                                paddingBottom:22,
-                                borderRadius:10,
-                                shadowOpacity:80,
-                                elevation:15,
-                                marginTop:20,
-                                marginBottom:40,
-                                backgroundColor:'#000'
-                                }}>
-                        <Text style = {{fontSize:15, color:'#000', fontWeight:'bold', marginLeft:10}}>Logout</Text>
-                    </TouchableOpacity>
-                </ScrollView>
+            <View style={styles.header}>
+                <View style = {{height: 20, marginTop:10, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image source = {images.navilogo} style = {{width: '20%', resizeMode:'contain'}}></Image>
+                </View>
             </View>
-
         );
     }
 
-    // Phần đầu của rút tiền
-
-    function renderBanner(){
+    function renderAvatar() {
         return (
-            <View style={{height: 120, borderRadius: 10, backgroundColor: COLORS.bluesec}}>
-                
-                <View>
-                    <Image  source={images.navilogo}
-                            style={{height: 22, width: 22}}/>
-                    <Text>Balance: $1200.65</Text>
-                </View>
-                <View>
-                    <Text style={{color: COLORS.black, ...FONTS.body3 }}>Withdraw amount</Text>
-                    <TextInput  style={{marginVertical: SIZES.padding, 
-                                        borderBottomColor: COLORS.black, 
-                                        borderBottomWidth: 1, height: 40, 
-                                        color: COLORS.black, 
-                                        ...FONTS.body3}} 
-                                placeholder="Enter Deposit Amount" 
-                                placeholderTextColor={COLORS.gray} 
-                                selectionColor={COLORS.black}/>
-                </View>
+            <View style={styles.avatarBox}>
+                {/* <Image source = {images.avatar} style = {{width:150, height:150,
+                borderRadius:100, marginTop:-50}}></Image> */}
+                <Avatar.Image medium rounded source={images.avatar} size={160} containerStyle={{borderWidth:2, borderColor:'black'}}
+                                avatarStyle={{borderWidth:2, borderColor: 'black'}}
+ style = {styles.avatar}/>
+                <Text style = {styles.nameText}>
+                    Name Here
+                </Text>
+                <Text style = {styles.inforText}>
+                    User ID Here
+                </Text>
             </View>
-        )
+        );
     }
 
-    function renderWithdrawSource(){
-        const Header = () => (
-            <View style={{marginBottom: SIZES.padding * 2}}>
-                <Text style={{...FONTS.h3}}>Features</Text>
-            </View>
-        )
-        const renderItem = ({item}) => (
-            <TouchableOpacity   style={{marginBottom: SIZES.padding * 2, 
-                                        width: 60, alignItems: 'center'}}
-                                onPress={() => console.log(item.description)}>
-                <View style={{  height: 50,
-                                width: 50,
-                                marginBottom: 5,
-                                borderRadius: 20,
-                                backgroundColor: item.backgroundColor,
-                                alignItems: 'center',
-                                justifyContent: 'center'}}>
-                    <Image  source={item.icon}
-                            resizeMode="contain"
-                            style={{height: 20,
-                                    width: 20,
-                                    tintColor: item.color}}/>
-                </View>
-                <Text   style={{textAlign: 'center', 
-                                flexWrap: 'wrap', 
-                                ...FONTS.body4 }}>{item.description}</Text>
-            </TouchableOpacity>
-        )
-
+    function renderButton() {
         return (
-            <FlatList
-                ListHeaderComponent={Header}
-                data={features}
-                numColumns={2}
-                columnWrapperStyle={{justifyContent: 'space-between'}}
-                keyExtractor={item => `${item.id}`}
-                renderItem={renderItem}
-                style={{ marginTop: SIZES.padding * 2 }}
-            />
-        )
-    }
-
-    function renderHomeView(){
-        const HeaderComponent = () => (
-            <View style={{backgroundColor: COLORS.blueback}}>
-                {renderHeader()}
-                {renderBanner()}
-                {renderWithdrawSource()}
-                {renderPromoHeader()}
-            </View>
-        )
-        const renderPromoHeader = () => (
-            <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
-                <View style={{flex: 1}}>
-                    <Text style={{...FONTS.h3}}>Special Promos</Text>
-                </View>
-                <TouchableOpacity onPress={() => console.log("View All")}>
-                    <Text style={{color: COLORS.gray, ...FONTS.body4}}>View All</Text>
+            <View>
+                <TouchableOpacity style = {styles.editProfileButton}>
+                    <Text style = {styles.editProfileText}>Edit Profile</Text>
                 </TouchableOpacity>
-            </View>
-
-        )
-        return (
-            <FlatList
-                ListHeaderComponent={HeaderComponent}
-                contentContainerStyle={{paddingHorizontal: SIZES.padding * 3}}
-                numColumns={2}
-                columnWrapperStyle={{justifyContent: 'space-between'}}
-                keyExtractor={item => `${item.id}`}
-                showsVerticalScrollIndicator={false}
-                //pay attention to this
-                ListFooterComponent={
-                    <View style={{marginBottom: 80}}>
-                    </View>
-                }
-            />
-        )
+                <TouchableOpacity style = {styles.addAccountButton}>
+                    <Text style = {styles.addAccountText}>Add Account</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style = {styles.logoutButton}>
+                    <Text style = {styles.logoutText}>Logout</Text>
+                </TouchableOpacity>  
+            </View> 
+        );
     }
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
-            {renderHomeView()}
+            {renderHeader()}
+            {renderAvatar()}
+            {renderButton()}
         </SafeAreaView>
     )
 }
