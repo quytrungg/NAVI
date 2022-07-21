@@ -43,7 +43,7 @@ const Admin = () => {
             <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
                 <View style={{flex: 1}}>
                     <Text style={{ ...FONTS.h1 }}>Welcome Back!</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>quytrungg</Text>
+                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>administrator</Text>
                 </View>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                     <TouchableOpacity   style={{height: 40,
@@ -139,7 +139,7 @@ const Admin = () => {
         const renderPromoHeader = () => (
             <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
                 <View style={{flex: 1}}>
-                    <Text style={{...FONTS.h3}}>Special Promos</Text>
+                    <Text style={{...FONTS.h3}}>What's New</Text>
                 </View>
                 <TouchableOpacity onPress={() => console.log("View All")}>
                     <Text style={{color: COLORS.gray, ...FONTS.body4}}>View All</Text>

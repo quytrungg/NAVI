@@ -1,5 +1,5 @@
 import React from 'react';
-import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Profile } from "./screens";
+import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Loading, Password, Profile } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -52,20 +52,21 @@ const App = () => {
         <NavigationContainer theme={theme}>
             <Stack.Navigator
                 screenOptions={{
-                    headerShown: false,
+                    headerShown: false
                 }}
-                initialRouteName={'Profile'}>
+                initialRouteName={"SignIn"}>
 
-                <Stack.Screen options={{headerShown: false}} name="BankDescription" component={BankDescription}/>
+                <Stack.Screen name="BankDescription" component={BankDescription}/>
                 <Stack.Screen name="StartUp" component={StartUp}/>
                 <Stack.Screen name="SignUp" component={SignUp}/>
                 <Stack.Screen name="SignIn" component={SignIn}/>
                 <Stack.Screen name="BankAccount" component={BankAccount}/>
                 <Stack.Screen name="HomeAdmin" component={TabsAdmin}/>
                 <Stack.Screen name="Home" component={Tabs}/>
-                
+                <Stack.Screen name="Loading" component={Loading}/>
                 <Stack.Screen name="Withdraw" component={Withdraw}/>
                 <Stack.Screen name="Deposit" component={Deposit}/>
+                <Stack.Screen name="Password" component={Password}/>
                 <Stack.Screen name="Profile" component={Profile}/>
             </Stack.Navigator>
         </NavigationContainer>

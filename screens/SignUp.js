@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 
@@ -18,25 +18,24 @@ const SignUp = ({ navigation }) => {
     balance: "",
     role: "",
   };
-  
+
   const [showPassword, setShowPassword] = useState(false);
 
   function renderHeader(){
     return (
       <TouchableOpacity style={{flexDirection: 'row', 
                                 alignItems: "center", 
-                                marginTop: SIZES.padding * 6,
+                                marginTop: SIZES.padding * 1,
                                 paddingHorizontal: SIZES.padding * 2}} 
-                        onPress={() => navigation.navigate("StartUp")}>
+                        onPress={() => navigation.navigate("SignIn")}>
         <Image  source={icons.back} 
                 resizeMode="contain" 
                 style={{width: 15, 
                         height: 15, 
                         tintColor: COLORS.black}}/>
-        <Text style={{marginLeft: SIZES.padding, 
+        <Text style={{marginLeft: SIZES.padding / 2, 
                       color: COLORS.black, 
-                      ...FONTS.h4}}
-              onPress={() => navigation.navigate("StartUp")}>Sign Up</Text>
+                      ...FONTS.h4}}>Sign In</Text>
         </TouchableOpacity>
     );
   }
@@ -55,21 +54,15 @@ const SignUp = ({ navigation }) => {
   }
 
   function handleEmailInput(text){
-    return (
-      Alert.alert("Notification", "finished")
-    )
+    
   }
 
   function handlePasswordInput(text){
-    return (
-      Alert.alert("Notification", "finished")
-    )
+    
   }
 
   function handleName (){
-    return(
-      Alert.alert("Notification", "finished")
-    );
+    
   }
 
   function handlePhoneNumber(phoneNumber) {
@@ -92,7 +85,6 @@ const SignUp = ({ navigation }) => {
                       placeholder="Enter Full Name" 
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
-                      onBlur = {() => handleName()}
                       onChangeText={(name) => (state.name = name)}/>
         </View>
         {/* Phone Number */}
@@ -126,7 +118,6 @@ const SignUp = ({ navigation }) => {
                                 color: COLORS.black,
                                 ...FONTS.body3}}
                         placeholder="Enter Email"
-                        onBlur = {(text) => handleEmailInput(text)}
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
                         onChangeText={(email) => (state.email = email)}/>
@@ -142,7 +133,6 @@ const SignUp = ({ navigation }) => {
                               color: COLORS.black,
                               ...FONTS.body3}}
                       placeholder="Enter Password"
-                      onBlur = {(text) => handlePasswordInput(text)}
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
@@ -163,7 +153,7 @@ const SignUp = ({ navigation }) => {
     )
   }
 
-  const handleSignUp = () => {
+  function handleSignUp(){
     const {
       fakeEmail,
       password,
@@ -190,7 +180,7 @@ const SignUp = ({ navigation }) => {
           });
         console.log(result);
         console.log(firebase.auth().currentUser.uid);
-        navigation.navigate("Home");
+        navigation.navigate("Loading");
       })
       .catch((error) => {
         console.log(error);
@@ -221,8 +211,10 @@ const SignUp = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
                       style={{flex: 1}}>
-        <ScrollView>
+        <SafeAreaView>
           {renderHeader()}
+        </SafeAreaView>
+        <ScrollView>
           {renderLogo()}
           {renderForm()}
           {renderButton()}

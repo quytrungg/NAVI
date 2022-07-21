@@ -8,6 +8,8 @@ import BankDescription from "./BankDescription";
 import Admin from "./Admin";
 import Withdraw from "./Withdraw";
 import Deposit from "./Deposit";
+import Loading from "./Loading";
+import Password from "./Password";
 import Profile from "./Profile";
 
 export {
@@ -21,5 +23,7 @@ export {
     Admin,
     Withdraw,
     Deposit,
-    Profile,
+    Loading,
+    Password,
+    Profile
 };

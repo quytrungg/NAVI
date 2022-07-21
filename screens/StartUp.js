@@ -4,7 +4,7 @@ import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Sc
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, images } from "../constants";
 
-const StartUp = ({ navigation }) => {
+const StartUp = ({ navigation, phoneNum }) => {
 
   function renderHeader(){
     return (
@@ -47,7 +47,8 @@ const StartUp = ({ navigation }) => {
                         keyboardType="number-pad"
                         placeholder="Enter Phone Number"
                         placeholderTextColor={COLORS.gray}
-                        selectionColor={COLORS.black}/>
+                        selectionColor={COLORS.black}
+                        onChangeText={(text) => phoneNum = text}/>
           </View>
         </View>
       </View>

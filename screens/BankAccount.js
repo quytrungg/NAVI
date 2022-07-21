@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, TouchableHighlight} from "react-native";
-import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView} from "react-native";
+import { COLORS, SIZES, FONTS, icons } from "../constants";
 
 const BankAccount = ({navigation}) => {
   const bankData = [
@@ -9,59 +9,61 @@ const BankAccount = ({navigation}) => {
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "MB Bank",
+            choice: false
         },
         {   id: 2,
             icon: icons.bill,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
-            description: "VCB Bank",
+            description: "Vietcombank",
+            choice: false
         },
         {   id: 3,
             icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "TP Bank",
+            choice: false
         },
         {   id: 4,
             icon: icons.bill,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
             description: "VP Bank",
+            choice: false
         },
         {   id: 5,
             icon: icons.bill,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "BIDV",
+            choice: false
         },
         {   id: 6,
             icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "TCB Bank",
+            description: "Techcombank",
+            choice: false
         }
     ]
 
     const [bank, setBank] = useState(bankData);
-    const [showBox, setShowBox] = useState(true);
 
     function handleBackToHome(){
         return Alert.alert(
             "Warning",
             "Are you sure you want to go to Home screen?",
             [
-              // The "Yes" button
-              {
-                text: "Yes",
-                onPress: () => {
-                    navigation.navigate("Home");
+                {
+                    text: "No",
                 },
-              },
-              // The "No" button
-              // Does nothing but dismiss the dialog when tapped
-              {
-                text: "No",
-              },
+                {
+                    text: "Yes",
+                    onPress: () => {
+                        navigation.navigate("Home");
+                    },
+                },
             ]
         );
     }
@@ -70,29 +72,28 @@ const BankAccount = ({navigation}) => {
         return(
           <TouchableOpacity style={{flexDirection: 'row', 
                                     alignItems: "center", 
-                                    marginTop: SIZES.padding,
-                                    marginLeft: 0}} 
+                                    margin: SIZES.padding / 2,
+                                    marginLeft: -10}} 
                             onPress={() => handleBackToHome()}>
             <Image  source={icons.back} 
                     resizeMode="contain" 
                     style={{width: 15, 
                             height: 15, 
                             tintColor: COLORS.black}}/>
-            <Text style={{marginLeft: SIZES.padding,
+            <Text style={{marginLeft: SIZES.padding / 2,
                           color: COLORS.black, 
-                          ...FONTS.h4 }} 
-                  onPress={() => handleBackToHome()}>Home</Text>
+                          ...FONTS.h4 }}>Home</Text>
           </TouchableOpacity>
         )
       }
 
     function renderHeader() {
         return (
-            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 4}}>
+            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
                 <View   style={{flex: 1,
                                 justifyContent: 'center',
                                 alignItems: 'center'}}>
-                    <Text style={{...FONTS.h1}}>Bank Linking</Text>
+                    <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Bank Linking</Text>
                 </View>
             </View>
         )
@@ -102,23 +103,27 @@ const BankAccount = ({navigation}) => {
         return (
             <View style={{height: 120, borderRadius: 10}}>
                 <View style={{ marginBottom: SIZES.padding * 2 }}>
-                  <Text style={{...FONTS.h3}}>An account can connect to 1 or many bank accounts.</Text>
+                  <Text style={{...FONTS.h3}}>An account must at least connect to 1 bank account.</Text>
                 </View>
-                <Text style={{...FONTS.h3, color: COLORS.gray}}>Choose one of the banks below to link with your account.</Text>
+                <Text style={{...FONTS.h3, color: COLORS.gray}}>This is a list of banks that are able to connect to account.</Text>
             </View>
         )
-    }
-
-    function handleBank(item){
-        Alert.alert("Warning", "Bank is closed");
     }
 
     function renderFeatures() {
         const Header = () => (
-            <View style={{marginBottom: SIZES.padding * 2, marginTop: SIZES.padding * 3}}>
+            <View style={{marginBottom: SIZES.padding * 2, marginTop: SIZES.padding * 1}}>
                 <Text style={{...FONTS.h3}}>Banks</Text>
             </View>
         )
+
+        function handleBank(){
+            return Alert.alert(
+                "Warning",
+                "Select \"Next\" to link a bank account"
+            );
+        }
+
         const renderItem = ({item}) => (
             <TouchableOpacity   style={{marginBottom: SIZES.padding * 1.5, 
                                         width: 111, 
@@ -157,7 +162,7 @@ const BankAccount = ({navigation}) => {
     }
     function renderButton(){
         return(
-            <View style={{margin: SIZES.padding * 2}}>
+            <View style={{margin: SIZES.padding * 1.5}}>
                 <TouchableOpacity   style={{height: 60,
                                             width: 180,
                                             alignSelf: "center",
@@ -167,7 +172,7 @@ const BankAccount = ({navigation}) => {
                                             justifyContent: 'center',
                                             borderColor: COLORS.blueprim,}}
                                     onPress = {() => navigation.push("BankDescription")}>
-                    <Text style={{color: COLORS.white, ...FONTS.h3}}>Confirm</Text>
+                    <Text style={{color: COLORS.white, ...FONTS.h3}}>Next</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -176,10 +181,10 @@ const BankAccount = ({navigation}) => {
     function renderBank(){
         const HeaderComponent = () => (
             <View style={{backgroundColor: COLORS.blueback}}>
-                {renderTop()}
                 {renderHeader()}
                 {renderBanner()}
                 {renderFeatures()}
+                {renderButton()}
             </View>
         )
         return (
@@ -199,10 +204,12 @@ const BankAccount = ({navigation}) => {
     }
 
     return (
-      <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
-        {renderBank()}
-        {renderButton()}
-      </SafeAreaView>
+        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
+            <SafeAreaView style={{paddingHorizontal: SIZES.padding * 3}}>
+                {renderTop()}
+            </SafeAreaView>
+            {renderBank()}
+        </SafeAreaView>
     )
 }
 
