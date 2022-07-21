@@ -1,8 +1,15 @@
 import React, {useState} from "react";
+<<<<<<< Updated upstream
 import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {Avatar} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
+=======
+import { SafeAreaView, View, ScrollView, Text, Image, FlatList, TouchableOpacity, StyleSheet } from "react-native"
+import { TextInput } from "react-native-gesture-handler";
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import UserAvatar from 'react-native-user-avatar'
+>>>>>>> Stashed changes
 
 const Profile = ({navigation}) => { 
 
