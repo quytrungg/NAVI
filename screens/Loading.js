@@ -17,7 +17,7 @@ const Loading = ({navigation}) => {
   console.log(userDocument);
   setTimeout(() => {
     navigation.navigate("Home");
-    }, 1000);
+    }, 1500);
 
   function renderLogo(){
     return(

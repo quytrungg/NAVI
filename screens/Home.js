@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput } from "react-native"
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 
 import firebase from "firebase/compat/app";
@@ -19,7 +19,7 @@ const Home = ({navigation}) => {
   console.log("3");
   console.log(userDocument);*/
 
-  var balance = 1200.65;
+  var balance = 9027384;
 
   const featuresData = [
     {   id: 1,
@@ -56,10 +56,10 @@ const Home = ({navigation}) => {
 
     function renderHeader(){
         return(
-            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
+            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2, marginBottom: SIZES.padding * 3}}>
                 <View style={{flex: 1}}>
-                    <Text style={{ ...FONTS.h1 }}>Welcome Back!</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>quytrungg</Text>
+                    <Text style={{ ...FONTS.h1, color: COLORS.blueprim }}>Welcome Back!</Text>
+                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>username</Text>
                 </View>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                     <TouchableOpacity   style={{height: 40,
@@ -88,13 +88,29 @@ const Home = ({navigation}) => {
         )
     }
 
+    function balanceDisplay(){
+        var temp = balance.toString();
+        for (var i = temp.length; i > 0; i -= 3){
+            if(i == temp.length){
+                continue;
+            }
+            temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
+        }
+        return temp + " VND";
+    }
+
     function renderBanner(){
         const [showPassword, setShowPassword] = useState(false);
         return (
-            <View style={{height: 120, borderRadius: 10}}>
+            <View style={{ height: 120, borderRadius: 10}}>
                 <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
-                    <Text style={{...FONTS.h3}}>Balance: $</Text>
-                    <Text style={{...FONTS.h3}}>{balance}</Text>
+                    <Text style={{...FONTS.h3}}>Balance: </Text>
+                    <View >
+                        <TextInput style={{...FONTS.h3, marginTop: 3}}
+                                    editable={false} 
+                                    value={balanceDisplay()}
+                                    secureTextEntry={!showPassword}/>
+                    </View>
                     <TouchableOpacity style={{position: 'absolute',
                                             right: 0}}
                                     onPress={() => setShowPassword(!showPassword)}>
@@ -126,7 +142,7 @@ const Home = ({navigation}) => {
 
     function renderFeatures(){
         const Header = () => (
-            <View style={{marginBottom: SIZES.padding * 2}}>
+            <View style={{marginTop: SIZES.padding * 3, marginBottom: SIZES.padding * 2}}>
                 <Text style={{...FONTS.h3}}>Features</Text>
             </View>
         )
