@@ -109,6 +109,7 @@ const Home = ({navigation}) => {
                         <TextInput style={{...FONTS.h3, marginTop: 3}}
                                     editable={false} 
                                     value={balanceDisplay()}
+                                    underlineColorAndroid="transparent"
                                     secureTextEntry={!showPassword}/>
                     </View>
                     <TouchableOpacity style={{position: 'absolute',
