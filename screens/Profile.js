@@ -1,119 +1,99 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, ScrollView, Text, Image, FlatList, TouchableOpacity, StyleSheet, Alert } from "react-native"
-import { COLORS, SIZES, FONTS, icons, images } from "../constants";
-import {Avatar, Colors} from 'react-native-paper'
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { COLORS, SIZES, FONTS, images } from "../constants";
+import {Avatar} from 'react-native-paper';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Profile = ({navigation}) => { 
 
     const styles = StyleSheet.create({
         avatar: {
-            flexDirection:'row',
-            alignItems:'center',
-            justifyContent:'center',
-            borderRadius:100,
-            marginVertical:5,
-            marginLeft:20,
-            padding:5,
-            borderWidth:5,
-            borderColor:COLORS.blueprim,
+          marginBottom: 10
         },
 
         avatarBox: {
-            flexDirection:'row', 
             alignItems:'center',
-            borderWidth:1,
+            justifyContent: 'center',
+            borderWidth:2,
+            borderColor:COLORS.blueback,
+            borderRadius: SIZES.radius /1.5,
             marginTop:30,
             marginHorizontal:10,
             paddingVertical:10,
-            borderColor:COLORS.blueprim,
+            marginTop: 10
         },
 
         nameText: {
-            ...FONTS.h1,
-            padding:10,
-            marginLeft:5,
-            marginTop: -10,
+            ...FONTS.h1
         },
 
         inforText: {
-            ...FONTS.h3,
-            padding:10,
-            marginTop:-20,
-            marginLeft: 5,
+            ...FONTS.h4
         },
 
         editProfileButton: {
-            alignSelf:'center',
-            flexDirection:'row',
+            alignItems: 'center',
             justifyContent:'center',
             backgroundColor:COLORS.white,
             borderColor:COLORS.blueprim,
             borderWidth:1,
-            width: '50%',
-            paddingVertical:15,
+            width: 150,
+            height: 50,
             borderRadius:10,
             marginTop:20,
+            margin: 5,
         },
 
         editProfileText: {
             color:COLORS.bluetext, 
-            ...FONTS.h4, 
-            fontWeight:'bold', 
-        },
-
-        addAccountButton: {
-            alignSelf:'center',
-            flexDirection:'row',
-            justifyContent:'center',
-            backgroundColor:COLORS.white,
-            borderColor:COLORS.blueprim,
-            borderWidth:1,
-            width: '50%',
-            paddingVertical:15,
-            borderRadius:10,
-            marginTop:20,
-        },
-
-        addAccountText: {
-            color:COLORS.bluetext, 
-            ...FONTS.h4, 
-            fontWeight:'bold', 
+            ...FONTS.h4
         },
 
         logoutButton: {
-            alignSelf:'center',
-            flexDirection:'row',
-            justifyContent:'center',
-            borderWidth:1,
             borderColor:COLORS.blueprim,
             backgroundColor:COLORS.bluesec,
-            width: '70%',
-            paddingVertical:15,
-            borderRadius: SIZES.radius / 1.5,
-            marginTop: 180,
+            alignSelf: 'center',
+            alignItems: 'center',
+            justifyContent:'center',
+            borderWidth:1,
+            width: 180,
+            height: 60,
+            borderRadius:SIZES.radius / 1.5,
+            bottom: 30,
+            marginTop: 30,
         },
 
         logoutText: {
-            alignItems:'center',
             ...FONTS.h2, 
-            color:COLORS.white,
-        },
+            color:COLORS.white
+        }
     });
+
+    function renderHeader() {
+      return (
+          <View style={{backgroundColor: COLORS.white, borderRadius:10, height: 60, width: 350, alignSelf: 'center', marginTop: 10}}>
+              <View   style={{flex: 1,
+                              justifyContent: 'center',
+                              alignItems: 'center'}}>
+                  <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Profile</Text>
+              </View>
+          </View>
+      )
+  }
 
     function renderAvatar() {
         return (
             <View style={styles.avatarBox}>
-                <Avatar.Image medium rounded source={images.avatar} size={160} containerStyle={{borderWidth:2, borderColor:'black'}}
-                                avatarStyle={{borderWidth:2, borderColor: 'black'}}
- style = {styles.avatar}/>
-
-                <View>
-                    <Text style = {styles.nameText}>
-                        Name Here
-                    </Text>
-                    <Text style = {styles.inforText}>
-                        User ID Here
-                    </Text>
+                <Avatar.Image rounded source={images.avatar} size={160} style = {styles.avatar}/>
+                <Text style = {styles.nameText}>Name Here</Text>
+                <Text style = {styles.inforText}>User ID Here</Text>
+                <View style={{flexDirection: 'row'}}>
+                  <TouchableOpacity style = {styles.editProfileButton}>
+                      <Text style = {styles.editProfileText}>Edit Profile</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style = {styles.editProfileButton}>
+                      <Text style = {styles.editProfileText}>Add Account</Text>
+                  </TouchableOpacity>
                 </View>
             </View>
         );
@@ -144,14 +124,7 @@ const Profile = ({navigation}) => {
     function renderButton() {
         return (
             <View>
-                <TouchableOpacity style = {styles.editProfileButton}>
-                    <Text style = {styles.editProfileText}>Edit Profile</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style = {styles.addAccountButton}>
-                    <Text style = {styles.addAccountText}>Add Account</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style = {styles.logoutButton}
-                                  onPress={handleSignOut()}>
+                <TouchableOpacity style = {styles.logoutButton} onPress={() => handleSignOut()}>
                     <Text style = {styles.logoutText}>Logout</Text>
                 </TouchableOpacity>  
             </View> 
@@ -159,9 +132,12 @@ const Profile = ({navigation}) => {
     }
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
+        <SafeAreaView style={{flexGrow: 1, backgroundColor: COLORS.blueback}}>
+          {renderHeader()}
+          <ScrollView>
             {renderAvatar()}
-            {renderButton()}
+          </ScrollView>
+          {renderButton()}
         </SafeAreaView>
     )
 }

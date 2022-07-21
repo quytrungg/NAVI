@@ -131,13 +131,31 @@ const Home = ({navigation}) => {
         )
     }
 
+    function randomNum(){
+        return Math.floor(Math.random() * 100) + 1;
+    }
+
     function handleFeature(item){
         console.log(item.description)
         if(item.description == 'Withdraw'){
             navigation.navigate("Withdraw");
         }
-        if(item.description == 'Deposit'){
+        else if(item.description == 'Deposit'){
             navigation.navigate("Deposit");
+        }
+        else if(item.description == 'Bank Account'){
+            navigation.navigate("BankAccount");
+        }
+        else if(item.description == 'Transfer'){
+            var temp = randomNum();
+            if(temp % 2 == 0){
+                balance -= 1000000;
+                console.log(balance);
+            }
+            else{
+                balance += 1000000;
+                console.log(balance);
+            }
         }
     }
 

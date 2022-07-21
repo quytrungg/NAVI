@@ -181,7 +181,6 @@ const BankAccount = ({navigation}) => {
     function renderBank(){
         const HeaderComponent = () => (
             <View style={{backgroundColor: COLORS.blueback}}>
-                {renderTop()}
                 {renderHeader()}
                 {renderBanner()}
                 {renderFeatures()}
@@ -206,6 +205,9 @@ const BankAccount = ({navigation}) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
+            <SafeAreaView style={{paddingHorizontal: SIZES.padding * 3}}>
+                {renderTop()}
+            </SafeAreaView>
             {renderBank()}
         </SafeAreaView>
     )

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
@@ -18,8 +18,7 @@ const Password = ({ navigation }) => {
     return(
       <TouchableOpacity style={{flexDirection: 'row', 
                                 alignItems: "center",
-                                marginTop: SIZES.padding * 5,
-                                marginBottom: SIZES.padding,
+                                marginTop: SIZES.padding * 1,
                                 paddingHorizontal: SIZES.padding * 2}}
                         onPress={() => navigation.goBack()}>
         <Image  source={icons.back} 
@@ -142,8 +141,10 @@ const Password = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]}
                       style={{flex: 1}}>
-        <ScrollView>
+        <SafeAreaView >
           {renderHeader()}
+        </SafeAreaView>
+        <ScrollView>
           {renderLogo()}
           {renderForm()}
           {renderButton()}
