@@ -128,13 +128,13 @@ const SignIn = ({ navigation }) => {
           "The email or password you entered did not match our records. Please try again",
           [
             {
-              text: "Sign in",
+              text: "Try again",
               onPress: () => {
                   handleSignIn(randomNum());
               },
             },
             {
-              text: "Try again",
+              text: "OK",
             },
           ]
         );

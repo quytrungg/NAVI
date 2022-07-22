@@ -184,7 +184,40 @@ const SignUp = ({ navigation }) => {
       })
       .catch((error) => {
         console.log(error);
-        //woooooooooooooooooooooooooooooo
+        if(state.email == "" || state.phoneNumber == "" || state.name == "" || state.password == ""){
+          Alert.alert(
+            "Error",
+            "Some of the information is empty. Please try again",
+            [
+              {
+                text: "Try again",
+                onPress: () => {
+                    handleSignUp();
+                },
+              },
+              {
+                text: "OK",
+              },
+            ]
+          );
+        }
+        else{
+          Alert.alert(
+            "Error",
+            "There are errors while signing up. Please try again",
+            [
+              {
+                text: "Try again",
+                onPress: () => {
+                    handleSignUp();
+                },
+              },
+              {
+                text: "OK",
+              },
+            ]
+          );
+          }
       });
   };
 
