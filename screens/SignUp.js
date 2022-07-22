@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 
@@ -211,6 +211,7 @@ const SignUp = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
                       style={{flex: 1}}>
+        <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <SafeAreaView>
           {renderHeader()}
         </SafeAreaView>

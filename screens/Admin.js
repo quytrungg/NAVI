@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar } from "react-native"
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 
 const Admin = () => {
@@ -165,6 +165,7 @@ const Admin = () => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
+            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             {renderHomeView()}
         </SafeAreaView>
     )

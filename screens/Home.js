@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput } from "react-native"
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput, StatusBar } from "react-native"
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 
 import firebase from "firebase/compat/app";
@@ -240,6 +240,7 @@ const Home = ({navigation}) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
+            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             {renderHomeView()}
         </SafeAreaView>
     )

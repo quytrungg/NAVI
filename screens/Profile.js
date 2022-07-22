@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {Avatar} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -133,6 +133,7 @@ const Profile = ({navigation}) => {
 
     return (
         <SafeAreaView style={{flexGrow: 1, backgroundColor: COLORS.blueback}}>
+            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
           {renderHeader()}
           <ScrollView>
             {renderAvatar()}

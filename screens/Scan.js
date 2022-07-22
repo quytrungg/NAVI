@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import {View,Text,Image,TouchableOpacity} from "react-native";
+import {View,Text,Image,TouchableOpacity, StatusBar} from "react-native";
 import { Camera } from 'expo-camera';
 import { COLORS, FONTS, SIZES, icons, images } from "../constants";
 
@@ -127,6 +127,7 @@ const Scan = ({ navigation }) => {
 
     return (
         <View style={{flex: 1, backgroundColor: COLORS.transparent}}>
+            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             <Camera ref={ref => {Camera.camera = ref}}
                     style={{flex: 1}}
                     captureAudio={false}

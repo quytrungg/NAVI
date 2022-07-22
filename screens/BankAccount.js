@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView} from "react-native";
+import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, StatusBar} from "react-native";
 import { COLORS, SIZES, FONTS, icons } from "../constants";
 
 const BankAccount = ({navigation}) => {
@@ -205,6 +205,7 @@ const BankAccount = ({navigation}) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
+            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             <SafeAreaView style={{paddingHorizontal: SIZES.padding * 3}}>
                 {renderTop()}
             </SafeAreaView>

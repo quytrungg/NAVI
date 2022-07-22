@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert, StatusBar} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
@@ -123,7 +123,21 @@ const SignIn = ({ navigation }) => {
       })
       .catch((error) => {
         console.log(error);
-        //woooooooooooooooooooooooooooooo
+        Alert.alert(
+          "Error",
+          "The email or password you entered did not match our records. Please try again",
+          [
+            {
+              text: "Sign in",
+              onPress: () => {
+                  handleSignIn(randomNum());
+              },
+            },
+            {
+              text: "Try again",
+            },
+          ]
+        );
       });
   }
   
@@ -169,6 +183,7 @@ const SignIn = ({ navigation }) => {
                           style={{flex: 1}}>
       <LinearGradient colors={[COLORS.blueback, COLORS.blueback]}
                       style={{flex: 1}}>
+        <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <ScrollView>
           {renderHeader()}
           {renderLogo()}
