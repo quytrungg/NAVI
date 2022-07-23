@@ -47,10 +47,13 @@ const Password = ({ navigation }) => {
   }
 
   function handleConfirm(text){
-    if (text == password){
-      console.log("correct");
+    if (text != password){
+      Alert.alert(
+        "Error",
+        "Confirm password not match. Please try again"
+      );
     }
-    else console.log("incorrect");
+    else console.log("correct");
   }
 
   function renderForm(){
@@ -116,6 +119,7 @@ const Password = ({ navigation }) => {
 
   function handleChangePassword(){
     console.log("Change password");
+    navigation.navigate("Loading");
   }
   
   function renderButton(){
