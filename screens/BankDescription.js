@@ -10,7 +10,7 @@ import "firebase/compat/firestore";
 const BankDescription = ({navigation}) => {
 
   var state = {
-    bankName: "",
+    bankName: "default",
     bankID: "",
     ownerName: "",
     publishDate: "",
@@ -140,15 +140,13 @@ const BankDescription = ({navigation}) => {
       ownerName,
       publishDate,
     } = state;
+
     firebase
       .firestore()
       .collection("user")
       .doc(firebase.auth().currentUser.uid)
       .collection("bank")
       .doc(bankName)
-      .catch((error) => {
-
-      })
       .get()
       .then((snapshot) => {
         if (snapshot.data() == undefined) {
