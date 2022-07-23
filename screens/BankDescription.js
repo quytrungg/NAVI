@@ -47,7 +47,7 @@ const BankDescription = ({navigation}) => {
               <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Bank Information</Text>
           </View>
       </View>
-  )
+    )
   }
 
   function renderForm(){
@@ -155,6 +155,18 @@ const BankDescription = ({navigation}) => {
             .doc(firebase.auth().currentUser.uid)
             .collection("bank")
             .doc(bankName)
+            .catch((error) => {
+              console.log(error);
+              Alert.alert(
+                "Error",
+                "Bank name cannot be empty. Please try again",
+                [
+                  {
+                    text: "OK",
+                  },
+                ]
+              );
+            })
             .set({
               bankID,
               ownerName,

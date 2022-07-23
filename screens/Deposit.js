@@ -1,154 +1,128 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import { COLORS, SIZES, FONTS, icons } from "../constants"
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Deposit = ({navigation}) => {
-    const featuresData = [
-        {   id: 1,
-            icon: icons.reload,
-            color: COLORS.purple,
-            backgroundColor: COLORS.lightpurple,
-            description: "Bank Account"
-        }
-    ]
-
-    const [features, setFeatures] = useState(featuresData);
-
-    function renderHeader(){
-        return(
-            <View   style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
-                <TouchableOpacity style={{flexDirection: 'row', 
+  function renderHeader(){
+    return (
+      <TouchableOpacity style={{flexDirection: 'row', 
                                 alignItems: "center", 
-                                marginTop: SIZES.padding * 6,
+                                marginTop: SIZES.padding * 1,
                                 paddingHorizontal: SIZES.padding * 2}} 
-                        onPress={() => navigation.goBack("Home")}>
-                    <Image  source={icons.back} 
+                        onPress={() => navigation.navigate("SignIn")}>
+        <Image  source={icons.back} 
                 resizeMode="contain" 
                 style={{width: 15, 
                         height: 15, 
                         tintColor: COLORS.black}}/>
-                </TouchableOpacity>
-                <View style={{flex: 1, 
+        <Text style={{marginLeft: SIZES.padding / 2, 
+                      color: COLORS.black, 
+                      ...FONTS.h4}}>Home</Text>
+        </TouchableOpacity>
+    );
+  }
+
+  function renderLogo(){
+    return (
+        <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
+            <View   style={{flex: 1,
                             justifyContent: 'center',
                             alignItems: 'center'}}>
-                    <Text style={{ ...FONTS.h1 }}>Deposit Money</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>quytrungg</Text>
-                </View>
+                <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Deposit Money</Text>
             </View>
-        )
-    }
+        </View>
+    )
+  }
 
-    // Phần đầu của rút tiền
-
-    function renderBanner(){
-        return (
-            <View style={{height: 120, borderRadius: 10, backgroundColor: COLORS.bluesec}}>
-                
-                <View>
-                    <Image  source={images.navilogo}
-                            style={{height: 22, width: 22}}/>
-                    <Text>Balance: $1200.65</Text>
-                </View>
-                <View>
-                    <Text style={{color: COLORS.black, ...FONTS.body3 }}>Withdraw amount</Text>
-                    <TextInput  style={{marginVertical: SIZES.padding, 
-                                        borderBottomColor: COLORS.black, 
-                                        borderBottomWidth: 1, height: 40, 
-                                        color: COLORS.black, 
-                                        ...FONTS.body3}} 
-                                placeholder="Enter Deposit Amount" 
-                                placeholderTextColor={COLORS.gray} 
-                                selectionColor={COLORS.black}/>
-                </View>
-            </View>
-        )
-    }
-
-    function renderWithdrawSource(){
-        const Header = () => (
-            <View style={{marginBottom: SIZES.padding * 2}}>
-                <Text style={{...FONTS.h3}}>Features</Text>
-            </View>
-        )
-        const renderItem = ({item}) => (
-            <TouchableOpacity   style={{marginBottom: SIZES.padding * 2, 
-                                        width: 60, alignItems: 'center'}}
-                                onPress={() => console.log(item.description)}>
-                <View style={{  height: 50,
-                                width: 50,
-                                marginBottom: 5,
-                                borderRadius: 20,
-                                backgroundColor: item.backgroundColor,
-                                alignItems: 'center',
-                                justifyContent: 'center'}}>
-                    <Image  source={item.icon}
-                            resizeMode="contain"
-                            style={{height: 20,
-                                    width: 20,
-                                    tintColor: item.color}}/>
-                </View>
-                <Text   style={{textAlign: 'center', 
-                                flexWrap: 'wrap', 
-                                ...FONTS.body4 }}>{item.description}</Text>
-            </TouchableOpacity>
-        )
-
-        return (
-            <FlatList
-                ListHeaderComponent={Header}
-                data={features}
-                numColumns={2}
-                columnWrapperStyle={{justifyContent: 'space-between'}}
-                keyExtractor={item => `${item.id}`}
-                renderItem={renderItem}
-                style={{ marginTop: SIZES.padding * 2 }}
-            />
-        )
-    }
-
-    function renderHomeView(){
-        const HeaderComponent = () => (
-            <View style={{backgroundColor: COLORS.blueback}}>
-                {renderHeader()}
-                {renderBanner()}
-                {renderWithdrawSource()}
-                {renderPromoHeader()}
-            </View>
-        )
-        const renderPromoHeader = () => (
-            <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
-                <View style={{flex: 1}}>
-                    <Text style={{...FONTS.h3}}>Special Promos</Text>
-                </View>
-                <TouchableOpacity onPress={() => console.log("View All")}>
-                    <Text style={{color: COLORS.gray, ...FONTS.body4}}>View All</Text>
-                </TouchableOpacity>
-            </View>
-
-        )
-        return (
-            <FlatList
-                ListHeaderComponent={HeaderComponent}
-                contentContainerStyle={{paddingHorizontal: SIZES.padding * 3}}
-                numColumns={2}
-                columnWrapperStyle={{justifyContent: 'space-between'}}
-                keyExtractor={item => `${item.id}`}
-                showsVerticalScrollIndicator={false}
-                //pay attention to this
-                ListFooterComponent={
-                    <View style={{marginBottom: 80}}>
-                    </View>
-                }
-            />
-        )
+  //var money = 0;
+  function renderForm(){
+    var conv = "";
+    function modifyBalance(amount){
+        for (var i = amount.length; i > 0; i -= 3){
+            if(i == amount.length){
+                continue;
+            }
+            amount = amount.substring(0, i) + "." + amount.substring(i, amount.length);
+        }
+        conv = amount;
+        console.log(conv);
+        return parseInt(conv, 10);
     }
 
     return (
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
-            {renderHomeView()}
-        </SafeAreaView>
+        <View style={{  borderWidth: 1,
+                        borderColor: COLORS.blueprim,
+                        borderRadius: 10,
+                        backgroundColor: COLORS.white,
+                        marginHorizontal: 10,
+                        paddingVertical: 10,
+                        marginTop: 10}}>
+            <View style={{marginTop: SIZES.padding * 3, 
+                            marginHorizontal: SIZES.padding * 3}}>
+                <View style={{marginTop: SIZES.padding * 1}}>
+                <Text style={{color: COLORS.black, ...FONTS.body3 }}>Deposit Amount</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <TextInput  style={{flex: 1,
+                                        marginVertical: SIZES.padding,
+                                        paddingHorizontal: SIZES.padding,
+                                        borderColor: COLORS.black,
+                                        borderRadius: 10,
+                                        borderWidth: 1,
+                                        height: 50,
+                                        ...FONTS.body3}}
+                                keyboardType="number-pad"
+                                maxLength={15}
+                                placeholder="e.g 500.000 VND"
+                                placeholderTextColor={COLORS.gray}
+                                onChangeText={(amount) => modifyBalance(amount)}/>
+                </View>
+                </View>
+            </View>
+        </View>
     )
+  }
+
+  function handleDeposit(){
+    
+  }
+
+  function renderButton() {
+    return(
+      <View style={{margin: SIZES.padding * 2}}>
+        <TouchableOpacity style={{height: 60,
+                                  width: 180,
+                                  alignSelf: "center",
+                                  backgroundColor: COLORS.bluesec,
+                                  borderRadius: SIZES.radius / 1.5,
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  borderColor: COLORS.blueprim}}
+                          onPress={() => handleDeposit()}>
+          <Text style={{color: COLORS.white, ...FONTS.h3}}>Deposit</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  return (
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
+                          style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
+                      style={{flex: 1}}>
+        <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
+        <SafeAreaView>
+          {renderHeader()}
+        </SafeAreaView>
+        <ScrollView>
+          {renderLogo()}
+          {renderForm()}
+          {renderButton()}
+        </ScrollView>
+      </LinearGradient>
+    </KeyboardAvoidingView>
+  )
 }
 
 export default Deposit;

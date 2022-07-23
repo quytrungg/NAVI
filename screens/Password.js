@@ -119,7 +119,7 @@ const Password = ({ navigation }) => {
 
   function handleChangePassword(){
     console.log("Change password");
-    navigation.navigate("Loading");
+    navigation.goBack();
   }
   
   function renderButton(){

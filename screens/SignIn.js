@@ -115,12 +115,13 @@ const SignIn = ({ navigation }) => {
       .auth()
       .signInWithEmailAndPassword(fakeEmail, password)
       .then((result) => {
-        //console.log(result);
-        // if(num % 2 == 0){
-        //   navigation.navigate("Loading");
-        // }
-        // else 
-        navigation.navigate("Home");
+        console.log(result);
+        if(num % 2 == 0){
+          navigation.navigate("Loading");
+        }
+        else{
+          navigation.navigate("HomeAdmin");
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -129,7 +130,7 @@ const SignIn = ({ navigation }) => {
           "The email or password you entered did not match our records. Please try again",
           [
             {
-              text: "Try again",
+              text: "Retry",
               onPress: () => {
                   handleSignIn(randomNum());
               },

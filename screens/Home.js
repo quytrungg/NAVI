@@ -19,8 +19,8 @@ const Home = ({navigation}) => {
   console.log("3");
   console.log(userDocument);*/
 
-  var balance = 9027384;
-  var name = 'username';
+  var balance = 500000;
+  var name = ' ';
 
   const featuresData = [
     {   id: 1,
@@ -69,7 +69,6 @@ const Home = ({navigation}) => {
                     console.log("does not exist");
                 }
             })
-
     }
 
     function balanceDisplay(){

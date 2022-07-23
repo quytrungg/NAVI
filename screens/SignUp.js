@@ -180,7 +180,7 @@ const SignUp = ({ navigation }) => {
           });
         console.log(result);
         console.log(firebase.auth().currentUser.uid);
-        navigation.navigate("Loading");
+        navigation.navigate("BankAccount");
       })
       .catch((error) => {
         console.log(error);
@@ -190,7 +190,7 @@ const SignUp = ({ navigation }) => {
             "Some of the information is empty. Please try again",
             [
               {
-                text: "Try again",
+                text: "Retry",
                 onPress: () => {
                     handleSignUp();
                 },
