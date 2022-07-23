@@ -1,17 +1,17 @@
 import React, {useState} from "react";
 import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
-import {Avatar} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Profile = ({navigation}) => { 
 
     const styles = StyleSheet.create({
         header: {
-            backgroundColor: COLORS.white, 
-            borderRadius:10, 
+            backgroundColor: COLORS.white,
+            borderBottomWidth: 1,
+            borderBottomColor: COLORS.bluesec, 
             height: 60, 
-            width: '95%',
+            width: '100%', 
             alignSelf: 'center', 
             marginTop: 10,
         },
@@ -23,7 +23,7 @@ const Profile = ({navigation}) => {
             width: 170,
             height: 170,
             borderWidth: 1,
-            borderColor: COLORS.bluesec,
+            borderColor: COLORS.blueprim,
             borderRadius: 150,
         },
 
@@ -31,8 +31,8 @@ const Profile = ({navigation}) => {
             alignItems: 'center',
             justifyContent: 'center',
             borderWidth: 1,
-            borderColor: COLORS.bluesec,
-            borderRadius: 10,
+            borderColor: COLORS.blueprim,
+            borderRadius: SIZES.radius / 1.5,
             backgroundColor: COLORS.white,
             marginHorizontal: 10,
             paddingVertical: 10,
@@ -93,7 +93,7 @@ const Profile = ({navigation}) => {
                 </View>
             </View>
       )
-  }
+    }
 
     function renderAvatar() {
         return (

@@ -1,11 +1,10 @@
 import React from 'react';
-import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Loading, Password, Profile } from "./screens";
+import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Loading, Password, Profile, Verification } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import Tabs from "./navigation/tabs";
 import TabsAdmin from "./navigation/tabsAdmin";
-
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 
@@ -54,7 +53,7 @@ const App = () => {
                 screenOptions={{
                     headerShown: false
                 }}
-                initialRouteName={"SignIn"}>
+                initialRouteName={"Verification"}>
 
                 <Stack.Screen name="BankDescription" component={BankDescription}/>
                 <Stack.Screen name="StartUp" component={StartUp}/>
@@ -68,6 +67,7 @@ const App = () => {
                 <Stack.Screen name="Deposit" component={Deposit}/>
                 <Stack.Screen name="Password" component={Password}/>
                 <Stack.Screen name="Profile" component={Profile}/>
+                <Stack.Screen name="Verification" component={Verification}/>
             </Stack.Navigator>
         </NavigationContainer>
         

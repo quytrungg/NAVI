@@ -11,6 +11,7 @@ import Deposit from "./Deposit";
 import Loading from "./Loading";
 import Password from "./Password";
 import Profile from "./Profile";
+import Verification from "./Verification";
 
 export {
     Home,
@@ -25,5 +26,6 @@ export {
     Deposit,
     Loading,
     Password,
-    Profile
+    Profile,
+    Verification,
 };
