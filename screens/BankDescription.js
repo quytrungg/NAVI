@@ -1,19 +1,19 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, StatusBar} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert, StatusBar} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient'
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const BankDescription = ({navigation}) => {
 
   var state = {
-    fakeEmail: "",
-    password: "",
-    email: "",
-    phoneNumber: "",
-    name: "",
-    dob: "",
-    balance: "",
-    role: "",
+    bankName: "",
+    bankID: "",
+    ownerName: "",
+    publishDate: "",
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -50,11 +50,6 @@ const BankDescription = ({navigation}) => {
   )
   }
 
-  function handlePhoneNumber(phoneNumber) {
-    state.phoneNumber = phoneNumber;
-    state.fakeEmail = phoneNumber + "@gmail.com";
-  }
-
   function renderForm(){
     return (
       <View style={{marginTop: SIZES.padding, 
@@ -70,8 +65,9 @@ const BankDescription = ({navigation}) => {
                       placeholder="Enter Bank Name" 
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
-                      onChangeText={(name) => (state.name = name)}/>
+                      onChangeText={(name) => (state.bankName = name)}/>
         </View>
+        {/* STK */}
         <View style={{ marginTop: SIZES.padding * 2 }}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Bank ID</Text>
           <TextInput  style={{marginVertical: SIZES.padding,
@@ -85,7 +81,7 @@ const BankDescription = ({navigation}) => {
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
-                      onChangeText={(password) => (state.password = password)}/>
+                      onChangeText={(bankID) => (state.bankID = bankID)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
@@ -98,7 +94,6 @@ const BankDescription = ({navigation}) => {
                             tintColor: COLORS.black}}/>
           </TouchableOpacity>
         </View>
-        {/* STK */}
         {/* Name */}
         <View style={{marginTop: SIZES.padding * 2}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Owner Name</Text>
@@ -113,7 +108,7 @@ const BankDescription = ({navigation}) => {
                         placeholder="Enter Name"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
-                        onChangeText={(email) => (state.email = email)}/>
+                        onChangeText={(ownerName) => (state.ownerName = ownerName)}/>
           </View>
         </View>
         {/* Date */}
@@ -127,12 +122,11 @@ const BankDescription = ({navigation}) => {
                                 height: 40,
                                 color: COLORS.black,
                                 ...FONTS.body3}}
-                        keyboardType="number-pad"
                         maxLength={5}
                         placeholder="e.g. 03/21"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
-                        onChangeText={(phoneNumber) => handlePhoneNumber(phoneNumber)}/>
+                        onChangeText={(publishDate) => (state.publishDate = publishDate)}/>
           </View>
         </View>
       </View>
@@ -141,37 +135,48 @@ const BankDescription = ({navigation}) => {
 
   function handleBankLinking(){
     const {
-      fakeEmail,
-      password,
-      email,
-      phoneNumber,
-      name,
-      dob,
-      balance,
-      role,
+      bankName,
+      bankID,
+      ownerName,
+      publishDate,
     } = state;
-    console.log(fakeEmail);
     firebase
-      .auth()
-      .createUserWithEmailAndPassword(fakeEmail, password)
-      .then((result) => {
-        firebase
-          .firestore()
-          .collection("user")
-          .doc(firebase.auth().currentUser.uid)
-          .set({
-            email,
-            phoneNumber,
-            name,
-          });
-        console.log(result);
-        console.log(firebase.auth().currentUser.uid);
-        navigation.navigate("Home");
+      .firestore()
+      .collection("user")
+      .doc(firebase.auth().currentUser.uid)
+      .collection("bank")
+      .doc(bankName)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.data() == undefined) {
+          firebase
+            .firestore()
+            .collection("user")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("bank")
+            .doc(bankName)
+            .set({
+              bankID,
+              ownerName,
+              publishDate,
+            }).then(() => {
+              navigation.navigate("Home");
+            })
+        } else {
+          Alert.alert(
+            "Error",
+            "Bank is already registered.",
+            [
+              {
+                text: "OK",
+                onPress: () => {
+                  navigation.navigate("BankAccount");
+              },
+              },
+            ]
+          );
+        }
       })
-      .catch((error) => {
-        console.log(error);
-        //woooooooooooooooooooooooooooooo
-      });
   };
 
   function renderButton() {

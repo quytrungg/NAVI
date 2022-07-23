@@ -16,13 +16,13 @@ import thunk from "redux-thunk";
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const firebaseConfig = {
-    apiKey: "AIzaSyD-U8hYj3kzXCYECo_5OWvtij5qB7unRD0",
-    authDomain: "instaclone-75dc2.firebaseapp.com",
-    projectId: "instaclone-75dc2",
-    storageBucket: "instaclone-75dc2.appspot.com",
-    messagingSenderId: "886924551037",
-    appId: "1:886924551037:web:f66ece62d64657abed2214",
-    measurementId: "G-SRJBL28KF6",
+    apiKey: "AIzaSyD4el1dD8ea8s9VSrlM9zH_Nu7jhFAtSrE",
+    authDomain: "fir-test-6daef.firebaseapp.com",
+    projectId: "fir-test-6daef",
+    storageBucket: "fir-test-6daef.appspot.com",
+    messagingSenderId: "623775787174",
+    appId: "1:623775787174:web:8274635b31986cca88ec67",
+    measurementId: "G-F3JJFHX1GL"
 };
 
 if (firebase.apps.length === 0) {

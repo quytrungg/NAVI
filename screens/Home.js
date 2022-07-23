@@ -20,6 +20,7 @@ const Home = ({navigation}) => {
   console.log(userDocument);*/
 
   var balance = 9027384;
+  var name = 'username';
 
   const featuresData = [
     {   id: 1,
@@ -55,37 +56,20 @@ const Home = ({navigation}) => {
     }
 
     function renderHeader(){
-        return(
-            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2, marginBottom: SIZES.padding * 3}}>
-                <View style={{flex: 1}}>
-                    <Text style={{ ...FONTS.h1, color: COLORS.blueprim }}>Welcome Back!</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>username</Text>
-                </View>
-                <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                    <TouchableOpacity   style={{height: 40,
-                                                width: 40,
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                backgroundColor: COLORS.blueback,
-                                                borderColor: COLORS.bluetext,
-                                                borderWidth: 1.5}}
-                                        onPress = {() => handelNotification()}>
-                        <Image  source={icons.bell}
-                                style={{width: 20,
-                                        height: 20,
-                                        tintColor: COLORS.bluetext}}/>
-                        <View   style={{position: 'absolute',
-                                        top: -5,
-                                        right: -5,
-                                        height: 10,
-                                        width: 10,
-                                        backgroundColor: COLORS.red,
-                                        borderRadius: 5}}>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        )
+        firebase
+            .firestore()
+            .collection("user")
+            .doc(firebase.auth().currentUser.uid)
+            .get()
+            .then((snapshot) => {
+                if (snapshot.data() != undefined) {
+                    name = snapshot.data().name;
+                    console.log(name);
+                } else {
+                    console.log("does not exist");
+                }
+            })
+
     }
 
     function balanceDisplay(){
@@ -102,6 +86,37 @@ const Home = ({navigation}) => {
     function renderBanner(){
         const [showPassword, setShowPassword] = useState(false);
         return (
+            <>
+            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2, marginBottom: SIZES.padding * 3}}>
+                    <View style={{flex: 1}}>
+                        <Text style={{ ...FONTS.h1, color: COLORS.blueprim }}>Welcome Back!</Text>
+                        <Text style={{ ...FONTS.body2, color: COLORS.gray }}>{name}</Text>
+                    </View>
+                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                        <TouchableOpacity   style={{height: 40,
+                                                    width: 40,
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    backgroundColor: COLORS.blueback,
+                                                    borderColor: COLORS.bluetext,
+                                                    borderWidth: 1.5}}
+                                            onPress = {() => handelNotification()}>
+                            <Image  source={icons.bell}
+                                    style={{width: 20,
+                                            height: 20,
+                                            tintColor: COLORS.bluetext}}/>
+                            <View   style={{position: 'absolute',
+                                            top: -5,
+                                            right: -5,
+                                            height: 10,
+                                            width: 10,
+                                            backgroundColor: COLORS.red,
+                                            borderRadius: 5}}>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+
             <View style={{ height: 120, borderRadius: 10}}>
                 <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
                     <Text style={{...FONTS.h3}}>Balance: </Text>
@@ -128,6 +143,7 @@ const Home = ({navigation}) => {
                                 alignSelf: "center",
                                 borderRadius: 20}}/>
             </View>
+            </>
         )
     }
 
@@ -136,7 +152,7 @@ const Home = ({navigation}) => {
     }
 
     function handleFeature(item){
-        console.log(item.description)
+        //console.log(item.description)
         if(item.description == 'Withdraw'){
             navigation.navigate("Withdraw");
         }
@@ -150,11 +166,11 @@ const Home = ({navigation}) => {
             var temp = randomNum();
             if(temp % 2 == 0){
                 balance -= 1000000;
-                console.log(balance);
+                //console.log(balance);
             }
             else{
                 balance += 1000000;
-                console.log(balance);
+                //console.log(balance);
             }
         }
     }
