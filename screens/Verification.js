@@ -2,14 +2,16 @@ import React from "react";
 import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
-import { AutoFocus } from "expo-camera";
 
 const Verification = ({navigation}) => {
     const styles = StyleSheet.create({
         
         image: {
-            width: 230,
-            height: 230,
+            marginBottom: 10,
+            justifyContent: 'center',
+            width: 200,
+            height: 200,
+            borderRadius: 150,
         },
 
         header: {
@@ -163,8 +165,8 @@ const Verification = ({navigation}) => {
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             <ScrollView>
                 {renderImage()}
+                {showOTP()}
                 {OTP()}
-                {showOTP()} 
                 {renderButton()}
             </ScrollView>
         </SafeAreaView>
