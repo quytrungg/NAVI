@@ -19,7 +19,7 @@ const Home = ({navigation}) => {
   console.log("3");
   console.log(userDocument);*/
 
-  var balance = 500000;
+  var balance = 100000;
   var name = ' ';
 
   const featuresData = [
@@ -64,6 +64,7 @@ const Home = ({navigation}) => {
             .then((snapshot) => {
                 if (snapshot.data() != undefined) {
                     name = snapshot.data().name;
+                    balance = snapshot.data().balance;
                     console.log(name);
                 } else {
                     console.log("does not exist");

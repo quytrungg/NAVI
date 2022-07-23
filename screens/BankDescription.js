@@ -146,6 +146,9 @@ const BankDescription = ({navigation}) => {
       .doc(firebase.auth().currentUser.uid)
       .collection("bank")
       .doc(bankName)
+      .catch((error) => {
+
+      })
       .get()
       .then((snapshot) => {
         if (snapshot.data() == undefined) {
@@ -171,6 +174,7 @@ const BankDescription = ({navigation}) => {
               bankID,
               ownerName,
               publishDate,
+              balance: 10000000,
             }).then(() => {
               navigation.navigate("Home");
             })

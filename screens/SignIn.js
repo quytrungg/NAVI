@@ -9,7 +9,7 @@ import "firebase/compat/firestore";
 
 const SignIn = ({ navigation }) => {
   var state = {
-    fakeEmail: "",
+    phoneNumber: "",
     password: "",
   };
 
@@ -66,7 +66,7 @@ const SignIn = ({ navigation }) => {
                         placeholderTextColor={COLORS.gray}
                         maxLength={11}
                         selectionColor={COLORS.black}
-                        onChangeText={(phoneNumber) => (state.fakeEmail = phoneNumber + "@gmail.com")}/>
+                        onChangeText={(phoneNumber) => (state.phoneNumber = phoneNumber)}/>
           </View>
         </View>
         {/* Password */}
@@ -108,39 +108,64 @@ const SignIn = ({ navigation }) => {
   }
 
   function handleSignIn(num) {
-    const { fakeEmail, password } = state;
+    const { phoneNumber, password } = state;
     //console.log(fakeEmail);
     //console.log(num);
+    var wholedata = []
     firebase
-      .auth()
-      .signInWithEmailAndPassword(fakeEmail, password)
-      .then((result) => {
-        console.log(result);
-        if(num % 2 == 0){
-          navigation.navigate("Loading");
-        }
-        else{
-          navigation.navigate("HomeAdmin");
+      .firestore()
+      .collection("user")
+      .get()
+      .then((collectionSnapshot) => {
+        if (collectionSnapshot != undefined) {
+          console.log("Data exists!")
+          collectionSnapshot.forEach((doc) => {
+            wholedata.push(doc.data())
+          }) 
+          for (let i = 0; i < wholedata.length; i++) {
+            console.log(wholedata[i].phoneNumber)
+            console.log(phoneNumber)
+            if (wholedata[i].phoneNumber == phoneNumber) {
+              console.log("User exists!")
+              console.log(i)
+              let email = wholedata[i].email;
+              firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+                .then((result) => {
+                  if(num % 2 == 0){
+                    navigation.navigate("Loading");
+                  }
+                  else{
+                    navigation.navigate("HomeAdmin");
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                  Alert.alert(
+                    "Error",
+                    "The email or password you entered did not match our records. Please try again",
+                    [
+                      {
+                        text: "Try again",
+                        onPress: () => {
+                            handleSignIn(randomNum());
+                        },
+                      },
+                      {
+                        text: "OK",
+                      },
+                    ]
+                  );
+                });
+            } else {
+              console.log("User does not exist!")
+            }
+          }
+        } else {
+          console.log("Data does not exist!")
         }
       })
-      .catch((error) => {
-        console.log(error);
-        Alert.alert(
-          "Error",
-          "The email or password you entered did not match our records. Please try again",
-          [
-            {
-              text: "Retry",
-              onPress: () => {
-                  handleSignIn(randomNum());
-              },
-            },
-            {
-              text: "OK",
-            },
-          ]
-        );
-      });
   }
   
   function renderButton(){

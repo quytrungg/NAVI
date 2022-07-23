@@ -15,7 +15,7 @@ const SignUp = ({ navigation }) => {
     phoneNumber: "",
     name: "",
     dob: "",
-    balance: "",
+    balance: 500000,
     role: "",
   };
 
@@ -103,7 +103,7 @@ const SignUp = ({ navigation }) => {
                         placeholder="Enter Phone Number"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
-                        onChangeText={(phoneNumber) => handlePhoneNumber(phoneNumber)}/>
+                        onChangeText={(phoneNumber) => (state.phoneNumber = phoneNumber)}/>
           </View>
         </View>
         {/* Email */}
@@ -155,7 +155,6 @@ const SignUp = ({ navigation }) => {
 
   function handleSignUp(){
     const {
-      fakeEmail,
       password,
       email,
       phoneNumber,
@@ -164,10 +163,10 @@ const SignUp = ({ navigation }) => {
       balance,
       role,
     } = state;
-    console.log(fakeEmail);
+    console.log(email);
     firebase
       .auth()
-      .createUserWithEmailAndPassword(fakeEmail, password)
+      .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         firebase
           .firestore()
@@ -177,6 +176,7 @@ const SignUp = ({ navigation }) => {
             email,
             phoneNumber,
             name,
+            balance,
           });
         console.log(result);
         console.log(firebase.auth().currentUser.uid);
