@@ -49,6 +49,8 @@ const Withdraw = ({navigation}) => {
             console.log(conv);
             return parseInt(conv, 10);
         }
+
+        const [value, setValue] = React.useState(0);
     
         return (
             <View style={{  borderWidth: 1,
@@ -63,19 +65,25 @@ const Withdraw = ({navigation}) => {
                     <View style={{marginTop: SIZES.padding * 1}}>
                     <Text style={{color: COLORS.black, ...FONTS.body3 }}>Withdraw Amount</Text>
                     <View style={{ flexDirection: 'row' }}>
-                        <TextInput  style={{flex: 1,
-                                            marginVertical: SIZES.padding,
-                                            paddingHorizontal: SIZES.padding,
-                                            borderColor: COLORS.black,
-                                            borderRadius: 10,
-                                            borderWidth: 1,
-                                            height: 50,
-                                            ...FONTS.body3}}
-                                    keyboardType="number-pad"
-                                    maxLength={15}
-                                    placeholder="e.g 500.000 VND"
-                                    placeholderTextColor={COLORS.gray}
-                                    onChangeText={(amount) => modifyBalance(amount)}/>
+                      <CurrencyInput  style={{flex: 1,
+                                          marginVertical: SIZES.padding,
+                                          paddingHorizontal: SIZES.padding,
+                                          borderColor: COLORS.black,
+                                          borderRadius: 10,
+                                          borderWidth: 1,
+                                          height: 50,
+                                          ...FONTS.body3}}
+                                          keyboardType="number-pad"
+                                          maxLength={15}
+                                          placeholder = "e.g 500.000 VND"
+                                          placeholderTextColor={COLORS.gray}
+                                          
+                                          value = {value}
+                                          onChangeValue = {setValue}
+                                          separator = "."
+                                          suffix = " VND"
+                                          precision = {value >= 1000 && 0}
+                                          onChangeText={(amount) => modifyBalance(amount)}/>
                     </View>
                     </View>
                 </View>

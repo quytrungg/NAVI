@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity
 import { TextInput } from "react-native-gesture-handler";
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
+import CurrencyInput from 'react-native-currency-input';
 
 const Deposit = ({navigation}) => {
   function renderHeader(){
@@ -51,6 +52,8 @@ const Deposit = ({navigation}) => {
         return parseInt(conv, 10);
     }
 
+    const [value, setValue] = React.useState(0); 
+
     return (
         <View style={{  borderWidth: 1,
                         borderColor: COLORS.blueprim,
@@ -64,7 +67,7 @@ const Deposit = ({navigation}) => {
                 <View style={{marginTop: SIZES.padding * 1}}>
                 <Text style={{color: COLORS.black, ...FONTS.body3 }}>Deposit Amount</Text>
                 <View style={{ flexDirection: 'row' }}>
-                    <TextInput  style={{flex: 1,
+                    <CurrencyInput  style={{flex: 1,
                                         marginVertical: SIZES.padding,
                                         paddingHorizontal: SIZES.padding,
                                         borderColor: COLORS.black,
@@ -74,8 +77,14 @@ const Deposit = ({navigation}) => {
                                         ...FONTS.body3}}
                                 keyboardType="number-pad"
                                 maxLength={15}
-                                placeholder="e.g 500.000 VND"
+                                placeholder = "e.g 500.000 VND"
                                 placeholderTextColor={COLORS.gray}
+                                
+                                value = {value}
+                                onChangeValue = {setValue}
+                                separator = "."
+                                suffix = " VND"
+                                precision = {value >= 1000 && 0}
                                 onChangeText={(amount) => modifyBalance(amount)}/>
                 </View>
                 </View>
