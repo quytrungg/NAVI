@@ -113,17 +113,18 @@ const SignIn = ({ navigation }) => {
 
   function handleSignIn(num) {
     const { fakeEmail, password } = state;
-    console.log(fakeEmail);
-    console.log(num);
+    //console.log(fakeEmail);
+    //console.log(num);
     firebase
       .auth()
       .signInWithEmailAndPassword(fakeEmail, password)
       .then((result) => {
-        console.log(result);
-        if(num % 2 == 0){
-          navigation.navigate("Home");
-        }
-        else navigation.navigate("HomeAdmin");;
+        //console.log(result);
+        // if(num % 2 == 0){
+        //   navigation.navigate("Loading");
+        // }
+        // else 
+        navigation.navigate("Home");
       })
       .catch((error) => {
         console.log(error);
