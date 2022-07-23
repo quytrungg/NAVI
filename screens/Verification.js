@@ -105,6 +105,12 @@ const Verification = ({navigation}) => {
         )
     }
 
+    function showOTPTimeout(){
+        setTimeout(() => {
+            showOTP();
+        }, 1000);
+    }
+
     function OTP() {
         return (
             <View style = {{flex: 1}}>
@@ -156,7 +162,7 @@ const Verification = ({navigation}) => {
     function handleNavigation() {
         if(digit.pin1 == randomOTP.num1 && digit.pin2 == randomOTP.num2 
             && digit.pin3 == randomOTP.num3 && digit.pin4 == randomOTP.num4) {
-            navigation.navigate("Profile");
+            navigation.navigate("Home");
         }
     }
 
@@ -165,7 +171,7 @@ const Verification = ({navigation}) => {
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             <ScrollView>
                 {renderImage()}
-                {showOTP()}
+                {showOTPTimeout()}
                 {OTP()}
                 {renderButton()}
             </ScrollView>

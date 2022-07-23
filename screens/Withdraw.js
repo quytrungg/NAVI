@@ -1,10 +1,14 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, Alert } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
+import CurrencyInput from 'react-native-currency-input';
 
 const Withdraw = ({navigation}) => {
+
+    var balance = 500000;
+
     function renderHeader(){
         return (
           <TouchableOpacity style={{flexDirection: 'row', 
@@ -35,23 +39,10 @@ const Withdraw = ({navigation}) => {
             </View>
         )
       }
-    
-      //var money = 0;
-      function renderForm(){
-        var conv = "";
-        function modifyBalance(amount){
-            for (var i = amount.length; i > 0; i -= 3){
-                if(i == amount.length){
-                    continue;
-                }
-                amount = amount.substring(0, i) + "." + amount.substring(i, amount.length);
-            }
-            conv = amount;
-            console.log(conv);
-            return parseInt(conv, 10);
-        }
+      
+      const [value, setValue] = React.useState(0);
 
-        const [value, setValue] = React.useState(0);
+      function renderForm(){
     
         return (
             <View style={{  borderWidth: 1,
@@ -78,13 +69,11 @@ const Withdraw = ({navigation}) => {
                                           maxLength={15}
                                           placeholder = "e.g 500.000 VND"
                                           placeholderTextColor={COLORS.gray}
-                                          
                                           value = {value}
                                           onChangeValue = {setValue}
                                           separator = "."
                                           suffix = " VND"
-                                          precision = {value >= 1000 && 0}
-                                          onChangeText={(amount) => modifyBalance(amount)}/>
+                                          precision = {value >= 1000 && 0}/>
                     </View>
                     </View>
                 </View>
@@ -92,8 +81,32 @@ const Withdraw = ({navigation}) => {
         )
       }
     
-      function handleDeposit(){
-        
+      function handleWithdraw(){
+        if(value > 0 && value <= balance){
+            navigation.navigate("Verification");
+        }
+        else if(value > balance){
+            Alert.alert(
+                "Warning",
+                "Withdraw amount cannot be larger than balance!",
+                [
+                    {
+                        text: "OK",
+                    },
+                ]
+            );
+        }
+        else{
+            Alert.alert(
+                "Warning",
+                "Withdraw amount cannot be 0!",
+                [
+                    {
+                        text: "OK",
+                    },
+                ]
+            );
+        }
       }
     
       function renderButton() {
@@ -107,7 +120,7 @@ const Withdraw = ({navigation}) => {
                                       alignItems: 'center',
                                       justifyContent: 'center',
                                       borderColor: COLORS.blueprim}}
-                              onPress={() => handleDeposit()}>
+                              onPress={() => handleWithdraw()}>
               <Text style={{color: COLORS.white, ...FONTS.h3}}>Withdraw</Text>
             </TouchableOpacity>
           </View>

@@ -7,9 +7,6 @@ const Profile = ({navigation}) => {
 
     const styles = StyleSheet.create({
         header: {
-            backgroundColor: COLORS.white,
-            borderBottomWidth: 1,
-            borderBottomColor: COLORS.bluesec, 
             height: 60, 
             width: '100%', 
             alignSelf: 'center', 
@@ -32,7 +29,7 @@ const Profile = ({navigation}) => {
             justifyContent: 'center',
             borderWidth: 1,
             borderColor: COLORS.blueprim,
-            borderRadius: SIZES.radius / 1.5,
+            borderRadius: 10,
             backgroundColor: COLORS.white,
             marginHorizontal: 10,
             paddingVertical: 10,
@@ -75,8 +72,6 @@ const Profile = ({navigation}) => {
             width: 180,
             height: 60,
             borderRadius: SIZES.radius / 1.5,
-            bottom: 30,
-            marginTop: 30,
         },
 
         logoutText: {
@@ -135,7 +130,7 @@ const Profile = ({navigation}) => {
 
     function renderButton() {
         return (
-            <View>
+            <View style={{marginTop: 200}}>
                 <TouchableOpacity style = {styles.logoutButton} onPress={() => handleSignOut()}>
                     <Text style = {styles.logoutText}>Logout</Text>
                 </TouchableOpacity>  
@@ -149,8 +144,8 @@ const Profile = ({navigation}) => {
             {renderHeader()}
             <ScrollView>
                 {renderAvatar()}
+                {renderButton()}
             </ScrollView>
-            {renderButton()}
         </SafeAreaView>
     )
 }
