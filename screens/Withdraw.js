@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import { COLORS, SIZES, FONTS, icons } from "../constants"
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Withdraw = ({navigation}) => {
     function renderHeader(){

@@ -97,14 +97,14 @@ const Home = ({navigation}) => {
                                                     width: 40,
                                                     justifyContent: 'center',
                                                     alignItems: 'center',
-                                                    backgroundColor: COLORS.blueback,
-                                                    borderColor: COLORS.bluetext,
+                                                    backgroundColor: COLORS.white,
+                                                    borderColor: COLORS.blueprim,
                                                     borderWidth: 1.5}}
                                             onPress = {() => handelNotification()}>
                             <Image  source={icons.bell}
                                     style={{width: 20,
                                             height: 20,
-                                            tintColor: COLORS.bluetext}}/>
+                                            tintColor: COLORS.blueprim}}/>
                             <View   style={{position: 'absolute',
                                             top: -5,
                                             right: -5,
@@ -166,11 +166,11 @@ const Home = ({navigation}) => {
             var temp = randomNum();
             if(temp % 2 == 0){
                 balance -= 1000000;
-                //console.log(balance);
+                console.log(balance);
             }
             else{
                 balance += 1000000;
-                //console.log(balance);
+                console.log(balance);
             }
         }
     }
