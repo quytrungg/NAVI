@@ -148,7 +148,7 @@ const SignUp = ({ navigation }) => {
       name,
       dob,
       balance,
-      role,
+      role = 0,
     } = state;
     console.log(email);
     firebase
@@ -164,6 +164,7 @@ const SignUp = ({ navigation }) => {
             phoneNumber,
             name,
             balance,
+            role
           });
         console.log(result);
         console.log(firebase.auth().currentUser.uid);

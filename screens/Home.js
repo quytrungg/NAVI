@@ -54,7 +54,6 @@ const Home = ({navigation}) => {
                 if (snapshot.data() != undefined) {
                     name = snapshot.data().name;
                     balance = snapshot.data().balance;
-                    console.log(name);
                 } else {
                     console.log("does not exist");
                 }

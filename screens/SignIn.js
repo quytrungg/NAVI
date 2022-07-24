@@ -125,7 +125,6 @@ const SignIn = ({ navigation }) => {
             console.log(phoneNumber)
             if (wholedata[i].phoneNumber == phoneNumber) {
               console.log("User exists!")
-              console.log(i)
               let email = wholedata[i].email;
               firebase
                 .auth()
