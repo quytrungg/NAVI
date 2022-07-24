@@ -7,8 +7,6 @@ import Tabs from "./navigation/tabs";
 import TabsAdmin from "./navigation/tabsAdmin";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-
-import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./redux/reducers";
 import thunk from "redux-thunk";

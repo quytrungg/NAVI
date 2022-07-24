@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs";
 import Svg, {Path} from 'react-native-svg';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-import { Home, Admin, Scan, BankAccount, Profile } from "../screens";
+import { Home, Scan, BankAccount, Profile } from "../screens";
 import { COLORS, icons } from "../constants"; 
 
 const Tab = createBottomTabNavigator();
@@ -81,14 +81,9 @@ const CustomTabBar = (props) => {
 const Tabs = () => {
     return(
         <Tab.Navigator
-            tabBarOptions={{
+            screenOptions={{
                 tabBarShowLabel: false,
-                tabBarstyle: [
-                    {
-                        display: "flex"
-                    },
-                    null
-                ]
+                tabBarstyle:{ position: 'absolute' }
             }}
             tabBar={(props) => (
                 <CustomTabBar props={props}/>

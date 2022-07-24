@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, Alert } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
 import { COLORS, SIZES, FONTS, icons } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
@@ -66,7 +65,6 @@ const Withdraw = ({navigation}) => {
                                           height: 50,
                                           ...FONTS.body3}}
                                           keyboardType="number-pad"
-                                          maxLength={15}
                                           placeholder = "e.g 500.000 VND"
                                           placeholderTextColor={COLORS.gray}
                                           value = {value}

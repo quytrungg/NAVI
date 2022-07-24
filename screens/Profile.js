@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
@@ -12,7 +12,6 @@ const Profile = ({navigation}) => {
             alignSelf: 'center', 
             marginTop: 10,
         },
-
         avatar: {
             marginBottom: 10,
             backgroundColor: 'white',
@@ -23,7 +22,6 @@ const Profile = ({navigation}) => {
             borderColor: COLORS.blueprim,
             borderRadius: 150,
         },
-
         avatarBox: {
             alignItems: 'center',
             justifyContent: 'center',
@@ -35,15 +33,12 @@ const Profile = ({navigation}) => {
             paddingVertical: 10,
             marginTop: 10,
         },
-
         nameText: {
             ...FONTS.h1
         },
-
         inforText: {
             ...FONTS.h4
         },
-
         editButton: {
             alignItems: 'center',
             justifyContent:'center',
@@ -56,12 +51,10 @@ const Profile = ({navigation}) => {
             marginTop: 20,
             margin: 5,
         },
-
         editText: {
             color: COLORS.white, 
             ...FONTS.h4
         },
-
         logoutButton: {
             borderColor: COLORS.blueprim,
             backgroundColor: COLORS.bluesec,
@@ -73,7 +66,6 @@ const Profile = ({navigation}) => {
             height: 60,
             borderRadius: SIZES.radius / 1.5,
         },
-
         logoutText: {
             ...FONTS.h2, 
             color: COLORS.white

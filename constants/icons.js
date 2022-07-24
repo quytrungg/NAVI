@@ -1,4 +1,3 @@
-import React from 'react';
 import {FontAwesome} from '@expo/vector-icons'; 
 
 const back = require("../assets/icons/back.png");
@@ -19,11 +18,6 @@ const scan = require("../assets/icons/scan.png");
 const send = require("../assets/icons/send.png");
 const user = require("../assets/icons/user.png");
 const wallet = require("../assets/icons/wallet.png");
-const bankIcon = () => {
-  return(
-    <FontAwesome name="bank" size={24} color="black" />
-  )
-}
 
 export default {
   back,
@@ -43,6 +37,5 @@ export default {
   scan,
   send,
   user,
-  wallet,
-  bankIcon,
+  wallet
 }

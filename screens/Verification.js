@@ -4,8 +4,7 @@ import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
 
 const Verification = ({navigation}) => {
-    const styles = StyleSheet.create({
-        
+    const styles = StyleSheet.create({ 
         image: {
             marginBottom: 10,
             justifyContent: 'center',
@@ -13,31 +12,26 @@ const Verification = ({navigation}) => {
             height: 200,
             borderRadius: 150,
         },
-
         header: {
             alignItems: 'center',
             justifyContent: 'center',
             paddingVertical: 10,
             marginTop: 10,
         },
-
         titleBox: {
             alignItems: 'center',
             justifyContent: 'center',
             paddingVertical: 10,
             marginTop: 30,
         },
-
         title: {
             ...FONTS.h1,
             color: COLORS.bluetext,
         },
-
         inforText: {
             ...FONTS.h4,
             color: COLORS.gray,
         },
-
         otpBlock: {
             backgroundColor: "#F5F4F2", 
             fontWeight: '600',
@@ -50,7 +44,6 @@ const Verification = ({navigation}) => {
             borderWidth: 0.5,
             borderColor: 'gray',
         },
-
         confirmButton: {
             borderColor: COLORS.blueprim,
             backgroundColor: COLORS.bluesec,
@@ -62,7 +55,6 @@ const Verification = ({navigation}) => {
             height: 60,
             borderRadius: SIZES.radius / 1.5,
         },
-
         confirmText: {
             ...FONTS.h2, 
             color: COLORS.white
@@ -118,7 +110,6 @@ const Verification = ({navigation}) => {
                     <Text style = {styles.title}>OTP Verification</Text>
                     <Text style = {styles.inforText}>Please enter the 4-digit code on the screen</Text>
                 </View>
-
                 <View style = {{flex: 0.6, justifyContent: 'space-evenly', flexDirection: 'row', marginTop: 40}}>
                     <TextInput keyboardType = "numeric"
                         maxLength = {1}
@@ -162,14 +153,16 @@ const Verification = ({navigation}) => {
     function handleNavigation() {
         for (let i = 0; i < 4; i++) {
             if(digit[i] == randomOTP[i]) {
-                var flag = true
+                continue;
             }
-            else flag = false
+            else{
+                Alert.alert(
+                    "Error",
+                    "Your OTP is incorrect. Please try again",
+                );
+            }
         }
-
-        if (flag == true) {
-            navigation.navigate("Home")
-        }
+        navigation.navigate("Home")
     }
 
     return (

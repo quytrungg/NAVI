@@ -10,7 +10,6 @@ import "firebase/compat/firestore";
 const Password = ({ navigation }) => {
 
   var password = "";
-
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
 
@@ -53,7 +52,12 @@ const Password = ({ navigation }) => {
         "Confirm password not match. Please try again"
       );
     }
-    else console.log("correct");
+    else{
+      Alert.alert(
+        "Notification",
+        "Correct password"
+      );
+    }
   }
 
   function renderForm(){
@@ -141,10 +145,8 @@ const Password = ({ navigation }) => {
   }
 
   return(
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
-                          style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]}
-                      style={{flex: 1}}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex: 1}}>
         <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <SafeAreaView >
           {renderHeader()}

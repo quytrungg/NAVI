@@ -105,7 +105,7 @@ const BankAccount = ({navigation}) => {
                 <View style={{ marginBottom: SIZES.padding * 2 }}>
                   <Text style={{...FONTS.h3}}>An account must at least connect to 1 bank account.</Text>
                 </View>
-                <Text style={{...FONTS.h3, color: COLORS.gray}}>This is a list of banks that are able to connect to account.</Text>
+                <Text style={{...FONTS.h3, color: COLORS.gray}}>This is a list of banks that are able to connect to the account.</Text>
             </View>
         )
     }

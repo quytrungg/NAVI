@@ -109,8 +109,6 @@ const SignIn = ({ navigation }) => {
 
   function handleSignIn(num) {
     const { phoneNumber, password } = state;
-    //console.log(fakeEmail);
-    //console.log(num);
     var wholedata = []
     firebase
       .firestore()
@@ -144,7 +142,7 @@ const SignIn = ({ navigation }) => {
                   console.log(error);
                   Alert.alert(
                     "Error",
-                    "The email or password you entered did not match our records. Please try again",
+                    "The email or password you entered does not exist. Please try again",
                     [
                       {
                         text: "Try again",

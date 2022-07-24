@@ -1,58 +1,47 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput, StatusBar } from "react-native"
-import { COLORS, SIZES, FONTS, icons } from "../constants"
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput, StatusBar } from "react-native";
+import { COLORS, SIZES, FONTS, icons } from "../constants";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { fetchUser } from "../redux/actions/index";
-
 const Home = ({navigation}) => {
-  
-  /*  var loaded = false;
-  const userDocument = fetchUser(loaded);
-  console.log("2.5");
-  //while (loaded == false) continue;
-  console.log("3");
-  console.log(userDocument);*/
 
-  var balance = 100000;
-  var name = ' ';
+    var balance = 100000;
+    var name = ' ';
 
-  const featuresData = [
-    {   id: 1,
-        icon: icons.reload,
-        color: COLORS.purple,
-        backgroundColor: COLORS.lightpurple,
-        description: "Withdraw"
-    },
-    {   id: 2,
-        icon: icons.send,
-        color: COLORS.yellow,
-        backgroundColor: COLORS.lightyellow,
-        description: "Deposit"
-    },
-    {   id: 3,
-        icon: icons.internet,
-        color: COLORS.primary,
-        backgroundColor: COLORS.lightGreen,
-        description: "Transfer"
-    },
-    {   id: 4,
-        icon: icons.wallet,
-        color: COLORS.red,
-        backgroundColor: COLORS.lightRed,
-        description: "Bank Account"
-    }
-]
+    const featuresData = [
+        {   id: 1,
+            icon: icons.reload,
+            color: COLORS.purple,
+            backgroundColor: COLORS.lightpurple,
+            description: "Withdraw"
+        },
+        {   id: 2,
+            icon: icons.send,
+            color: COLORS.yellow,
+            backgroundColor: COLORS.lightyellow,
+            description: "Deposit"
+        },
+        {   id: 3,
+            icon: icons.internet,
+            color: COLORS.primary,
+            backgroundColor: COLORS.lightGreen,
+            description: "Transfer"
+        },
+        {   id: 4,
+            icon: icons.wallet,
+            color: COLORS.red,
+            backgroundColor: COLORS.lightRed,
+            description: "Bank Account"
+        }
+    ]
 
     function handelNotification(){
-      return(
-        Alert.alert("Notifications", "No notifications")
-      )
+        return(
+            Alert.alert("Notifications", "No notifications")
+        )
     }
 
     function renderHeader(){
@@ -87,7 +76,7 @@ const Home = ({navigation}) => {
         const [showPassword, setShowPassword] = useState(false);
         return (
             <>
-            <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2, marginBottom: SIZES.padding * 3}}>
+                <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2, marginBottom: SIZES.padding * 3}}>
                     <View style={{flex: 1}}>
                         <Text style={{ ...FONTS.h1, color: COLORS.blueprim }}>Welcome Back!</Text>
                         <Text style={{ ...FONTS.body2, color: COLORS.gray }}>{name}</Text>
@@ -117,32 +106,32 @@ const Home = ({navigation}) => {
                     </View>
                 </View>
 
-            <View style={{ height: 120, borderRadius: 10}}>
-                <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
-                    <Text style={{...FONTS.h3}}>Balance: </Text>
-                    <View >
-                        <TextInput style={{...FONTS.h3, marginTop: 3}}
-                                    editable={false} 
-                                    value={balanceDisplay()}
-                                    underlineColorAndroid="transparent"
-                                    secureTextEntry={!showPassword}/>
+                <View style={{ height: 120, borderRadius: 10}}>
+                    <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
+                        <Text style={{...FONTS.h3}}>Balance: </Text>
+                        <View >
+                            <TextInput style={{...FONTS.h3, marginTop: 3}}
+                                        editable={false} 
+                                        value={balanceDisplay()}
+                                        underlineColorAndroid="transparent"
+                                        secureTextEntry={!showPassword}/>
+                        </View>
+                        <TouchableOpacity style={{position: 'absolute',
+                                                right: 0}}
+                                        onPress={() => setShowPassword(!showPassword)}>
+                            <Image  source={showPassword ? icons.disable_eye : icons.eye}
+                                    style={{height: 22,
+                                            width: 22,
+                                            tintColor: COLORS.black}}/>
+                        </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{position: 'absolute',
-                                            right: 0}}
-                                    onPress={() => setShowPassword(!showPassword)}>
-                        <Image  source={showPassword ? icons.disable_eye : icons.eye}
-                                style={{height: 22,
-                                        width: 22,
-                                        tintColor: COLORS.black}}/>
-                    </TouchableOpacity>
+                    <Image  source={icons.barcode}
+                            resizeMode="cover"
+                            style={{width: "100%",
+                                    height: "80%",
+                                    alignSelf: "center",
+                                    borderRadius: 20}}/>
                 </View>
-                <Image  source={icons.barcode}
-                        resizeMode="cover"
-                        style={{width: "100%",
-                                height: "80%",
-                                alignSelf: "center",
-                                borderRadius: 20}}/>
-            </View>
             </>
         )
     }
@@ -163,15 +152,7 @@ const Home = ({navigation}) => {
             navigation.navigate("BankAccount");
         }
         else if(item.description == 'Transfer'){
-            var temp = randomNum();
-            if(temp % 2 == 0){
-                balance -= 1000000;
-                console.log(balance);
-            }
-            else{
-                balance += 1000000;
-                console.log(balance);
-            }
+
         }
     }
 
@@ -229,7 +210,7 @@ const Home = ({navigation}) => {
         const renderPromoHeader = () => (
             <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
                 <View style={{flex: 1}}>
-                    <Text style={{...FONTS.h3}}>Special Promos</Text>
+                    <Text style={{...FONTS.h3}}>What's New</Text>
                 </View>
                 <TouchableOpacity onPress={() => console.log("View All")}>
                     <Text style={{color: COLORS.gray, ...FONTS.body4}}>View All</Text>
@@ -245,7 +226,6 @@ const Home = ({navigation}) => {
                 columnWrapperStyle={{justifyContent: 'space-between'}}
                 keyExtractor={item => `${item.id}`}
                 showsVerticalScrollIndicator={false}
-                //pay attention to this
                 ListFooterComponent={
                     <View style={{marginBottom: 80}}>
                     </View>

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert} from "react-native";
-import { LinearGradient } from 'expo-linear-gradient'
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import { LinearGradient } from 'expo-linear-gradient';
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -53,18 +53,6 @@ const SignUp = ({ navigation }) => {
     );
   }
 
-  function handleEmailInput(text){
-    
-  }
-
-  function handlePasswordInput(text){
-    
-  }
-
-  function handleName (){
-    
-  }
-
   function handlePhoneNumber(phoneNumber) {
     state.phoneNumber = phoneNumber;
     state.fakeEmail = phoneNumber + "@gmail.com";
@@ -72,8 +60,7 @@ const SignUp = ({ navigation }) => {
 
   function renderForm(){
     return (
-      <View style={{marginTop: SIZES.padding * 3, 
-                    marginHorizontal: SIZES.padding * 3}}>
+      <View style={{marginTop: SIZES.padding * 3, marginHorizontal: SIZES.padding * 3}}>
         {/* Full Name */}
         <View style={{ marginTop: SIZES.padding * 3 }}>
           <Text style={{color: COLORS.black, ...FONTS.body3 }}>Full Name</Text>
@@ -207,7 +194,7 @@ const SignUp = ({ navigation }) => {
             "There are errors while signing up. Please try again",
             [
               {
-                text: "Try again",
+                text: "Retry",
                 onPress: () => {
                     handleSignUp();
                 },
@@ -240,10 +227,8 @@ const SignUp = ({ navigation }) => {
   }
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
-                          style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
-                      style={{flex: 1}}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex: 1}}>
         <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <SafeAreaView>
           {renderHeader()}
