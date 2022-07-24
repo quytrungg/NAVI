@@ -111,25 +111,26 @@ const Verification = ({navigation}) => {
                     <Text style = {styles.inforText}>Please enter the 4-digit code on the screen</Text>
                 </View>
                 <View style = {{flex: 0.6, justifyContent: 'space-evenly', flexDirection: 'row', marginTop: 40}}>
-                    <TextInput keyboardType = "numeric"
+                    <TextInput keyboardType = "number-pad"
+                        autoFocus = {true}
                         maxLength = {1}
                         clearTextOnFocus = {true}
                         onChangeText = {(pin1) => (digit.pin1 = pin1)}
                         style = {styles.otpBlock}
                         />
-                    <TextInput keyboardType = "numeric"
+                    <TextInput keyboardType = "number-pad"
                         maxLength = {1}
                         clearTextOnFocus = {true}
                         onChangeText = {(pin2) => (digit.pin2 = pin2)}
                         style = {styles.otpBlock}
                         />
-                    <TextInput keyboardType = "numeric"
+                    <TextInput keyboardType = "number-pad"
                         maxLength = {1}
                         clearTextOnFocus = {true}
                         onChangeText = {(pin3) => (digit.pin3 = pin3)}
                         style = {styles.otpBlock}
                         />
-                    <TextInput keyboardType = "numeric"
+                    <TextInput keyboardType = "number-pad"
                         maxLength = {1}
                         clearTextOnFocus = {true}
                         onChangeText = {(pin4) => (digit.pin4 = pin4)}
@@ -151,18 +152,26 @@ const Verification = ({navigation}) => {
     }
 
     function handleNavigation() {
-        for (let i = 0; i < 4; i++) {
-            if(digit[i] == randomOTP[i]) {
-                continue;
-            }
-            else{
-                Alert.alert(
-                    "Error",
-                    "Your OTP is incorrect. Please try again",
-                );
-            }
+        var flag = false;
+
+        if(digit.pin1 == randomOTP.num1 && digit.pin2 == randomOTP.num2 && digit.pin3 == randomOTP.num3 && digit.pin4 == randomOTP.num4) {
+            flag = true;
         }
-        navigation.navigate("Home")
+
+        else {
+            flag = false;
+        }
+
+        if (flag == true) {
+            navigation.navigate("Home");
+        }
+        
+        else{
+            Alert.alert(
+                "Error",
+                "Your OTP is incorrect. Please try again",
+            );
+        }
     }
 
     return (
