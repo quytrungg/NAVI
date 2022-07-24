@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert, StatusBar} from "react-native";
-import { LinearGradient } from 'expo-linear-gradient'
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import { LinearGradient } from 'expo-linear-gradient';
+import { COLORS, SIZES, FONTS, icons } from "../constants";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -212,10 +212,8 @@ const BankDescription = ({navigation}) => {
   }
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
-                          style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
-                      style={{flex: 1}}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex: 1}}>
         <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <ScrollView>
           {renderHeader()}

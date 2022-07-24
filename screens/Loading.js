@@ -1,18 +1,16 @@
-import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, StatusBar} from "react-native";
+import React from "react";
+import {View, Text, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform, StatusBar} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import { COLORS, SIZES, FONTS, images } from "../constants";
 
-import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import { fetchUser } from "../redux/actions/index";
 
 const Loading = ({navigation}) => {
 
   setTimeout(() => {
     navigation.navigate("Home");
-    }, 1000);
+  }, 1000);
 
   function renderLogo(){
     return(
@@ -43,10 +41,8 @@ const Loading = ({navigation}) => {
   }
 
   return(
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
-                          style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]}
-                      style={{flex: 1}}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex: 1}}>
         <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <ScrollView>
           {renderLogo()}

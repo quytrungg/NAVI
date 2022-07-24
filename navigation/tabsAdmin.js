@@ -82,14 +82,9 @@ const CustomTabBar = (props) => {
 const TabsAdmin = () => {
     return(
         <TabAd.Navigator
-            tabBarOptions={{
+            screenOptions={{
                 tabBarShowLabel: false,
-                tabBarstyle: [
-                    {
-                        display: "flex"
-                    },
-                    null
-                ]
+                tabBarstyle:{ position: 'absolute' }
             }}
             tabBar={(props) => (
                 <CustomTabBar props={props}/>

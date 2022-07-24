@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar } from "react-native"
-import { COLORS, SIZES, FONTS, icons } from "../constants"
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar } from "react-native";
+import { COLORS, SIZES, FONTS, icons } from "../constants";
 
 const Admin = () => {
     const featuresData = [
@@ -8,13 +8,13 @@ const Admin = () => {
             icon: icons.reload,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
-            description: "Modify Balance"
+            description: "Modify"
         },
         {   id: 2,
             icon: icons.send,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
-            description: "View Transaction"
+            description: "View"
         },
         {   id: 3,
             icon: icons.internet,

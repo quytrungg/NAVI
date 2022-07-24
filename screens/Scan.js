@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React from "react";
 import {View,Text,Image,TouchableOpacity, StatusBar} from "react-native";
 import { Camera } from 'expo-camera';
 import { COLORS, FONTS, SIZES, icons, images } from "../constants";
@@ -11,7 +11,7 @@ const Scan = ({ navigation }) => {
           const { status } = await Camera.requestCameraPermissionsAsync();
           setHasPermission(status === 'granted');
         })();
-      }, []);
+    }, []);
 
     if (hasPermission === null) { return <View />; }
     if (hasPermission === false) { return <Text>No access to camera</Text>; }
@@ -122,7 +122,12 @@ const Scan = ({ navigation }) => {
 
     function onBarCodeRead(result) {
         console.log(result.data)
-        
+        if(result.data == 'Deposit'){
+            navigation.navigate("Deposit");
+        }
+        else if(result.data == 'Withdraw'){
+            navigation.navigate("Withdraw");
+        }
     }
 
     return (
