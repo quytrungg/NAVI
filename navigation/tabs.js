@@ -90,7 +90,7 @@ const Tabs = () => {
             )}
         >
             <Tab.Screen
-                name="Homgepage"
+                name="Homepage"
                 component={Home}
                 options={{
                     headerShown: false,
