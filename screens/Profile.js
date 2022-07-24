@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar } from "react-native";
+import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar, KeyboardAvoidingView } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
 import QRCode from 'react-native-qrcode-svg';
@@ -102,7 +102,6 @@ const Profile = ({navigation}) => {
                         value="Withdraw"
                         logo={images.navilogo}
                         logoBackgroundColor={COLORS.blueback}
-                        logoBorderRadius='100%'
                         logoSize={25}
                         size={150}
                     />
@@ -142,14 +141,18 @@ const Profile = ({navigation}) => {
     }
 
     return (
-        <SafeAreaView style={{flexGrow: 1, backgroundColor: COLORS.blueback}}>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
+                          style={{flex: 1, backgroundColor: COLORS.blueback}}>
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
-            {renderHeader()}
+            <SafeAreaView>
+                {renderHeader()}
+            </SafeAreaView>
             <ScrollView>
                 {renderAvatar()}
                 {renderButton()}
             </ScrollView>
-        </SafeAreaView>
+
+        </KeyboardAvoidingView>
     )
 }
 
