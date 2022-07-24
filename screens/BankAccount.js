@@ -1,46 +1,46 @@
 import React, {useState} from "react";
 import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, StatusBar} from "react-native";
-import { COLORS, SIZES, FONTS, icons } from "../constants";
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
 const BankAccount = ({navigation}) => {
   const bankData = [
         {   id: 1,
-            icon: icons.bill,
+            icon: images.mb,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "MB Bank",
             choice: false
         },
         {   id: 2,
-            icon: icons.bill,
+            icon: images.vcb,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "Vietcombank",
             choice: false
         },
         {   id: 3,
-            icon: icons.bill,
+            icon: images.acb,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "TP Bank",
+            description: "ACB Bank",
             choice: false
         },
         {   id: 4,
-            icon: icons.bill,
+            icon: images.vp,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
             description: "VP Bank",
             choice: false
         },
         {   id: 5,
-            icon: icons.bill,
+            icon: images.bidv,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "BIDV",
             choice: false
         },
         {   id: 6,
-            icon: icons.bill,
+            icon: images.tech,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "Techcombank",
@@ -139,8 +139,8 @@ const BankAccount = ({navigation}) => {
                                 justifyContent: 'center'}}>
                     <Image  source={item.icon}
                             resizeMode="contain"
-                            style={{height: 20,
-                                    width: 20,
+                            style={{height: 55,
+                                    width: 55,
                                     tintColor: item.color}}/>
                 </View>
                 <Text   style={{textAlign: 'center', 

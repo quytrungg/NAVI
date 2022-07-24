@@ -2,10 +2,22 @@ const focus = require("../assets/images/focus.png");
 const navilogo = require("../assets/images/Navi_Logo.png");
 const avatar = require("../assets/images/default.jpg");
 const lock = require("../assets/images/lock.png");
+const acb = require("../assets/images/acb.png");
+const bidv = require("../assets/images/bidv.png");
+const mb = require("../assets/images/mb.png");
+const tech = require("../assets/images/tech.png");
+const vcb = require("../assets/images/vcb.png");
+const vp = require("../assets/images/vp.png");
 
 export default {
     focus,
     navilogo,
     avatar,
     lock,
+    acb,
+    bidv,
+    mb,
+    tech,
+    vcb,
+    vp
 };

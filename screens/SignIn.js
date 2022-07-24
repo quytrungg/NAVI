@@ -107,7 +107,7 @@ const SignIn = ({ navigation }) => {
     return Math.floor(Math.random() * 100) + 1;
   }
 
-  function handleSignIn(num) {
+  function handleSignIn() {
     const { phoneNumber, password } = state;
     var wholedata = []
     firebase
@@ -130,13 +130,14 @@ const SignIn = ({ navigation }) => {
               firebase
                 .auth()
                 .signInWithEmailAndPassword(email, password)
-                .then((result) => {
-                  if(num % 2 == 0){
+                .then(() => {
+                  if(parseInt(wholedata[i].role, 10) % 2 == 0){
                     navigation.navigate("Loading");
                   }
                   else{
                     navigation.navigate("HomeAdmin");
                   }
+                  return;
                 })
                 .catch((error) => {
                   console.log(error);
@@ -177,7 +178,7 @@ const SignIn = ({ navigation }) => {
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   borderColor: COLORS.blueprim}}
-                          onPress={() => handleSignIn(randomNum())}>
+                          onPress={() => handleSignIn()}>
           <Text style={{color: COLORS.white, ...FONTS.h3}}>Sign In</Text>
         </TouchableOpacity>
         <View style={{marginTop: SIZES.padding / 1.5,
