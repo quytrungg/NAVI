@@ -141,6 +141,18 @@ const BankDescription = ({navigation}) => {
       publishDate,
     } = state;
 
+    if (bankName == "") {
+        Alert.alert(
+          "Error",
+          "Bank name cannot be empty. Please try again",
+          [
+            {
+              text: "OK"
+            },
+          ]
+        );
+    }
+
     firebase
       .firestore()
       .collection("user")
@@ -149,6 +161,7 @@ const BankDescription = ({navigation}) => {
       .doc(bankName)
       .get()
       .then((snapshot) => {
+        console.log("Path valid!")
         if (snapshot.data() == undefined) {
           firebase
             .firestore()
@@ -156,18 +169,6 @@ const BankDescription = ({navigation}) => {
             .doc(firebase.auth().currentUser.uid)
             .collection("bank")
             .doc(bankName)
-            .catch((error) => {
-              console.log(error);
-              Alert.alert(
-                "Error",
-                "Bank name cannot be empty. Please try again",
-                [
-                  {
-                    text: "OK",
-                  },
-                ]
-              );
-            })
             .set({
               bankID,
               ownerName,
@@ -190,6 +191,9 @@ const BankDescription = ({navigation}) => {
             ]
           );
         }
+      })
+      .catch((error) => {
+        console.log(error)
       })
   };
 
