@@ -16,7 +16,7 @@ const SignUp = ({ navigation }) => {
     name: "",
     dob: "",
     balance: 500000,
-    role: "",
+    role: "0",
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -148,7 +148,7 @@ const SignUp = ({ navigation }) => {
       name,
       dob,
       balance,
-      role = '0',
+      role,
     } = state;
     console.log(email);
     firebase
@@ -158,16 +158,13 @@ const SignUp = ({ navigation }) => {
         firebase
           .firestore()
           .collection("user")
-          .doc(firebase.auth().currentUser.uid)
+          .doc(phoneNumber)
           .set({
             email,
-            phoneNumber,
             name,
             balance,
             role
           });
-        console.log(result);
-        console.log(firebase.auth().currentUser.uid);
         navigation.navigate("BankAccount");
       })
       .catch((error) => {

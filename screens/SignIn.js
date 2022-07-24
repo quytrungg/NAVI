@@ -109,59 +109,58 @@ const SignIn = ({ navigation }) => {
 
   function handleSignIn() {
     const { phoneNumber, password } = state;
-    var wholedata = []
     firebase
       .firestore()
       .collection("user")
+      .doc(phoneNumber)
       .get()
-      .then((collectionSnapshot) => {
-        if (collectionSnapshot != undefined) {
-          console.log("Data exists!")
-          collectionSnapshot.forEach((doc) => {
-            wholedata.push(doc.data())
-          }) 
-          for (let i = 0; i < wholedata.length; i++) {
-            console.log(wholedata[i].phoneNumber)
-            console.log(phoneNumber)
-            if (wholedata[i].phoneNumber == phoneNumber) {
-              console.log("User exists!")
-              let email = wholedata[i].email;
-              firebase
-                .auth()
-                .signInWithEmailAndPassword(email, password)
-                .then(() => {
-                  if(parseInt(wholedata[i].role, 10) % 2 == 0){
-                    navigation.navigate("Loading");
-                  }
-                  else{
-                    navigation.navigate("HomeAdmin");
-                  }
-                  return;
-                })
-                .catch((error) => {
-                  console.log(error);
-                  Alert.alert(
-                    "Error",
-                    "The email or password you entered does not exist. Please try again",
-                    [
-                      {
-                        text: "Try again",
-                        onPress: () => {
-                            handleSignIn(randomNum());
-                        },
-                      },
-                      {
-                        text: "OK",
-                      },
-                    ]
-                  );
-                });
+      .then((snapshot) => {
+        if (snapshot != undefined) {
+          firebase
+          .auth()
+          .signInWithEmailAndPassword(snapshot.data().email, password)
+          .then(() => {
+            if (parseInt(snapshot.data().role) % 2 == 0) {
+              navigation.navigate("Home");
             } else {
-              console.log("User does not exist!")
+              navigation.navigate("HomeAdmin");
             }
-          }
+          })
         } else {
-          console.log("Data does not exist!")
+          if(state.email == "" || state.phoneNumber == "" || state.name == "" || state.password == ""){
+            Alert.alert(
+              "Error",
+              "Some of the information is empty. Please try again",
+              [
+                {
+                  text: "Retry",
+                  onPress: () => {
+                      handleSignIn();
+                  },
+                },
+                {
+                  text: "OK",
+                },
+              ]
+            );
+          }
+          else{
+            Alert.alert(
+              "Error",
+              "There are errors while signing up. Please try again",
+              [
+                {
+                  text: "Retry",
+                  onPress: () => {
+                      handleSignIn();
+                  },
+                },
+                {
+                  text: "OK",
+                },
+              ]
+            );
+          }
         }
       })
   }
