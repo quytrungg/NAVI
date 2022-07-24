@@ -12,6 +12,7 @@ import Loading from "./Loading";
 import Password from "./Password";
 import Profile from "./Profile";
 import Verification from "./Verification";
+import Transfer from "./Transfer";
 
 export {
     Home,
@@ -28,4 +29,5 @@ export {
     Password,
     Profile,
     Verification,
+    Transfer
 };

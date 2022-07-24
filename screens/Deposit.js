@@ -6,7 +6,7 @@ import CurrencyInput from 'react-native-currency-input';
 
 const Deposit = ({navigation}) => {
 
-    var balance = '500.000';
+    var balance = 500000;
 
     function renderHeader(){
         return (
@@ -39,6 +39,17 @@ const Deposit = ({navigation}) => {
         )
     }
 
+    function balanceDisplay(){
+        var temp = balance.toString();
+        for (var i = temp.length; i > 0; i -= 3){
+            if(i == temp.length){
+                continue;
+            }
+            temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
+        }
+        return temp + " VND";
+    }
+
     const [value, setValue] = useState(0); 
 
     function renderForm(){
@@ -66,7 +77,7 @@ const Deposit = ({navigation}) => {
                                     alignSelf: 'center', marginLeft: 10}}>Balance: </Text>
                         <TextInput style={{...FONTS.body3, bottom: 0.5}}
                                         editable={false} 
-                                        value={balance + " VND"}/>
+                                        value={balanceDisplay()}/>
                     </View>
                     <View style={{marginTop: SIZES.padding * 2}}>
                         <Text style={{color: COLORS.black, ...FONTS.body3}}>Deposit Amount</Text>

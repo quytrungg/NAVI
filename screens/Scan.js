@@ -128,6 +128,9 @@ const Scan = ({ navigation }) => {
         else if(result.data == 'Withdraw'){
             navigation.navigate("Withdraw");
         }
+        else if(result.data[0] == '0'){
+            navigation.navigate("Transfer");
+        }
     }
 
     return (

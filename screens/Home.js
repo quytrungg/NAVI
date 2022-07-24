@@ -135,12 +135,7 @@ const Home = ({navigation}) => {
         )
     }
 
-    function randomNum(){
-        return Math.floor(Math.random() * 100) + 1;
-    }
-
     function handleFeature(item){
-        //console.log(item.description)
         if(item.description == 'Withdraw'){
             navigation.navigate("Withdraw");
         }
@@ -151,7 +146,7 @@ const Home = ({navigation}) => {
             navigation.navigate("BankAccount");
         }
         else if(item.description == 'Transfer'){
-
+            navigation.navigate("Transfer");
         }
     }
 
