@@ -13,7 +13,7 @@ const Home = ({navigation}) => {
 
     const featuresData = [
         {   id: 1,
-            icon: icons.reload,
+            icon: icons.internet,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "Withdraw"
@@ -25,7 +25,7 @@ const Home = ({navigation}) => {
             description: "Deposit"
         },
         {   id: 3,
-            icon: icons.internet,
+            icon: icons.bill,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "Transfer"

@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
+import QRCode from 'react-native-qrcode-svg';
 
 const Profile = ({navigation}) => { 
 
@@ -16,8 +17,8 @@ const Profile = ({navigation}) => {
             marginBottom: 10,
             backgroundColor: 'white',
             justifyContent: 'center', 
-            width: 170,
-            height: 170,
+            width: 180,
+            height: 180,
             borderWidth: 1,
             borderColor: COLORS.blueprim,
             borderRadius: 150,
@@ -30,7 +31,7 @@ const Profile = ({navigation}) => {
             borderRadius: 10,
             backgroundColor: COLORS.white,
             marginHorizontal: 10,
-            paddingVertical: 10,
+            paddingVertical: SIZES.padding,
             marginTop: 10,
         },
         nameText: {
@@ -96,6 +97,16 @@ const Profile = ({navigation}) => {
                         <Text style = {styles.editText}>Add Account</Text>
                     </TouchableOpacity>
                 </View>
+                <View style={{margin: SIZES.padding * 0.5}}>
+                    <QRCode
+                        value="Withdraw"
+                        logo={images.navilogo}
+                        logoBackgroundColor={COLORS.blueback}
+                        logoBorderRadius='100%'
+                        logoSize={25}
+                        size={150}
+                    />
+                </View>
             </View>
         );
     }
@@ -122,7 +133,7 @@ const Profile = ({navigation}) => {
 
     function renderButton() {
         return (
-            <View style={{marginTop: 200}}>
+            <View style={{marginTop: SIZES.padding * 2}}>
                 <TouchableOpacity style = {styles.logoutButton} onPress={() => handleSignOut()}>
                     <Text style = {styles.logoutText}>Logout</Text>
                 </TouchableOpacity>  
