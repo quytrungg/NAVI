@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar} from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
 
@@ -151,9 +151,18 @@ const Verification = ({navigation}) => {
     }
 
     function handleNavigation() {
-        if(digit.pin1 == randomOTP.num1 && digit.pin2 == randomOTP.num2 && digit.pin3 == randomOTP.num3 && digit.pin4 == randomOTP.num4) {
-            navigation.navigate("Home");
+        for (let i = 0; i < 4; i++) {
+            if(digit[i] == randomOTP[i]) {
+                continue;
+            }
+            else{
+                Alert.alert(
+                    "Error",
+                    "Your OTP is incorrect. Please try again",
+                );
+            }
         }
+        navigation.navigate("Home")
     }
 
     return (
