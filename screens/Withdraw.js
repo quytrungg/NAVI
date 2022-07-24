@@ -14,7 +14,7 @@ const Withdraw = ({navigation}) => {
                                   alignItems: "center", 
                                   marginTop: SIZES.padding * 1,
                                   paddingHorizontal: SIZES.padding * 2}} 
-                          onPress={() => navigation.navigate("SignIn")}>
+                          onPress={() => navigation.goBack()}>
           <Image  source={icons.back} 
                   resizeMode="contain" 
                   style={{width: 15, 

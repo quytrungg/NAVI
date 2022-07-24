@@ -72,8 +72,7 @@ const BankAccount = ({navigation}) => {
         return(
           <TouchableOpacity style={{flexDirection: 'row', 
                                     alignItems: "center", 
-                                    margin: SIZES.padding / 2,
-                                    marginLeft: -10}} 
+                                    marginTop: SIZES.padding * 1}} 
                             onPress={() => handleBackToHome()}>
             <Image  source={icons.back} 
                     resizeMode="contain" 
@@ -206,7 +205,7 @@ const BankAccount = ({navigation}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
-            <SafeAreaView style={{paddingHorizontal: SIZES.padding * 3}}>
+            <SafeAreaView style={{paddingHorizontal: SIZES.padding * 2}}>
                 {renderTop()}
             </SafeAreaView>
             {renderBank()}

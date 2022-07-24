@@ -148,7 +148,7 @@ const SignUp = ({ navigation }) => {
       name,
       dob,
       balance,
-      role = 0,
+      role = '0',
     } = state;
     console.log(email);
     firebase
