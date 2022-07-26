@@ -8,6 +8,10 @@ const mb = require("../assets/images/mb.png");
 const tech = require("../assets/images/tech.png");
 const vcb = require("../assets/images/vcb.png");
 const vp = require("../assets/images/vp.png");
+const transfer = require("../assets/images/transfer.png");
+const withdraw = require("../assets/images/withdraw.png");
+const deposit = require("../assets/images/deposit.png");
+const bank = require("../assets/images/bank.png");
 
 export default {
     focus,
@@ -19,5 +23,9 @@ export default {
     mb,
     tech,
     vcb,
-    vp
+    vp,
+    transfer,
+    deposit,
+    withdraw,
+    bank
 };

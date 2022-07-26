@@ -13,6 +13,7 @@ import Password from "./Password";
 import Profile from "./Profile";
 import Verification from "./Verification";
 import Transfer from "./Transfer";
+import Search from "./Search";
 
 export {
     Home,
@@ -29,5 +30,6 @@ export {
     Password,
     Profile,
     Verification,
-    Transfer
+    Transfer,
+    Search
 };

@@ -24,7 +24,7 @@ const Scan = ({ navigation }) => {
                 <TouchableOpacity   style={{width: 45,
                                             alignItems: 'center',
                                             justifyContent: 'center'}}
-                                    onPress={() => navigation.goBack("Home")}>
+                                    onPress={() => navigation.goBack()}>
                     <Image  source={icons.close}
                             style={{height: 20,
                                     width: 20,

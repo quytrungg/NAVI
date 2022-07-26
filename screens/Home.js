@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput, StatusBar } from "react-native";
-import { COLORS, SIZES, FONTS, icons } from "../constants";
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -13,25 +13,25 @@ const Home = ({navigation}) => {
 
     const featuresData = [
         {   id: 1,
-            icon: icons.internet,
+            icon: images.withdraw,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "Withdraw"
         },
         {   id: 2,
-            icon: icons.send,
+            icon: images.deposit,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "Deposit"
         },
         {   id: 3,
-            icon: icons.bill,
+            icon: images.transfer,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "Transfer"
         },
         {   id: 4,
-            icon: icons.wallet,
+            icon: images.bank,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
             description: "Bank Account"
@@ -146,7 +146,7 @@ const Home = ({navigation}) => {
             navigation.navigate("BankAccount");
         }
         else if(item.description == 'Transfer'){
-            navigation.navigate("Transfer");
+            navigation.navigate("Search");
         }
     }
 

@@ -170,6 +170,15 @@ const Verification = ({navigation}) => {
             Alert.alert(
                 "Error",
                 "Your OTP is incorrect. Please try again",
+                [{
+                    text: "Resend",
+                    onPress: () => {
+                        showOTPTimeout();
+                    },
+                },
+                {
+                    text: "OK",
+                },]
             );
         }
     }
