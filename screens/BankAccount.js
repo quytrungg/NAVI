@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, StatusBar} from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
-const BankAccount = ({navigation}) => {
+const BankAccount = ({navigation, route}) => {
   const bankData = [
         {   id: 1,
             icon: images.mb,
@@ -61,7 +61,10 @@ const BankAccount = ({navigation}) => {
                 {
                     text: "Yes",
                     onPress: () => {
-                        navigation.navigate("Home");
+                        navigation.navigate("Home", {
+                            username: route.params.username,
+                            phoneNumber: route.params.phoneNumber,
+                        });
                     },
                 },
             ]
@@ -170,7 +173,10 @@ const BankAccount = ({navigation}) => {
                                             alignItems: 'center',
                                             justifyContent: 'center',
                                             borderColor: COLORS.blueprim,}}
-                                    onPress = {() => navigation.push("BankDescription")}>
+                                    onPress = {() => navigation.push("BankDescription", {
+                                        username: route.params.username,
+                                        phoneNumber: route.params.phoneNumber,
+                                    })}>
                     <Text style={{color: COLORS.white, ...FONTS.h3}}>Next</Text>
                 </TouchableOpacity>
             </View>

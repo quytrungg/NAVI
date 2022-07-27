@@ -154,18 +154,22 @@ const SignUp = ({ navigation }) => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
+      .then(() => {
         firebase
           .firestore()
           .collection("user")
           .doc(phoneNumber)
           .set({
+            phoneNumber,
             email,
             name,
             balance,
             role
           });
-        navigation.navigate("BankAccount");
+        navigation.navigate("BankAccount", {
+          username: name,
+          phoneNumber: phoneNumber,
+        });
       })
       .catch((error) => {
         console.log(error);

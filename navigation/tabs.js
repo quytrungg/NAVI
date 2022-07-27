@@ -126,6 +126,7 @@ const Tabs = ({route}) => {
                         <TabBarCustomButton {...props}/>
                     )
                 }}
+                initialParams={{username: route.params.username, phoneNumber: route.params.phoneNumber}}
             />
             <Tab.Screen
                 name="TransHistory"

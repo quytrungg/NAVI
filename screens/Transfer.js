@@ -4,7 +4,7 @@ import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
 
-const Transfer = ({navigation}) => {
+const Transfer = ({navigation, route}) => {
 
   var balance = 500000;
 
@@ -88,8 +88,8 @@ const Transfer = ({navigation}) => {
       const arr = [
       { password: "",
         email: "",
-        phoneNumber: "0935915203",
-        name: "quytrungg",
+        phoneNumber: route.params.recipientPhoneNumber,
+        name: route.params.recipientUsername,
       }];
       return(
       <View>

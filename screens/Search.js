@@ -1,12 +1,56 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
 
-const Search = ({navigation}) => {
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
-  var balance = 500000;
+const Search = ({navigation, route}) => {
+
+    const [balance, getBalance] = useState(0);
+    const [userList, getUserList] = useState([]);
+    useEffect(() => {
+        const getBalance_ = async () => {
+            await firebase
+                .firestore()
+                .collection("user")
+                .doc(route.params.phoneNumber)
+                .get()
+                .then((snapshot) => {
+                    if (snapshot.data() != undefined) {
+                        getBalance(snapshot.data().balance);
+                    } else {
+                        console.log("does not exist");
+                    }
+                });
+        }
+        const getUserList_ = async () => {
+            await firebase
+                .firestore()
+                .collection("user")
+                .where("phoneNumber", "!=", route.params.phoneNumber)
+                .get()
+                .then((snapshot) => {
+                    if (snapshot != undefined) {
+                        var list = [], i = 1
+                        snapshot.forEach((doc) => {
+                            var element = {}
+                            element.name = doc.data().name;
+                            element.phoneNumber = doc.data().phoneNumber;
+                            list.push(element)
+                        })
+                        getUserList(list)
+                    } else {
+                        console.log("does not exist");
+                    }
+                })
+        }
+        getBalance_()
+        getUserList_()
+    }, []);
 
   function renderHeader(){
       return (
@@ -64,7 +108,7 @@ const Search = ({navigation}) => {
       )
   }
 
-  function renderBank(){
+  function renderUsers(){
         const arr = [
         { password: "",
         email: "",
@@ -93,9 +137,14 @@ const Search = ({navigation}) => {
         },];
         return(
         <View>
-            {arr.map(data =>{
+            {userList.map(data =>{
                 return(
-                    <TouchableOpacity key={data.phoneNumber} onPress={() => navigation.navigate("Transfer")}>
+                    <TouchableOpacity key={data.phoneNumber} onPress={() => navigation.navigate("Transfer", {
+                        username: route.params.username,
+                        phoneNumber: route.params.phoneNumber,
+                        recipientUsername: data.name,
+                        recipientPhoneNumber: data.phoneNumber,
+                    })}>
                         <View   style={{borderWidth: 1,
                                     borderColor: COLORS.blueprim,
                                     borderRadius: 10,
@@ -110,7 +159,7 @@ const Search = ({navigation}) => {
                                                         marginLeft: 20, alignSelf: 'center'}}/>
                                 <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
                                     <Text style={{color: COLORS.black, ...FONTS.h3, 
-                                                alignSelf: 'center'}}>{data.name}</Text>
+                                                }}>{data.name}</Text>
                                     <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.phoneNumber}</Text>
                                 </View>
                             </View>
@@ -159,7 +208,7 @@ const Search = ({navigation}) => {
           </SafeAreaView>
           <ScrollView>
               {renderSource()}
-              {renderBank()}
+              {renderUsers()}
           </ScrollView>
           <SafeAreaView>
               

@@ -3,7 +3,7 @@ import {View,Text,Image,TouchableOpacity, StatusBar} from "react-native";
 import { Camera } from 'expo-camera';
 import { COLORS, FONTS, SIZES, icons, images } from "../constants";
 
-const Scan = ({ navigation }) => {
+const Scan = ({ navigation, route }) => {
     const [hasPermission, setHasPermission] = React.useState(null);
 
     React.useEffect(() => {
@@ -123,10 +123,16 @@ const Scan = ({ navigation }) => {
     function onBarCodeRead(result) {
         console.log(result.data)
         if(result.data == 'Deposit'){
-            navigation.navigate("Deposit");
+            navigation.navigate("Deposit", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+            });
         }
         else if(result.data == 'Withdraw'){
-            navigation.navigate("Withdraw");
+            navigation.navigate("Withdraw", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+            });
         }
         else if(!isNaN(result.data)){
             navigation.navigate("Transfer",{

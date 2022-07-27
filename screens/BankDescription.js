@@ -7,8 +7,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-const BankDescription = ({navigation}) => {
-
+const BankDescription = ({navigation, route}) => {
   var state = {
     bankName: "default",
     bankID: "",
@@ -134,6 +133,7 @@ const BankDescription = ({navigation}) => {
   }
 
   function handleBankLinking(){
+
     const {
       bankName,
       bankID,
@@ -156,7 +156,7 @@ const BankDescription = ({navigation}) => {
     firebase
       .firestore()
       .collection("user")
-      .doc(firebase.auth().currentUser.uid)
+      .doc(route.params.phoneNumber)
       .collection("bank")
       .doc(bankName)
       .get()
@@ -166,16 +166,20 @@ const BankDescription = ({navigation}) => {
           firebase
             .firestore()
             .collection("user")
-            .doc(firebase.auth().currentUser.uid)
+            .doc(route.params.phoneNumber)
             .collection("bank")
             .doc(bankName)
             .set({
+              bankName,
               bankID,
               ownerName,
               publishDate,
               balance: 10000000,
             }).then(() => {
-              navigation.navigate("Home");
+              navigation.navigate("Home", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+              });
             })
         } else {
           Alert.alert(

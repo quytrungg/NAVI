@@ -9,25 +9,66 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const Withdraw = ({navigation, route}) => {
-
-    const [balance, getBalance] = useState(0);
-    useEffect(() => {
-        const getBalance_ = async () => {
-            await firebase
-                .firestore()
-                .collection("user")
-                .doc(route.params.phoneNumber)
-                .get()
-                .then((snapshot) => {
-                    if (snapshot.data() != undefined) {
-                        getBalance(snapshot.data().balance);
-                    } else {
-                        console.log("does not exist");
-                    }
-                });
+    function banknameToBankicon(bankName) {
+        if (bankName.substring(0, 4).toLowerCase() == "acb") {
+            return images.acb;
+          } else if (bankName.substring(0, 5).toLowerCase() == "bidv") {
+            return bidv;
+          } else if (bankName.substring(0, 2).toLowerCase() == "mb") {
+            return images.mb;
+          } else if (bankName.substring(0, 4).toLowerCase() == "tech") {
+            return images.tech;
+          } else if (bankName.substring(0, 2).toLowerCase() == "vi") {
+            return images.vcb;
+          } else if (bankName.substring(0, 2).toLowerCase() == "vp") {
+            return images.vp;
+          }
         }
-        getBalance_()
-    }, []);
+
+        const [balance, getBalance] = useState(0);
+        const [bankList, getBankList] = useState([]);
+        useEffect(() => {
+            const getBalance_ = async () => {
+                await firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(route.params.phoneNumber)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot.data() != undefined) {
+                            getBalance(snapshot.data().balance);
+                        } else {
+                            console.log("does not exist");
+                        }
+                    });
+            }
+            const getBankList_ = async () => {
+                await firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(route.params.phoneNumber)
+                    .collection("bank")
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            var list = [], i = 1
+                            snapshot.forEach((doc) => {
+                                var element = {}
+                                element.id = i++;
+                                element.icon = banknameToBankicon(doc.data().bankName);
+                                element.description = doc.data().bankName;
+                                element.choice = false;
+                                list.push(element)
+                            })
+                            getBankList(list)
+                        } else {
+                            console.log("does not exist");
+                        }
+                    })
+            }
+            getBalance_()
+            getBankList_()
+        }, []);
 
   function renderHeader(){
       return (
@@ -167,7 +208,7 @@ const Withdraw = ({navigation, route}) => {
       }];
       return(
       <View>
-          {arr.map(data =>{
+          {bankList.map(data =>{
               return(
                   <View   key={data.id} 
                           style={{borderWidth: 1,
