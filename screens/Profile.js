@@ -104,7 +104,7 @@ const Profile = ({navigation, route}) => {
                 </View>
                 <View style={{margin: SIZES.padding * 0.5}}>
                     <QRCode
-                        value="Withdraw"
+                        value={route.params.phoneNumber}
                         logo={images.navilogo}
                         logoBackgroundColor={COLORS.blueback}
                         logoSize={25}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Loading, Password, Profile, Verification, Transfer, Search, Bill } from "./screens";
+import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Loading, Password, Profile, Verification, Transfer, Search, History, Bill } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
@@ -69,6 +69,7 @@ const App = () => {
                 <Stack.Screen name="Transfer" component={Transfer}/>
                 <Stack.Screen name="Search" component={Search}/>
                 <Stack.Screen name="Bill" component={Bill}/>
+                <Stack.Screen name="History" component={History}/>
             </Stack.Navigator>
         </NavigationContainer>
         

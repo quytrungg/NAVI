@@ -128,8 +128,10 @@ const Scan = ({ navigation }) => {
         else if(result.data == 'Withdraw'){
             navigation.navigate("Withdraw");
         }
-        else if(result.data[0] == '0'){
-            navigation.navigate("Transfer");
+        else if(!isNaN(result.data)){
+            navigation.navigate("Transfer",{
+                phoneNumber: result.data,
+            });
         }
     }
 
