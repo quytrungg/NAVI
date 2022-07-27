@@ -163,7 +163,7 @@ const Verification = ({navigation}) => {
         }
 
         if (flag == true) {
-            navigation.navigate("Home");
+            navigation.navigate("Bill");
         }
         
         else{
