@@ -15,7 +15,7 @@ import Verification from "./Verification";
 import Transfer from "./Transfer";
 import Search from "./Search";
 import Bill from "./Bill";
-import History from "./HIstory";
+import History from "./History";
 
 export {
     Home,
@@ -35,5 +35,5 @@ export {
     Transfer,
     Search,
     Bill,
-    History
+    History,
 };

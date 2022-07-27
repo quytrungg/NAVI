@@ -1,16 +1,34 @@
 import React from "react";
-import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar, KeyboardAvoidingView, ImageBackground } from "react-native";
-import { COLORS, SIZES, FONTS, images } from "../constants";
-import {ScrollView} from 'react-native-gesture-handler';
+import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView} from "react-native";
+import { COLORS, SIZES, FONTS, images, icons } from "../constants";
 
-const Bill = ({navigation}) => { 
+const Bill = ({navigation, route}) => { 
 
     const styles = StyleSheet.create({
         header: {
-            height: 60, 
-            width: '100%', 
-            alignSelf: 'center', 
-            marginTop: 10,
+            flexDirection: 'row',
+            alignItems: "center",
+            marginTop: SIZES.padding * 1,
+            paddingHorizontal: SIZES.padding * 2,
+        },
+
+        button: {
+            width: 15,
+            height: 15,
+            tintColor: COLORS.black,
+        },
+
+        buttonText: {
+            marginLeft: SIZES.padding / 2,
+            color: COLORS.black,
+            ...FONTS.h4,
+        },
+        
+        banner: {
+            height: 60,
+            width: '100%',
+            alignSelf: 'center',
+            marginTop: 5,
         },
 
         logo: {
@@ -41,6 +59,15 @@ const Bill = ({navigation}) => {
         },
 
         bottomBox: {
+            borderWidth: 1,
+            borderColor: COLORS.blueprim,
+            backgroundColor: COLORS.white,
+            marginHorizontal: 10,
+            marginTop: 1,
+            borderStyle: 'dashed',
+        },
+
+        messageBox: {
             borderWidth: 1,
             borderColor: COLORS.blueprim,
             borderBottomRightRadius: 10,
@@ -76,18 +103,56 @@ const Bill = ({navigation}) => {
             ...FONTS.body3,
             marginBottom: 5,
             textAlign: 'right',
-            marginLeft: 130,
+            marginLeft: 170,
+        },
+
+        text5: {
+            color: COLORS.black,
+            ...FONTS.body3,
+            marginBottom: 5,
+            textAlign: 'right',
+            marginLeft: 170,
+        },
+
+        text6: {
+            color: '#355764',
+            ...FONTS.body3,
+            marginTop: 10,
+            marginBottom: 5,
+            marginLeft: 15,
+        },
+
+        text7: {
+            flex: 1,
+            color: COLORS.black,
+            ...FONTS.body3,
+            marginBottom: 5,
+            marginLeft: 15,
         },
     });
 
     function renderHeader() {
         return (
-            <View style = {styles.header}>
+            <TouchableOpacity  style={styles.header} 
+                            onPress={() => navigation.navigate('Home', {
+                                        username: route.params.username,
+                                        phoneNumber: route.params.phoneNumber})}>
+            <Image  source = {icons.back} 
+                resizeMode = "contain" 
+                style = {styles.button}/>
+            <Text style = {styles.buttonText}>Home</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    function renderBanner() {
+        return (
+            <View style = {styles.banner}>
                 <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                     <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Transaction Details</Text>
                 </View>
             </View>
-      )
+        )
     }
 
     function renderTop() {
@@ -113,9 +178,9 @@ const Bill = ({navigation}) => {
                         <Text style = {styles.text3}>Date</Text>
                         <Text style = {styles.text3}>Fee</Text>
                     </View>
-                    <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft: 40}}>
+                    <View style = {{flexDirection: 'column', alignSelf: 'center'}}>
                         <Text style = {styles.text4}>Send/Receive Money</Text>
-                        <Text style = {styles.text4}>DD/MM/YYYY</Text>
+                        <Text style = {styles.text4}>28/07/2022</Text>
                         <Text style = {styles.text4}>0 VND</Text>
                     </View>
                 </View>
@@ -127,18 +192,29 @@ const Bill = ({navigation}) => {
         return (
             <View style = {styles.bottomBox}>
                 <View style = {{flexDirection: 'row', paddingVertical: 10}}>
-                    <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft:15}}>
+                    <View style = {{alignSelf: 'center', marginLeft: 15}}>
                         <Text style = {styles.text3}>Recipient</Text>
                         <Text style = {styles.text3}>Account ID</Text>
                         <Text style = {styles.text3}>Bank</Text>
-                        <Text style = {styles.text3}>Message</Text>
                     </View>
-                    <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft: 40}}>
-                        <Text style = {styles.text4}>Name</Text>
-                        <Text style = {styles.text4}>Phone Number</Text>
-                        <Text style = {styles.text4}>Bank Name</Text>
-                        <Text style = {styles.text4}>Message</Text>
+                    <View style = {{alignSelf: 'center'}}>
+                        <Text style = {styles.text5}>Name</Text>
+                        <Text style = {styles.text5}>Phone Number</Text>
+                        <Text style = {styles.text5}>Bank Name</Text>
                     </View>
+                </View>
+        </View>
+        );
+    }
+
+    function messageBox() {
+        return (
+            <View style = {styles.messageBox}>
+                <View>
+                    <Text style = {styles.text6}>Message</Text>
+                </View>
+                <View style={{flexGrow: 1, flexDirection: 'row'}}>
+                    <Text style={styles.text7}>Message here</Text>
                 </View>
         </View>
         );
@@ -148,9 +224,13 @@ const Bill = ({navigation}) => {
         <SafeAreaView style={{flexGrow: 1, backgroundColor: COLORS.blueback}}>
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
                 {renderHeader()}
-                {renderTop()}
-                {renderMiddle()}
-                {renderBottom()}
+                <ScrollView>
+                    {renderBanner()}
+                    {renderTop()}
+                    {renderMiddle()}
+                    {renderBottom()}
+                    {messageBox()}
+                </ScrollView>
         </SafeAreaView>
     )
 }
