@@ -14,6 +14,7 @@ import Profile from "./Profile";
 import Verification from "./Verification";
 import Transfer from "./Transfer";
 import Search from "./Search";
+import Bill from "./Bill";
 
 export {
     Home,
@@ -31,5 +32,7 @@ export {
     Profile,
     Verification,
     Transfer,
-    Search
+    Search,
+    Bill,
+    
 };

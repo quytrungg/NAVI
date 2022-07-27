@@ -27,5 +27,6 @@ export default {
     transfer,
     deposit,
     withdraw,
-    bank
+    bank,
+
 };
