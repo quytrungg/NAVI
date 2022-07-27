@@ -6,10 +6,13 @@ import { COLORS, SIZES, FONTS, images } from "../constants";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-const Loading = ({navigation}) => {
+const Loading = ({navigation, route}) => {
 
   setTimeout(() => {
-    navigation.navigate("Home");
+    navigation.navigate("Home", {
+      username: route.params.username,
+      phoneNumber: route.params.phoneNumber,
+    });
   }, 1000);
 
   function renderLogo(){

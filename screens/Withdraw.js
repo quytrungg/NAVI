@@ -1,12 +1,33 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
 
-const Withdraw = ({navigation}) => {
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
-  var balance = 500000;
+const Withdraw = ({navigation, route}) => {
+
+    const [balance, getBalance] = useState(0);
+    useEffect(() => {
+        const getBalance_ = async () => {
+            await firebase
+                .firestore()
+                .collection("user")
+                .doc(route.params.phoneNumber)
+                .get()
+                .then((snapshot) => {
+                    if (snapshot.data() != undefined) {
+                        getBalance(snapshot.data().balance);
+                    } else {
+                        console.log("does not exist");
+                    }
+                });
+        }
+        getBalance_()
+    }, []);
 
   function renderHeader(){
       return (

@@ -121,7 +121,10 @@ const SignIn = ({ navigation }) => {
           .signInWithEmailAndPassword(snapshot.data().email, password)
           .then(() => {
             if (parseInt(snapshot.data().role) % 2 == 0) {
-              navigation.navigate("Home");
+              navigation.navigate("Loading", {
+                username: snapshot.data().name,
+                phoneNumber: phoneNumber,
+              });
             } else {
               navigation.navigate("HomeAdmin");
             }

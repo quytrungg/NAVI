@@ -78,7 +78,8 @@ const CustomTabBar = (props) => {
     }
 }
 
-const Tabs = () => {
+const Tabs = ({route}) => {
+
     return(
         <Tab.Navigator
             screenOptions={{
@@ -106,6 +107,7 @@ const Tabs = () => {
                         <TabBarCustomButton {...props}/>
                     )
                 }}
+                initialParams={{username: route.params.username, phoneNumber: route.params.phoneNumber}}
             />
             <Tab.Screen
                 name="Scan"
@@ -142,6 +144,7 @@ const Tabs = () => {
                         <TabBarCustomButton {...props}/>
                     )
                 }}
+                initialParams={{username: route.params.username, phoneNumber: route.params.phoneNumber}}
             />
             <Tab.Screen
                 name="Profile"
@@ -160,6 +163,7 @@ const Tabs = () => {
                         <TabBarCustomButton {...props}/>
                     )
                 }}
+                initialParams={{username: route.params.username, phoneNumber: route.params.phoneNumber}}
             />
         </Tab.Navigator>
     )

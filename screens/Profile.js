@@ -4,7 +4,11 @@ import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
 import QRCode from 'react-native-qrcode-svg';
 
-const Profile = ({navigation}) => { 
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
+const Profile = ({navigation, route}) => { 
 
     const styles = StyleSheet.create({
         header: {
@@ -74,6 +78,7 @@ const Profile = ({navigation}) => {
     });
 
     function renderHeader() {
+        
         return (
             <View style={styles.header}>
                 <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -87,8 +92,8 @@ const Profile = ({navigation}) => {
         return (
             <View style={styles.avatarBox}>
                 <Image source={images.avatar} style = {styles.avatar}/>
-                <Text style = {styles.nameText}>Name Here</Text>
-                <Text style = {styles.inforText}>User ID Here</Text>
+                <Text style = {styles.nameText}>{route.params.username}</Text>
+                <Text style = {styles.inforText}>{route.params.phoneNumber}</Text>
                 <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity style = {styles.editButton}>
                         <Text style = {styles.editText}>Edit Profile</Text>

@@ -6,10 +6,21 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-const Home = ({navigation}) => {
+const Home = ({navigation, route}) => {
 
-    var balance = 100000;
-    var name = ' ';
+    var balance = "";
+    firebase
+        .firestore()
+        .collection("user")
+        .doc(route.params.phoneNumber)
+        .get()
+        .then((snapshot) => {
+            if (snapshot.data() != undefined) {
+                balance = snapshot.data().balance;
+            } else {
+                console.log("does not exist");
+            }
+        })
 
     const featuresData = [
         {   id: 1,
@@ -45,19 +56,7 @@ const Home = ({navigation}) => {
     }
 
     function renderHeader(){
-        firebase
-            .firestore()
-            .collection("user")
-            .doc(firebase.auth().currentUser.uid)
-            .get()
-            .then((snapshot) => {
-                if (snapshot.data() != undefined) {
-                    name = snapshot.data().name;
-                    balance = snapshot.data().balance;
-                } else {
-                    console.log("does not exist");
-                }
-            })
+
     }
 
     function balanceDisplay(){
@@ -78,7 +77,7 @@ const Home = ({navigation}) => {
                 <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2, marginBottom: SIZES.padding * 3}}>
                     <View style={{flex: 1}}>
                         <Text style={{ ...FONTS.h1, color: COLORS.blueprim }}>Welcome Back!</Text>
-                        <Text style={{ ...FONTS.body2, color: COLORS.gray }}>{name}</Text>
+                        <Text style={{ ...FONTS.body2, color: COLORS.gray }}>{route.params.username}</Text>
                     </View>
                     <View style={{alignItems: 'center', justifyContent: 'center'}}>
                         <TouchableOpacity   style={{height: 40,
@@ -137,16 +136,28 @@ const Home = ({navigation}) => {
 
     function handleFeature(item){
         if(item.description == 'Withdraw'){
-            navigation.navigate("Withdraw");
+            navigation.navigate("Withdraw", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+            });
         }
         else if(item.description == 'Deposit'){
-            navigation.navigate("Deposit");
+            navigation.navigate("Deposit", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+            });
         }
         else if(item.description == 'Bank Account'){
-            navigation.navigate("BankAccount");
+            navigation.navigate("BankAccount", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+            });
         }
         else if(item.description == 'Transfer'){
-            navigation.navigate("Search");
+            navigation.navigate("Search", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+            });
         }
     }
 
@@ -234,6 +245,7 @@ const Home = ({navigation}) => {
             {renderHomeView()}
         </SafeAreaView>
     )
+    
 }
 
 export default Home;
