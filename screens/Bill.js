@@ -1,7 +1,7 @@
 import React from "react";
 import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView} from "react-native";
 import { COLORS, SIZES, FONTS, images, icons } from "../constants";
-import moment from "moment"
+import moment from "moment";
 
 const Bill = ({navigation, route}) => { 
 
@@ -200,10 +200,10 @@ const Bill = ({navigation, route}) => {
                         <Text style = {styles.text3}>Sender ID</Text>
                     </View>
                     <View style = {{alignSelf: 'center'}}>
-                        <Text style = {styles.text5}>Name</Text>
-                        <Text style = {styles.text5}>ID</Text>
-                        <Text style = {styles.text5}>Name</Text>
-                        <Text style = {styles.text5}>ID</Text>
+                        <Text style = {styles.text5}>{route.params.username}</Text>
+                        <Text style = {styles.text5}>{route.params.phoneNumber}</Text>
+                        <Text style = {styles.text5}>{route.params.recipientUsername}</Text>
+                        <Text style = {styles.text5}>{route.params.recipientPhoneNumber}</Text>
                     </View>
                 </View>
         </View>

@@ -211,13 +211,6 @@ const Verification = ({navigation, route}) => {
                                 balance: temp
                             })
                     })
-                navigation.navigate("Bill", {
-                    username: route.params.username,
-                    phoneNumber: route.params.phoneNumber,
-                    balanceChange: route.params.balanceChange,
-                    transactionType: route.params.transactionType,
-                    bankName: route.params.description,
-                });
             }
             else {
                 firebase
@@ -227,7 +220,7 @@ const Verification = ({navigation, route}) => {
                     .get()
                     .then((snapshot) => {
                         if (snapshot != undefined) {
-                            temp = snapshot.data().balance + route.params.balanceChange
+                            temp = snapshot.data().balance - route.params.balanceChange
                         }
                     })
                     .then(() => {
@@ -258,15 +251,16 @@ const Verification = ({navigation, route}) => {
                                 balance: temp
                             })
                     })
-                navigation.navigate("Bill", {
-                    username: route.params.username,
-                    phoneNumber: route.params.phoneNumber,
-                    recipientUsername: route.params.recipientUsername,
-                    recipientPhoneNumber: route.params.recipientPhoneNumber,
-                    balanceChange: route.params.balanceChange,
-                    transactionType: route.params.transactionType,
-                });
             }
+            navigation.navigate("Bill", {
+                username: route.params.senderUsername,
+                phoneNumber: route.params.senderPhoneNumber,
+                recipientUsername: route.params.recipientUsername,
+                recipientPhoneNumber: route.params.recipientPhoneNumber,
+                balanceChange: route.params.balanceChange,
+                transactionType: route.params.transactionType,
+                bankName: route.params.description,
+            });
         }
         
         else{

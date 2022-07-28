@@ -12,18 +12,19 @@ const Withdraw = ({navigation, route}) => {
     function banknameToBankicon(bankName) {
         if (bankName.substring(0, 4).toLowerCase() == "acb") {
             return images.acb;
-          } else if (bankName.substring(0, 5).toLowerCase() == "bidv") {
+        } else if (bankName.substring(0, 5).toLowerCase() == "bidv") {
             return bidv;
-          } else if (bankName.substring(0, 2).toLowerCase() == "mb") {
+        } else if (bankName.substring(0, 2).toLowerCase() == "mb") {
             return images.mb;
-          } else if (bankName.substring(0, 4).toLowerCase() == "tech") {
+        } else if (bankName.substring(0, 4).toLowerCase() == "tech") {
             return images.tech;
-          } else if (bankName.substring(0, 2).toLowerCase() == "vi") {
+        } else if (bankName.substring(0, 2).toLowerCase() == "vi") {
             return images.vcb;
-          } else if (bankName.substring(0, 2).toLowerCase() == "vp") {
+        } else if (bankName.substring(0, 2).toLowerCase() == "vp") {
             return images.vp;
-          }
         }
+        else return icons.internet;
+    }
 
         const [balance, getBalance] = useState(0);
         const [bankList, getBankList] = useState([]);
@@ -207,7 +208,7 @@ const Withdraw = ({navigation, route}) => {
         );
       }
     else{
-        navigation.navigate("Verification",{
+        navigation.push("Verification",{
             username: route.params.username,
             phoneNumber: route.params.phoneNumber,
             balanceChange: value * -1,

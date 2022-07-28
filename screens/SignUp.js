@@ -67,6 +67,7 @@ const SignUp = ({ navigation }) => {
                       placeholder="Enter Full Name" 
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
+                      defaultValue={""}
                       onChangeText={(name) => (state.name = name)}/>
         </View>
         {/* Phone Number */}
@@ -85,6 +86,7 @@ const SignUp = ({ navigation }) => {
                         placeholder="Enter Phone Number"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
+                        defaultValue={""}
                         onChangeText={(phoneNumber) => (state.phoneNumber = phoneNumber)}/>
           </View>
         </View>
@@ -103,6 +105,7 @@ const SignUp = ({ navigation }) => {
                         placeholder="Enter Email"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
+                        defaultValue={""}
                         onChangeText={(email) => (state.email = email)}/>
           </View>
         </View>
@@ -119,6 +122,7 @@ const SignUp = ({ navigation }) => {
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
+                      defaultValue={""}
                       onChangeText={(password) => (state.password = password)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,

@@ -6,7 +6,7 @@ import CurrencyInput from 'react-native-currency-input';
 
 const Transfer = ({navigation, route}) => {
 
-  var balance = 500000;
+  var balance = route.params.balance;
 
   function renderHeader(){
       return (
@@ -144,7 +144,8 @@ const Transfer = ({navigation, route}) => {
         );
       }
       else{
-          navigation.navigate("Verification", {
+        console.log(route.params.username,route.params.phoneNumber)
+          navigation.push("Verification", {
             senderUsername: route.params.username,
             senderPhoneNumber: route.params.phoneNumber,
             recipientUsername: route.params.recipientUsername,

@@ -1,7 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import {View,Text,Image,TouchableOpacity, StatusBar} from "react-native";
 import { Camera } from 'expo-camera';
 import { COLORS, FONTS, SIZES, icons, images } from "../constants";
+
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const Scan = ({ navigation, route }) => {
     const [hasPermission, setHasPermission] = React.useState(null);
@@ -135,10 +139,21 @@ const Scan = ({ navigation, route }) => {
             });
         }
         else if(!isNaN(result.data)){
-            navigation.navigate("Transfer",{
-                recipientPhoneNumber: result.data,
-                recipientUsername: '',
-            });
+                firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(result.data)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot.data() != undefined) {
+                            navigation.navigate("Transfer",{
+                                recipientPhoneNumber: result.data,
+                                recipientUsername: snapshot.data().username,
+                            });
+                        } else {
+                            console.log("does not exist");
+                        }
+                    });
         }
     }
 

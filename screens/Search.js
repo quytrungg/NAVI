@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
-import CurrencyInput from 'react-native-currency-input';
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -109,42 +108,16 @@ const Search = ({navigation, route}) => {
   }
 
   function renderUsers(){
-        const arr = [
-        { password: "",
-        email: "",
-        phoneNumber: "0935915203",
-        name: "quytrungg",
-        },
-        { password: "",
-        email: "",
-        phoneNumber: "0935915204",
-        name: "quytrungg",
-        },
-        { password: "",
-        email: "",
-        phoneNumber: "0935915205",
-        name: "quytrungg",
-        },
-        { password: "",
-        email: "",
-        phoneNumber: "0935915206",
-        name: "quytrungg",
-        },
-        { password: "",
-        email: "",
-        phoneNumber: "0935915207",
-        name: "quytrungg",
-        },];
         return(
         <View>
             {userList.map(data =>{
                 return(
-                    <TouchableOpacity key={data.phoneNumber} onPress={() => navigation.navigate("Transfer", {
+                    <TouchableOpacity key={data.phoneNumber} onPress={() => {console.log(route.params.username,  route.params.phoneNumber); navigation.navigate("Transfer", {
                         username: route.params.username,
                         phoneNumber: route.params.phoneNumber,
                         recipientUsername: data.name,
                         recipientPhoneNumber: data.phoneNumber,
-                    })}>
+                    })}}>
                         <View   style={{borderWidth: 1,
                                     borderColor: COLORS.blueprim,
                                     borderRadius: 10,

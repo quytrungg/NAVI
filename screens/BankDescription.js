@@ -9,7 +9,7 @@ import "firebase/compat/firestore";
 
 const BankDescription = ({navigation, route}) => {
   var state = {
-    bankName: "default",
+    bankName: route.params.bankName,
     bankID: "",
     ownerName: "",
     publishDate: "",
@@ -64,7 +64,7 @@ const BankDescription = ({navigation, route}) => {
                       placeholder="Enter Bank Name" 
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
-                      value={route.params.bankName}/>
+                      value={state.bankName}/>
         </View>
         {/* STK */}
         <View style={{ marginTop: SIZES.padding * 2 }}>

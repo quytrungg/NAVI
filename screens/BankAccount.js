@@ -122,6 +122,8 @@ const BankAccount = ({navigation, route}) => {
         function handleBank(item){
             navigation.navigate("BankDescription", {
                 bankName: item.description,
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
             })
         }
 

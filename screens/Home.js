@@ -10,6 +10,24 @@ const Home = ({navigation, route}) => {
 
     const [balance, getBalance] = useState(0);
 
+    useEffect(() => {
+        const getBalance_ = async () => {
+            await firebase
+                .firestore()
+                .collection("user")
+                .doc(route.params.phoneNumber)
+                .get()
+                .then((snapshot) => {
+                    if (snapshot.data() != undefined) {
+                        getBalance(snapshot.data().balance);
+                    } else {
+                        console.log("does not exist");
+                    }
+                });
+        }
+        getBalance_()
+    })
+
     const featuresData = [
         {   id: 1,
             icon: images.withdraw,
@@ -57,27 +75,27 @@ const Home = ({navigation, route}) => {
         }
         return temp + " VND";
     }
-    const [showPassword, setShowPassword] = useState(false);
-    function refreshBalance() {
-        setShowPassword(!showPassword)
-        const getBalance_ = async () => {
-            await firebase
-                .firestore()
-                .collection("user")
-                .doc(route.params.phoneNumber)
-                .get()
-                .then((snapshot) => {
-                    if (snapshot.data() != undefined) {
-                        getBalance(snapshot.data().balance);
-                    } else {
-                        console.log("does not exist");
-                    }
-                });
-        }
-        getBalance_()
-    }
+    
     function renderBanner(){
-
+        const [showPassword, setShowPassword] = useState(false);
+        function refreshBalance() {
+            setShowPassword(!showPassword)
+            const getBalance_ = async () => {
+                await firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(route.params.phoneNumber)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot.data() != undefined) {
+                            getBalance(snapshot.data().balance);
+                        } else {
+                            console.log("does not exist");
+                        }
+                    });
+            }
+            getBalance_()
+        }
 
         return (
             <>
