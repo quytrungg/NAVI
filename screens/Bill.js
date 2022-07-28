@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView} from "react-native";
 import { COLORS, SIZES, FONTS, images, icons } from "../constants";
+import moment from "moment"
 
 const Bill = ({navigation, route}) => { 
 
@@ -134,7 +135,7 @@ const Bill = ({navigation, route}) => {
     function renderHeader() {
         return (
             <TouchableOpacity  style={styles.header} 
-                            onPress={() => navigation.navigate('Home', {
+                            onPress={() => navigation.push('Home', {
                                         username: route.params.username,
                                         phoneNumber: route.params.phoneNumber})}>
             <Image  source = {icons.back} 
@@ -162,7 +163,7 @@ const Bill = ({navigation, route}) => {
                     <Image  source = {images.navilogo} style = {styles.logo}/>
                     <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft:5}}>
                         <Text style = {styles.text1}>Successful Transaction</Text>
-                        <Text style = {styles.text2}>+500.000 VND</Text>
+                        <Text style = {styles.text2}>{route.params.balanceChange}</Text>
                     </View>
                 </View>
         </View>
@@ -179,9 +180,9 @@ const Bill = ({navigation, route}) => {
                         <Text style = {styles.text3}>Fee</Text>
                     </View>
                     <View style = {{flexDirection: 'column', alignSelf: 'center'}}>
-                        <Text style = {styles.text4}>Send/Receive Money</Text>
-                        <Text style = {styles.text4}>28/07/2022</Text>
-                        <Text style = {styles.text4}>0 VND</Text>
+                        <Text style = {styles.text4}>{route.params.transactionType}</Text>
+                        <Text style = {styles.text4}>{moment().utcOffset('+07:00').format('YYYY-MM-DD hh:mm:ss')}</Text>
+                        <Text style = {styles.text4}>{route.params.balanceChange}</Text>
                     </View>
                 </View>
         </View>
@@ -194,13 +195,15 @@ const Bill = ({navigation, route}) => {
                 <View style = {{flexDirection: 'row', paddingVertical: 10}}>
                     <View style = {{alignSelf: 'center', marginLeft: 15}}>
                         <Text style = {styles.text3}>Recipient</Text>
-                        <Text style = {styles.text3}>Account ID</Text>
-                        <Text style = {styles.text3}>Bank</Text>
+                        <Text style = {styles.text3}>Recipient ID</Text>
+                        <Text style = {styles.text3}>Sender</Text>
+                        <Text style = {styles.text3}>Sender ID</Text>
                     </View>
                     <View style = {{alignSelf: 'center'}}>
                         <Text style = {styles.text5}>Name</Text>
-                        <Text style = {styles.text5}>Phone Number</Text>
-                        <Text style = {styles.text5}>Bank Name</Text>
+                        <Text style = {styles.text5}>ID</Text>
+                        <Text style = {styles.text5}>Name</Text>
+                        <Text style = {styles.text5}>ID</Text>
                     </View>
                 </View>
         </View>

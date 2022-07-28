@@ -3,6 +3,10 @@ import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleShee
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
 
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
 const Verification = ({navigation, route}) => {
     const styles = StyleSheet.create({ 
         image: {
@@ -99,7 +103,6 @@ const Verification = ({navigation, route}) => {
 
     function showOTPTimeout(){
         setTimeout(() => {
-            console.log(route.params.info);
             showOTP();
         }, 1000);
     }
@@ -164,7 +167,106 @@ const Verification = ({navigation, route}) => {
         }
 
         if (flag == true) {
-            navigation.navigate("Bill");
+            if (route.params.transactionType == "Withdraw" || route.params.transactionType == "Deposit") {
+                var temp = 0;
+                firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(route.params.phoneNumber)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            temp = snapshot.data().balance + route.params.balanceChange
+                        }
+                    })
+                    .then(() => {
+                        firebase
+                            .firestore()
+                            .collection("user")
+                            .doc(route.params.phoneNumber)
+                            .update({
+                                balance: temp
+                            })
+                    })
+                firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(route.params.phoneNumber)
+                    .collection("bank")
+                    .doc(route.params.bankName)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            temp = snapshot.data().balance - route.params.balanceChange
+                        }
+                    })
+                    .then(() => {
+                        firebase
+                            .firestore()
+                            .collection("user")
+                            .doc(route.params.phoneNumber)
+                            .collection("bank")
+                            .doc(route.params.bankName)
+                            .update({
+                                balance: temp
+                            })
+                    })
+                navigation.navigate("Bill", {
+                    username: route.params.username,
+                    phoneNumber: route.params.phoneNumber,
+                    balanceChange: route.params.balanceChange,
+                    transactionType: route.params.transactionType,
+                    bankName: route.params.description,
+                });
+            }
+            else {
+                firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(route.params.senderPhoneNumber)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            temp = snapshot.data().balance + route.params.balanceChange
+                        }
+                    })
+                    .then(() => {
+                        firebase
+                            .firestore()
+                            .collection("user")
+                            .doc(route.params.senderPhoneNumber)
+                            .update({
+                                balance: temp
+                            })
+                    })
+                firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(route.params.recipientPhoneNumber)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            temp = snapshot.data().balance + route.params.balanceChange
+                        }
+                    })
+                    .then(() => {
+                        firebase
+                            .firestore()
+                            .collection("user")
+                            .doc(route.params.recipientPhoneNumber)
+                            .update({
+                                balance: temp
+                            })
+                    })
+                navigation.navigate("Bill", {
+                    username: route.params.username,
+                    phoneNumber: route.params.phoneNumber,
+                    recipientUsername: route.params.recipientUsername,
+                    recipientPhoneNumber: route.params.recipientPhoneNumber,
+                    balanceChange: route.params.balanceChange,
+                    transactionType: route.params.transactionType,
+                });
+            }
         }
         
         else{

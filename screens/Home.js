@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput, StatusBar } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
@@ -8,19 +8,7 @@ import "firebase/compat/firestore";
 
 const Home = ({navigation, route}) => {
 
-    var balance = "";
-    firebase
-        .firestore()
-        .collection("user")
-        .doc(route.params.phoneNumber)
-        .get()
-        .then((snapshot) => {
-            if (snapshot.data() != undefined) {
-                balance = snapshot.data().balance;
-            } else {
-                console.log("does not exist");
-            }
-        })
+    const [balance, getBalance] = useState(0);
 
     const featuresData = [
         {   id: 1,
@@ -69,9 +57,28 @@ const Home = ({navigation, route}) => {
         }
         return temp + " VND";
     }
-
+    const [showPassword, setShowPassword] = useState(false);
+    function refreshBalance() {
+        setShowPassword(!showPassword)
+        const getBalance_ = async () => {
+            await firebase
+                .firestore()
+                .collection("user")
+                .doc(route.params.phoneNumber)
+                .get()
+                .then((snapshot) => {
+                    if (snapshot.data() != undefined) {
+                        getBalance(snapshot.data().balance);
+                    } else {
+                        console.log("does not exist");
+                    }
+                });
+        }
+        getBalance_()
+    }
     function renderBanner(){
-        const [showPassword, setShowPassword] = useState(false);
+
+
         return (
             <>
                 <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2, marginBottom: SIZES.padding * 3}}>
@@ -116,7 +123,7 @@ const Home = ({navigation, route}) => {
                         </View>
                         <TouchableOpacity style={{position: 'absolute',
                                                 right: 0}}
-                                        onPress={() => setShowPassword(!showPassword)}>
+                                        onPress={() => refreshBalance()}>
                             <Image  source={showPassword ? icons.disable_eye : icons.eye}
                                     style={{height: 22,
                                             width: 22,

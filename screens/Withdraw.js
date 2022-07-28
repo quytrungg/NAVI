@@ -207,9 +207,13 @@ const Withdraw = ({navigation, route}) => {
         );
       }
     else{
-    navigation.navigate("Verification",{
-        info: data.description,
-    })
+        navigation.navigate("Verification",{
+            username: route.params.username,
+            phoneNumber: route.params.phoneNumber,
+            balanceChange: value * -1,
+            transactionType: "Withdraw",
+            bankName: data.description,
+        })
     }
   }
 

@@ -144,7 +144,14 @@ const Transfer = ({navigation, route}) => {
         );
       }
       else{
-          navigation.navigate("Verification");
+          navigation.navigate("Verification", {
+            senderUsername: route.params.username,
+            senderPhoneNumber: route.params.phoneNumber,
+            recipientUsername: route.params.recipientUsername,
+            recipientPhoneNumber: route.params.recipientPhoneNumber,
+            balanceChange: value,
+            transactionType: "Transfer",
+          });
       }
   }
 
