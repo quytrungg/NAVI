@@ -160,7 +160,7 @@ const Bill = ({navigation, route}) => {
             <View style = {styles.topBox}>
                 <View style = {{flexDirection: 'row', paddingVertical: 10}}>
                     <Image  source = {images.navilogo} style = {styles.logo}/>
-                    <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft:20}}>
+                    <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft:5}}>
                         <Text style = {styles.text1}>Successful Transaction</Text>
                         <Text style = {styles.text2}>+500.000 VND</Text>
                     </View>

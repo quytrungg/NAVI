@@ -136,7 +136,8 @@ const Scan = ({ navigation, route }) => {
         }
         else if(!isNaN(result.data)){
             navigation.navigate("Transfer",{
-                phoneNumber: result.data,
+                recipientPhoneNumber: result.data,
+                recipientUsername: '',
             });
         }
     }

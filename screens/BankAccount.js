@@ -119,11 +119,10 @@ const BankAccount = ({navigation, route}) => {
             </View>
         )
 
-        function handleBank(){
-            return Alert.alert(
-                "Warning",
-                "Select \"Next\" to link a bank account"
-            );
+        function handleBank(item){
+            navigation.navigate("BankDescription", {
+                bankName: item.description,
+            })
         }
 
         const renderItem = ({item}) => (
@@ -162,26 +161,6 @@ const BankAccount = ({navigation, route}) => {
           />
         )
     }
-    function renderButton(){
-        return(
-            <View style={{margin: SIZES.padding * 1.5}}>
-                <TouchableOpacity   style={{height: 60,
-                                            width: 180,
-                                            alignSelf: "center",
-                                            backgroundColor: COLORS.bluesec,
-                                            borderRadius: SIZES.radius / 1.5,
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            borderColor: COLORS.blueprim,}}
-                                    onPress = {() => navigation.push("BankDescription", {
-                                        username: route.params.username,
-                                        phoneNumber: route.params.phoneNumber,
-                                    })}>
-                    <Text style={{color: COLORS.white, ...FONTS.h3}}>Next</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
 
     function renderBank(){
         const HeaderComponent = () => (
@@ -189,7 +168,6 @@ const BankAccount = ({navigation, route}) => {
                 {renderHeader()}
                 {renderBanner()}
                 {renderFeatures()}
-                {renderButton()}
             </View>
         )
         return (

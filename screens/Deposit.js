@@ -183,29 +183,26 @@ const Deposit = ({navigation, route}) => {
         )
     }
 
+    function handleDeposit(data){
+        if(value <= 0){
+            Alert.alert(
+                "Warning",
+                "Withdraw amount cannot be 0!",
+                [
+                    {
+                        text: "OK",
+                    },
+                ]
+            );
+        }
+        else{
+        navigation.navigate("Verification", {
+            info: data.description,
+        })
+        }
+    }
+
     function renderBank(){
-        const arr = [
-        {   id: 1,
-            icon: images.mb,
-            color: COLORS.purple,
-            backgroundColor: COLORS.lightpurple,
-            description: "MB Bank",
-            choice: false
-        },
-        {   id: 2,
-            icon: images.vcb,
-            color: COLORS.yellow,
-            backgroundColor: COLORS.lightyellow,
-            description: "Vietcombank",
-            choice: false
-        },
-        {   id: 3,
-            icon: images.acb,
-            color: COLORS.primary,
-            backgroundColor: COLORS.lightGreen,
-            description: "ACB Bank",
-            choice: false
-        }];
         return(
         <View>
             {bankList.map(data =>{
@@ -218,7 +215,7 @@ const Deposit = ({navigation, route}) => {
                                     marginHorizontal: 10,
                                     marginTop: 10}}>
 
-                        <TouchableHighlight onPress={() => console.log("pressed")}
+                        <TouchableHighlight onPress={() => handleDeposit(data)}
                                             style={{borderRadius: 10}}
                                             underlayColor="#DDDDDD">
                             <View style={{flexDirection: 'row', paddingVertical: 10}}>
@@ -241,41 +238,6 @@ const Deposit = ({navigation, route}) => {
         )
     }
 
-    function handleDeposit(){
-        if(value <= 0){
-            Alert.alert(
-                "Warning",
-                "Withdraw amount cannot be 0!",
-                [
-                    {
-                        text: "OK",
-                    },
-                ]
-            );
-        }
-        else{
-            navigation.navigate("Verification");
-        }
-    }
-
-    function renderButton() {
-        return(
-            <View style={{margin: SIZES.padding * 0.5}}>
-                <TouchableOpacity style={{height: 60,
-                                        width: 180,
-                                        alignSelf: "center",
-                                        backgroundColor: COLORS.bluesec,
-                                        borderRadius: SIZES.radius / 1.5,
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        borderColor: COLORS.blueprim}}
-                                onPress={() => handleDeposit()}>
-                <Text style={{color: COLORS.white, ...FONTS.h3}}>Deposit</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
-
     return (
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{flex: 1}}>
         <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex: 1}}>
@@ -291,7 +253,6 @@ const Deposit = ({navigation, route}) => {
                 
             </ScrollView>
             <SafeAreaView>
-                {renderButton()}
             </SafeAreaView>
         </LinearGradient>
         </KeyboardAvoidingView>

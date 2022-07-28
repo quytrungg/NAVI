@@ -148,7 +148,7 @@ const Home = ({navigation, route}) => {
             });
         }
         else if(item.description == 'Bank Account'){
-            navigation.navigate("BankAccount", {
+            navigation.push("BankAccount", {
                 username: route.params.username,
                 phoneNumber: route.params.phoneNumber,
             });

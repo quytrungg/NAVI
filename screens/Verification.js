@@ -3,7 +3,7 @@ import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleShee
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
 
-const Verification = ({navigation}) => {
+const Verification = ({navigation, route}) => {
     const styles = StyleSheet.create({ 
         image: {
             marginBottom: 10,
@@ -99,6 +99,7 @@ const Verification = ({navigation}) => {
 
     function showOTPTimeout(){
         setTimeout(() => {
+            console.log(route.params.info);
             showOTP();
         }, 1000);
     }

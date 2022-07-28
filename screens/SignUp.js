@@ -53,11 +53,6 @@ const SignUp = ({ navigation }) => {
     );
   }
 
-  function handlePhoneNumber(phoneNumber) {
-    state.phoneNumber = phoneNumber;
-    state.fakeEmail = phoneNumber + "@gmail.com";
-  }
-
   function renderForm(){
     return (
       <View style={{marginTop: SIZES.padding * 3, marginHorizontal: SIZES.padding * 3}}>
@@ -104,6 +99,7 @@ const SignUp = ({ navigation }) => {
                                 height: 40,
                                 color: COLORS.black,
                                 ...FONTS.body3}}
+                        keyboardType="email-address"
                         placeholder="Enter Email"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
