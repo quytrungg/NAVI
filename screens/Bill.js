@@ -135,9 +135,9 @@ const Bill = ({navigation, route}) => {
     function renderHeader() {
         return (
             <TouchableOpacity  style={styles.header} 
-                            onPress={() => navigation.push('Home', {
+                            onPress={() => {console.log(route.params.username); navigation.push('Home', {
                                         username: route.params.username,
-                                        phoneNumber: route.params.phoneNumber})}>
+                                        phoneNumber: route.params.phoneNumber})}}>
             <Image  source = {icons.back} 
                 resizeMode = "contain" 
                 style = {styles.button}/>

@@ -148,7 +148,9 @@ const Scan = ({ navigation, route }) => {
                         if (snapshot.data() != undefined) {
                             navigation.navigate("Transfer",{
                                 recipientPhoneNumber: result.data,
-                                recipientUsername: snapshot.data().username,
+                                recipientUsername: snapshot.data().name,
+                                username: route.params.username,
+                                phoneNumber: route.params.phoneNumber,
                             });
                         } else {
                             console.log("does not exist");

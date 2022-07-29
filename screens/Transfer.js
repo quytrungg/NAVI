@@ -91,6 +91,7 @@ const Transfer = ({navigation, route}) => {
         phoneNumber: route.params.recipientPhoneNumber,
         name: route.params.recipientUsername,
       }];
+      console.log(route.params.recipientUsername);
       return(
       <View>
           {arr.map(data =>{
@@ -108,8 +109,7 @@ const Transfer = ({navigation, route}) => {
                                                       height: 50,
                                                       marginLeft: 20, alignSelf: 'center'}}/>
                               <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
-                                  <Text style={{color: COLORS.black, ...FONTS.h3, 
-                                              alignSelf: 'center'}}>{data.name}</Text>
+                                  <Text style={{color: COLORS.black, ...FONTS.h3, alignSelf: 'center'}}>{data.name}</Text>
                                   <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.phoneNumber}</Text>
                               </View>
                           </View>
@@ -146,8 +146,8 @@ const Transfer = ({navigation, route}) => {
       else{
         console.log(route.params.username,route.params.phoneNumber)
           navigation.push("Verification", {
-            senderUsername: route.params.username,
-            senderPhoneNumber: route.params.phoneNumber,
+            username: route.params.username,
+            phoneNumber: route.params.phoneNumber,
             recipientUsername: route.params.recipientUsername,
             recipientPhoneNumber: route.params.recipientPhoneNumber,
             balanceChange: value,

@@ -131,8 +131,7 @@ const Search = ({navigation, route}) => {
                                                         height: 50,
                                                         marginLeft: 20, alignSelf: 'center'}}/>
                                 <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
-                                    <Text style={{color: COLORS.black, ...FONTS.h3, 
-                                                }}>{data.name}</Text>
+                                    <Text style={{color: COLORS.black, ...FONTS.h3,}}>{data.name}</Text>
                                     <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.phoneNumber}</Text>
                                 </View>
                             </View>
@@ -142,34 +141,6 @@ const Search = ({navigation, route}) => {
             })}
         </View>
         )
-  }
-
-  function handleDeposit(){
-      if(value <= 0){
-          Alert.alert(
-              "Warning",
-              "Withdraw amount cannot be 0!",
-              [
-                  {
-                      text: "OK",
-                  },
-              ]
-          );
-      }
-      else if(value > balance){
-        Alert.alert(
-          "Warning",
-          "Withdraw amount is larger than balance!",
-          [
-              {
-                  text: "OK",
-              },
-          ]
-        );
-      }
-      else{
-          navigation.navigate("Verification");
-      }
   }
 
   return (

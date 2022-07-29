@@ -97,6 +97,8 @@ const Home = ({navigation, route}) => {
             getBalance_()
         }
 
+        console.log(route.params.username);
+
         return (
             <>
                 <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2, marginBottom: SIZES.padding * 3}}>

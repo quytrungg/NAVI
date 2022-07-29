@@ -162,10 +162,6 @@ const Verification = ({navigation, route}) => {
             flag = true;
         }
 
-        else {
-            flag = false;
-        }
-
         if (flag == true) {
             if (route.params.transactionType == "Withdraw" || route.params.transactionType == "Deposit") {
                 var temp = 0;
@@ -216,7 +212,7 @@ const Verification = ({navigation, route}) => {
                 firebase
                     .firestore()
                     .collection("user")
-                    .doc(route.params.senderPhoneNumber)
+                    .doc(route.params.phoneNumber)
                     .get()
                     .then((snapshot) => {
                         if (snapshot != undefined) {
@@ -227,7 +223,7 @@ const Verification = ({navigation, route}) => {
                         firebase
                             .firestore()
                             .collection("user")
-                            .doc(route.params.senderPhoneNumber)
+                            .doc(route.params.phoneNumber)
                             .update({
                                 balance: temp
                             })
@@ -250,11 +246,13 @@ const Verification = ({navigation, route}) => {
                             .update({
                                 balance: temp
                             })
+                        
+                            
                     })
             }
             navigation.navigate("Bill", {
-                username: route.params.senderUsername,
-                phoneNumber: route.params.senderPhoneNumber,
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
                 recipientUsername: route.params.recipientUsername,
                 recipientPhoneNumber: route.params.recipientPhoneNumber,
                 balanceChange: route.params.balanceChange,
