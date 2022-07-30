@@ -79,7 +79,7 @@ const Bill = ({navigation, route}) => {
         button: {
             width: 15,
             height: 15,
-            tintColor: COLORS.black,
+            tintColor: COLORS.blueback,
         },
 
         buttonText: {
@@ -124,8 +124,6 @@ const Bill = ({navigation, route}) => {
 
         bottomBox: {
             borderWidth: 1,
-            borderTopWidth: 0,
-            borderBottomWidth: 0,
             borderColor: COLORS.blueprim,
             backgroundColor: COLORS.white,
             marginHorizontal: 10,
@@ -139,8 +137,24 @@ const Bill = ({navigation, route}) => {
             borderBottomLeftRadius: 10,
             backgroundColor: COLORS.white,
             marginHorizontal: 10,
-            marginTop: 0,
             borderStyle: 'dashed',
+        },
+
+        confirmButton: {
+            borderColor: COLORS.blueprim,
+            backgroundColor: COLORS.bluesec,
+            alignSelf: 'center',
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderWidth: 1,
+            width: 180,
+            height: 60,
+            borderRadius: SIZES.radius / 1.5,
+        },
+
+        confirmText: {
+            ...FONTS.h2, 
+            color: COLORS.white
         },
 
         text1: {
@@ -198,14 +212,11 @@ const Bill = ({navigation, route}) => {
 
     function renderHeader() {
         return (
-            <TouchableOpacity  style={styles.header} 
-                            onPress={() => {console.log(route.params.username); navigation.push('Home', {
-                                        username: route.params.username,
-                                        phoneNumber: route.params.phoneNumber})}}>
+            <TouchableOpacity  style={styles.header}>
             <Image  source = {icons.back} 
                 resizeMode = "contain" 
                 style = {styles.button}/>
-            <Text style = {styles.buttonText}>Home</Text>
+            <Text style = {styles.buttonText}></Text>
             </TouchableOpacity>
         )
     }
@@ -220,6 +231,13 @@ const Bill = ({navigation, route}) => {
         )
     }
 
+    function handleBalanceChange(){
+        if(transactionDetail.balanceChange > 0){
+            return "+" + transactionDetail.balanceChange.toString() + " VND";
+        }
+        else return "-" + transactionDetail.balanceChange.toString() + " VND";
+    }
+
     function renderTop() {
         return (
             <View style = {styles.topBox}>
@@ -227,7 +245,7 @@ const Bill = ({navigation, route}) => {
                     <Image  source = {images.navilogo} style = {styles.logo}/>
                     <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft:5}}>
                         <Text style = {styles.text1}>Successful Transaction</Text>
-                        <Text style = {styles.text2}>{transactionDetail.balanceChange}</Text>
+                        <Text style = {styles.text2}>{handleBalanceChange()}</Text>
                     </View>
                 </View>
         </View>
@@ -246,7 +264,7 @@ const Bill = ({navigation, route}) => {
                     <View style = {{flexDirection: 'column', alignSelf: 'center'}}>
                         <Text style = {styles.text4}>{transactionDetail.type}</Text>
                         <Text style = {styles.text4}>{transactionDetail.date}</Text>
-                        <Text style = {styles.text4}>{transactionDetail.balanceChange}</Text>
+                        <Text style = {styles.text4}>0 VND</Text>
                     </View>
                 </View>
         </View>
@@ -287,6 +305,18 @@ const Bill = ({navigation, route}) => {
         );
     }
 
+    function renderButton() {
+        return (
+            <View style = {{marginTop: 120}}>
+                <TouchableOpacity style = {styles.confirmButton} onPress={() => {console.log(route.params.username); navigation.push('Home', {
+                                        username: route.params.username,
+                                        phoneNumber: route.params.phoneNumber})}}>
+                    <Text style = {styles.confirmText}>Back To Home</Text>
+                </TouchableOpacity> 
+            </View>
+        )
+    }
+
     return (
         <SafeAreaView style={{flexGrow: 1, backgroundColor: COLORS.blueback}}>
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
@@ -297,6 +327,7 @@ const Bill = ({navigation, route}) => {
                     {renderMiddle()}
                     {renderBottom()}
                     {messageBox()}
+                    {renderButton()}
                 </ScrollView>
         </SafeAreaView>
     )

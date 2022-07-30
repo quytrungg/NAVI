@@ -35,8 +35,7 @@ const Loading = ({navigation, route}) => {
                                   width: 180,
                                   alignSelf: "center",
                                   alignItems: 'center',
-                                  justifyContent: 'center'}}
-                          onPress={() => navigation.navigate("HomeAdmin")}>
+                                  justifyContent: 'center'}}>
           <Text style={{color: COLORS.bluesec, ...FONTS.h4}}>Loading...</Text>
         </TouchableOpacity>
       </View>
