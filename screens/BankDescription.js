@@ -170,13 +170,13 @@ const BankDescription = ({navigation, route}) => {
             .collection("bank")
             .doc(bankName)
             .set({
-              bankName,
-              bankID,
-              ownerName,
-              publishDate,
+              bankName: bankName,
+              bankID: bankID,
+              ownerName: ownerName,
+              publishDate: publishDate,
               balance: 10000000,
             }).then(() => {
-              navigation.navigate("Home", {
+              navigation.push("Home", {
                 username: route.params.username,
                 phoneNumber: route.params.phoneNumber,
               });

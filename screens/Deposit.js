@@ -13,7 +13,7 @@ const Deposit = ({navigation, route}) => {
         if (bankName.substring(0, 4).toLowerCase() == "acb") {
             return images.acb;
         } else if (bankName.substring(0, 5).toLowerCase() == "bidv") {
-            return bidv;
+            return images.bidv;
         } else if (bankName.substring(0, 2).toLowerCase() == "mb") {
             return images.mb;
         } else if (bankName.substring(0, 4).toLowerCase() == "tech") {
