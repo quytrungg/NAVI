@@ -47,7 +47,7 @@ const SignIn = ({ navigation }) => {
       <View style={{marginTop: SIZES.padding * 7, 
                     marginHorizontal: SIZES.padding * 3}}>
         {/* Phone Number */}
-        <View style={{position: 'absolute', width: '100%', height:'100%', backgroundColor: "#FFF", opacity: 0.5, borderRadius: 20}}></View>
+        <View style={{position: 'absolute', width: '100%', height:'100%', opacity: 0.5, borderRadius: 20}}></View>
         <View style={{marginTop: SIZES.padding, marginHorizontal: SIZES.padding}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Phone Number</Text>
           <View style={{ flexDirection: 'row' }}>
