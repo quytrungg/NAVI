@@ -12,6 +12,7 @@ const transfer = require("../assets/images/transfer.png");
 const withdraw = require("../assets/images/withdraw.png");
 const deposit = require("../assets/images/deposit.png");
 const bank = require("../assets/images/bank.png");
+const bg1 = require("../assets/images/navi_background.jpg")
 
 export default {
     focus,
@@ -28,5 +29,6 @@ export default {
     deposit,
     withdraw,
     bank,
+    bg1,
 
 };

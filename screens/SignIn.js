@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert, StatusBar} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Platform, Alert, StatusBar, ImageBackground} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import { ScrollView } from "react-native-gesture-handler";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -21,14 +22,9 @@ const SignIn = ({ navigation }) => {
                                 alignItems: "center", 
                                 marginTop: SIZES.padding * 6,
                                 paddingHorizontal: SIZES.padding * 2}}>
-        <Image  source={icons.back} 
-                resizeMode="contain" 
-                style={{width: 15, 
-                        height: 15, 
-                        tintColor: COLORS.blueback}}/>
         <Text style={{marginLeft: SIZES.padding,
                       color: COLORS.blueback, 
-                      ...FONTS.h4 }}>Sign In</Text>
+                      ...FONTS.h4 }}></Text>
       </TouchableOpacity>
     )
   }
@@ -51,7 +47,8 @@ const SignIn = ({ navigation }) => {
       <View style={{marginTop: SIZES.padding * 7, 
                     marginHorizontal: SIZES.padding * 3}}>
         {/* Phone Number */}
-        <View style={{marginTop: SIZES.padding * 2}}>
+        <View style={{position: 'absolute', width: '100%', height:'100%', backgroundColor: "#FFF", opacity: 0.5, borderRadius: 20}}></View>
+        <View style={{marginTop: SIZES.padding, marginHorizontal: SIZES.padding}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Phone Number</Text>
           <View style={{ flexDirection: 'row' }}>
             <TextInput  style={{flex: 1,
@@ -70,7 +67,7 @@ const SignIn = ({ navigation }) => {
           </View>
         </View>
         {/* Password */}
-        <View style={{marginTop: SIZES.padding * 2}}>
+        <View style={{marginTop: SIZES.padding * 2, marginHorizontal: SIZES.padding}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Password</Text>
           <TextInput  style={{marginVertical: SIZES.padding,
                               borderBottomColor: COLORS.black,
@@ -206,10 +203,9 @@ const SignIn = ({ navigation }) => {
   }
 
   return(
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
+    <ImageBackground source={images.bg1} resizeMode="cover" style={{flex:1, justifyContent:"center"}}>
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
                           style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]}
-                      style={{flex: 1}}>
         <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <ScrollView>
           {renderHeader()}
@@ -217,8 +213,8 @@ const SignIn = ({ navigation }) => {
           {renderForm()}
           {renderButton()}
         </ScrollView>
-      </LinearGradient>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   )
 }
 
