@@ -8,6 +8,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const Bill = ({navigation, route}) => {
+    var UISenderText, UIReceiverText;
     var transactionDetail = {
         ID: 0,
         type: route.params.transactionType,
@@ -21,21 +22,28 @@ const Bill = ({navigation, route}) => {
     }
 
     if (transactionDetail.type == "Withdraw") {
-        transactionDetail.senderName = route.params.bankName,
-        transactionDetail.senderID = route.params.bankID,
-        transactionDetail.recipientName = route.params.username,
-        transactionDetail.recipientID = route.params.phoneNumber
-    } else if (transactionDetail.type == "Deposit") {
+        UISenderText = "Bank",
+        UIReceiverText = "User",
+        transactionDetail.senderName = route.params.username,
+        transactionDetail.senderID = route.params.phoneNumber,
+        transactionDetail.recipientName = route.params.bankName,
+        transactionDetail.recipientID = route.params.bankID
+    }
+    else if (transactionDetail.type == "Deposit") {
+        UISenderText = "User",
+        UIReceiverText = "Bank",
         transactionDetail.senderName = route.params.username,
         transactionDetail.senderID = route.params.phoneNumber,
         transactionDetail.recipientName = route.params.bankName,
         transactionDetail.recipientID = route.params.bankID
     }
     else {
+        UISenderText = "Sender",
+        UIReceiverText = "Receiver",
         transactionDetail.senderName = route.params.username,
         transactionDetail.senderID = route.params.phoneNumber,
-        transactionDetail.recipientName = route.params.recipientName,
-        transactionDetail.recipientID = route.params.recipientID
+        transactionDetail.recipientName = route.params.recipientUsername,
+        transactionDetail.recipientID = route.params.recipientPhoneNumber
     }
     firebase
         .firestore()
@@ -249,10 +257,10 @@ const Bill = ({navigation, route}) => {
             <View style = {styles.bottomBox}>
                 <View style = {{flexDirection: 'row', paddingVertical: 10}}>
                     <View style = {{alignSelf: 'center', marginLeft: 15}}>
-                        <Text style = {styles.text3}>Recipient</Text>
-                        <Text style = {styles.text3}>Recipient ID</Text>
-                        <Text style = {styles.text3}>Sender</Text>
-                        <Text style = {styles.text3}>Sender ID</Text>
+                        <Text style = {styles.text3}>{UISenderText}</Text>
+                        <Text style = {styles.text3}>{UISenderText} ID</Text>
+                        <Text style = {styles.text3}>{UIReceiverText}</Text>
+                        <Text style = {styles.text3}>{UIReceiverText} ID</Text>
                     </View>
                     <View style = {{alignSelf: 'center'}}>
                         <Text style = {styles.text5}>{transactionDetail.senderName}</Text>

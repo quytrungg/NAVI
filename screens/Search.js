@@ -50,6 +50,31 @@ const Search = ({navigation, route}) => {
         getBalance_()
         getUserList_()
     }, []);
+    
+    function refreshSearchUser(text) {
+        firebase
+            .firestore()
+            .collection("user")
+            .where("phoneNumber", "!=", route.params.phoneNumber)
+            .get()
+            .then((snapshot) => {
+                if (snapshot != undefined) {
+                    var list = [], i = 1
+                    snapshot.forEach((doc) => {
+                        var temp = doc.data().phoneNumber
+                        if (temp.substring(0, text.length) == text) {
+                            var element = {}
+                            element.name = doc.data().name;
+                            element.phoneNumber = doc.data().phoneNumber;
+                            list.push(element)
+                        }
+                    })
+                    getUserList(list)
+                } else {
+                    console.log("does not exist");
+                }
+            })
+    }
 
   function renderHeader(){
       return (
@@ -74,7 +99,9 @@ const Search = ({navigation, route}) => {
                                     width: 310,
                                     ...FONTS.bdoy3}}
                             placeholder ="Search by phone number"
-                            placeholderTextColor={COLORS.gray}/>
+                            placeholderTextColor={COLORS.gray}
+                            onChangeText = {(text) => refreshSearchUser(text)} />
+
             </View>
             <TouchableOpacity onPress={() => console.log("Search")}>
             <Image  source={icons.search}

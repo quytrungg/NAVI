@@ -164,7 +164,8 @@ const SignUp = ({ navigation }) => {
             email,
             name,
             balance,
-            role
+            role,
+            friendList: [],
           });
         navigation.navigate("BankAccount", {
           username: name,

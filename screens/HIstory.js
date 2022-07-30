@@ -38,7 +38,7 @@ const History = ({navigation, route}) => {
   }
 
 
-  function renderBank(){
+  function renderTransaction(){
       const arr = [
       {   id: 1,
           icon: images.transfer,
@@ -96,6 +96,32 @@ const History = ({navigation, route}) => {
         description: "Deposit",
         amount: "+500.000 VND"
     }];
+    // const [transactionList, getTransactionList] = useState([]);
+    // useEffect(() => {
+    //     const getTransactionList_ = async () => {
+    //         var i = 1
+    //         await firebase
+    //             .firestore()
+    //             .collection("transaction-history")
+    //             .where("phoneNumber", "!=", route.params.phoneNumber)
+    //             .get()
+    //             .then((snapshot) => {
+    //                 if (snapshot != undefined) {
+    //                     var list = [], i = 1
+    //                     snapshot.forEach((doc) => {
+    //                         var element = {}
+    //                         element.name = doc.data().name;
+    //                         element.phoneNumber = doc.data().phoneNumber;
+    //                         list.push(element)
+    //                     })
+    //                     getTransactionList(list)
+    //                 } else {
+    //                     console.log("does not exist");
+    //                 }
+    //             })
+    //     }
+    //     getTransactionList_()
+    // }, []);
       return(
       <View>
           {arr.map(data =>{
@@ -139,7 +165,7 @@ const History = ({navigation, route}) => {
           <ScrollView>
               {renderLogo()}
               {renderSource()}
-              {renderBank()}
+              {renderTransaction()}
           </ScrollView>
           <SafeAreaView>
           </SafeAreaView>
