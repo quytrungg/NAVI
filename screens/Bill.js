@@ -124,10 +124,11 @@ const Bill = ({navigation, route}) => {
 
         bottomBox: {
             borderWidth: 1,
+            borderTopWidth: 0,
+            borderBottomWidth: 0,
             borderColor: COLORS.blueprim,
             backgroundColor: COLORS.white,
             marginHorizontal: 10,
-            marginTop: 1,
             borderStyle: 'dashed',
         },
 
@@ -138,7 +139,7 @@ const Bill = ({navigation, route}) => {
             borderBottomLeftRadius: 10,
             backgroundColor: COLORS.white,
             marginHorizontal: 10,
-            marginTop: 1,
+            marginTop: 0,
             borderStyle: 'dashed',
         },
 
@@ -167,7 +168,7 @@ const Bill = ({navigation, route}) => {
             ...FONTS.body3,
             marginBottom: 5,
             textAlign: 'right',
-            marginLeft: 170,
+            marginLeft: '45%',
         },
 
         text5: {
@@ -175,7 +176,7 @@ const Bill = ({navigation, route}) => {
             ...FONTS.body3,
             marginBottom: 5,
             textAlign: 'right',
-            marginLeft: 170,
+            marginLeft: '45%',
         },
 
         text6: {
