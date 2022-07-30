@@ -58,6 +58,7 @@ const Deposit = ({navigation, route}) => {
                             element.id = i++;
                             element.icon = banknameToBankicon(doc.data().bankName);
                             element.description = doc.data().bankName;
+                            element.bankID = doc.data().bankID;
                             element.choice = false;
                             list.push(element)
                         })
@@ -203,6 +204,8 @@ const Deposit = ({navigation, route}) => {
                 balanceChange: value,
                 transactionType: "Deposit",
                 bankName: data.description,
+                bankID: data.bankID,
+                transcMessage: route.params.username + " deposits from " + data.description,
             })
         }
     }

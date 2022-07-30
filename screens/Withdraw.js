@@ -13,7 +13,7 @@ const Withdraw = ({navigation, route}) => {
         if (bankName.substring(0, 4).toLowerCase() == "acb") {
             return images.acb;
         } else if (bankName.substring(0, 5).toLowerCase() == "bidv") {
-            return bidv;
+            return images.bidv;
         } else if (bankName.substring(0, 2).toLowerCase() == "mb") {
             return images.mb;
         } else if (bankName.substring(0, 4).toLowerCase() == "tech") {
@@ -58,6 +58,7 @@ const Withdraw = ({navigation, route}) => {
                                 element.id = i++;
                                 element.icon = banknameToBankicon(doc.data().bankName);
                                 element.description = doc.data().bankName;
+                                element.bankID = doc.data().bankID;
                                 element.choice = false;
                                 list.push(element)
                             })
@@ -214,6 +215,8 @@ const Withdraw = ({navigation, route}) => {
             balanceChange: value * -1,
             transactionType: "Withdraw",
             bankName: data.description,
+            bankID: data.bankID,
+            transcMessage: route.params.username + " withdraws to " + data.description,
         })
     }
   }

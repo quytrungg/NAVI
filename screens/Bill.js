@@ -1,9 +1,64 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView} from "react-native";
 import { COLORS, SIZES, FONTS, images, icons } from "../constants";
 import moment from "moment";
 
-const Bill = ({navigation, route}) => { 
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
+const Bill = ({navigation, route}) => {
+    var transactionDetail = {
+        ID: 0,
+        type: route.params.transactionType,
+        date: moment().utcOffset('+07:00').format('YYYY-MM-DD hh:mm:ss'),
+        balanceChange: Math.abs(route.params.balanceChange),
+        senderName: "",
+        senderID: "",
+        recipientName: "",
+        recipientID: "",
+        message: route.params.transcMessage,
+    }
+
+    if (transactionDetail.type == "Withdraw") {
+        transactionDetail.senderName = route.params.bankName,
+        transactionDetail.senderID = route.params.bankID,
+        transactionDetail.recipientName = route.params.username,
+        transactionDetail.recipientID = route.params.phoneNumber
+    } else if (transactionDetail.type == "Deposit") {
+        transactionDetail.senderName = route.params.username,
+        transactionDetail.senderID = route.params.phoneNumber,
+        transactionDetail.recipientName = route.params.bankName,
+        transactionDetail.recipientID = route.params.bankID
+    }
+    else {
+        transactionDetail.senderName = route.params.username,
+        transactionDetail.senderID = route.params.phoneNumber,
+        transactionDetail.recipientName = route.params.recipientName,
+        transactionDetail.recipientID = route.params.recipientID
+    }
+    firebase
+        .firestore()
+        .collection("transaction-history")
+        .orderBy("ID", "desc")
+        .limit(1)
+        .get()
+        .then((querySnapshot) => {
+            if (querySnapshot != undefined) {
+                console.log("Fetch successfully")
+                querySnapshot.forEach((doc) => {
+                    transactionDetail.ID = doc.data().ID + 1
+                })
+            }
+        })
+        .then(() => {
+            console.log(transactionDetail)
+            firebase
+                .firestore()
+                .collection("transaction-history")
+                .doc(String(transactionDetail.ID))
+                .set(transactionDetail)
+        })
 
     const styles = StyleSheet.create({
         header: {
@@ -163,7 +218,7 @@ const Bill = ({navigation, route}) => {
                     <Image  source = {images.navilogo} style = {styles.logo}/>
                     <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft:5}}>
                         <Text style = {styles.text1}>Successful Transaction</Text>
-                        <Text style = {styles.text2}>{route.params.balanceChange}</Text>
+                        <Text style = {styles.text2}>{transactionDetail.balanceChange}</Text>
                     </View>
                 </View>
         </View>
@@ -180,9 +235,9 @@ const Bill = ({navigation, route}) => {
                         <Text style = {styles.text3}>Fee</Text>
                     </View>
                     <View style = {{flexDirection: 'column', alignSelf: 'center'}}>
-                        <Text style = {styles.text4}>{route.params.transactionType}</Text>
-                        <Text style = {styles.text4}>{moment().utcOffset('+07:00').format('YYYY-MM-DD hh:mm:ss')}</Text>
-                        <Text style = {styles.text4}>{route.params.balanceChange}</Text>
+                        <Text style = {styles.text4}>{transactionDetail.type}</Text>
+                        <Text style = {styles.text4}>{transactionDetail.date}</Text>
+                        <Text style = {styles.text4}>{transactionDetail.balanceChange}</Text>
                     </View>
                 </View>
         </View>
@@ -200,10 +255,10 @@ const Bill = ({navigation, route}) => {
                         <Text style = {styles.text3}>Sender ID</Text>
                     </View>
                     <View style = {{alignSelf: 'center'}}>
-                        <Text style = {styles.text5}>{route.params.username}</Text>
-                        <Text style = {styles.text5}>{route.params.phoneNumber}</Text>
-                        <Text style = {styles.text5}>{route.params.recipientUsername}</Text>
-                        <Text style = {styles.text5}>{route.params.recipientPhoneNumber}</Text>
+                        <Text style = {styles.text5}>{transactionDetail.senderName}</Text>
+                        <Text style = {styles.text5}>{transactionDetail.senderID}</Text>
+                        <Text style = {styles.text5}>{transactionDetail.recipientName}</Text>
+                        <Text style = {styles.text5}>{transactionDetail.recipientID}</Text>
                     </View>
                 </View>
         </View>
@@ -217,7 +272,7 @@ const Bill = ({navigation, route}) => {
                     <Text style = {styles.text6}>Message</Text>
                 </View>
                 <View style={{flexGrow: 1, flexDirection: 'row'}}>
-                    <Text style={styles.text7}>Message here</Text>
+                    <Text style={styles.text7}>{transactionDetail.message}</Text>
                 </View>
         </View>
         );

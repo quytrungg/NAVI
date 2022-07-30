@@ -152,6 +152,7 @@ const Transfer = ({navigation, route}) => {
             recipientPhoneNumber: route.params.recipientPhoneNumber,
             balanceChange: value,
             transactionType: "Transfer",
+            transcMessage: route.params.username + " transfers to " + data.description,
           });
       }
   }

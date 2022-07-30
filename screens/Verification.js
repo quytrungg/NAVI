@@ -207,6 +207,15 @@ const Verification = ({navigation, route}) => {
                                 balance: temp
                             })
                     })
+                navigation.navigate("Bill", {
+                    username: route.params.username,
+                    phoneNumber: route.params.phoneNumber,
+                    balanceChange: route.params.balanceChange,
+                    transactionType: route.params.transactionType,
+                    bankName: route.params.bankName,
+                    bankID: route.params.bankID,
+                    transcMessage: route.params.transcMessage,
+                });
             }
             else {
                 firebase
@@ -249,16 +258,16 @@ const Verification = ({navigation, route}) => {
                         
                             
                     })
+                navigation.navigate("Bill", {
+                    username: route.params.username,
+                    phoneNumber: route.params.phoneNumber,
+                    recipientUsername: route.params.recipientUsername,
+                    recipientPhoneNumber: route.params.recipientPhoneNumber,
+                    balanceChange: route.params.balanceChange,
+                    transactionType: route.params.transactionType,
+                    transcMessage: route.params.transcMessage,
+                });
             }
-            navigation.navigate("Bill", {
-                username: route.params.username,
-                phoneNumber: route.params.phoneNumber,
-                recipientUsername: route.params.recipientUsername,
-                recipientPhoneNumber: route.params.recipientPhoneNumber,
-                balanceChange: route.params.balanceChange,
-                transactionType: route.params.transactionType,
-                bankName: route.params.description,
-            });
         }
         
         else{
