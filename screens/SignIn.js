@@ -203,9 +203,9 @@ const SignIn = ({ navigation }) => {
   }
 
   return(
-    <ImageBackground source={images.bg1} resizeMode="cover" style={{flex:1, justifyContent:"center"}}>
-      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
                           style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex:1}}>
         <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <ScrollView>
           {renderHeader()}
@@ -213,8 +213,8 @@ const SignIn = ({ navigation }) => {
           {renderForm()}
           {renderButton()}
         </ScrollView>
-      </KeyboardAvoidingView>
-    </ImageBackground>
+      </LinearGradient>
+    </KeyboardAvoidingView>
   )
 }
 
