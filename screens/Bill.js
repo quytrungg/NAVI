@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, StatusBar, ScrollView} from "react-native";
+import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, StatusBar, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, images, icons } from "../constants";
 import moment from "moment";
+import { ScrollView } from "react-native-gesture-handler";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('window').width;
 
 const Bill = ({navigation, route}) => {
     var UISenderText, UIReceiverText;
@@ -90,43 +94,48 @@ const Bill = ({navigation, route}) => {
         
         banner: {
             height: 60,
-            width: '100%',
             alignSelf: 'center',
             marginTop: 5,
         },
 
         logo: {
             resizeMode: 'contain',
-            width: 70,
-            height: 70,
-            marginLeft: 20,
+            width: widthScreen * 0.15,
+            height: widthScreen * 0.15,
+            marginLeft: widthScreen * 0.045,
         },
 
         topBox: {
+            flex: 1,
+            alignSelf: 'center',
             borderWidth: 1,
             borderColor: COLORS.blueprim,
             borderRadius: 5,
             backgroundColor: COLORS.white,
-            marginHorizontal: 10,
+            width: widthScreen - 20,
             marginTop: 10,
         },
 
         middleBox: {
+            flex: 1,
+            alignSelf: 'center',
             borderWidth: 1,
             borderColor: COLORS.blueprim,
             borderTopRightRadius: 10,
             borderTopLeftRadius: 10,
             backgroundColor: COLORS.white,
-            marginHorizontal: 10,
+            width: widthScreen - 20,
             marginTop: 5,
             borderStyle: 'dashed',
         },
 
         bottomBox: {
+            flex: 1,
+            alignSelf: 'center',
             borderWidth: 1,
             borderColor: COLORS.blueprim,
             backgroundColor: COLORS.white,
-            marginHorizontal: 10,
+            width: widthScreen - 20,
             borderStyle: 'dashed',
         },
 
@@ -182,7 +191,7 @@ const Bill = ({navigation, route}) => {
             ...FONTS.body3,
             marginBottom: 5,
             textAlign: 'right',
-            marginLeft: '45%',
+            marginLeft: widthScreen - 235,
         },
 
         text5: {
@@ -190,7 +199,7 @@ const Bill = ({navigation, route}) => {
             ...FONTS.body3,
             marginBottom: 5,
             textAlign: 'right',
-            marginLeft: '45%',
+            marginLeft: widthScreen - 200,
         },
 
         text6: {
@@ -243,7 +252,7 @@ const Bill = ({navigation, route}) => {
             <View style = {styles.topBox}>
                 <View style = {{flexDirection: 'row', paddingVertical: 10}}>
                     <Image  source = {images.navilogo} style = {styles.logo}/>
-                    <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft:5}}>
+                    <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft: widthScreen - 380}}>
                         <Text style = {styles.text1}>Successful Transaction</Text>
                         <Text style = {styles.text2}>{handleBalanceChange()}</Text>
                     </View>
