@@ -7,7 +7,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-const Search = ({navigation, route}) => {
+const ViewAdmin = ({navigation, route}) => {
 
     const [balance, getBalance] = useState(0);
     const [userList, getUserList] = useState([]);
@@ -66,7 +66,6 @@ const Search = ({navigation, route}) => {
                             var element = {}
                             element.name = doc.data().name;
                             element.phoneNumber = doc.data().phoneNumber;
-                            element.balance = doc.data().balance;
                             list.push(element)
                         }
                     })
@@ -135,31 +134,17 @@ const Search = ({navigation, route}) => {
       )
   }
 
-  function handleNavigateUser(data){
-    console.log(route.params.username,  route.params.phoneNumber); 
-    if(route.params.flag){
-        navigation.navigate("Transfer", {
-            username: route.params.username,
-            phoneNumber: route.params.phoneNumber,
-            recipientUsername: data.name,
-            recipientPhoneNumber: data.phoneNumber,
-        })
-    }
-    else{
-        navigation.navigate("Modify", {
-            recipientUsername: data.name,
-            recipientPhoneNumber: data.phoneNumber,
-            recipientBalance: data.balance,
-        })
-    }
-  }
-
   function renderUsers(){
         return(
         <View>
             {userList.map(data =>{
                 return(
-                    <TouchableOpacity key={data.phoneNumber} onPress={() => handleNavigateUser(data)}>
+                    <TouchableOpacity key={data.phoneNumber} onPress={() => {console.log(route.params.username,  route.params.phoneNumber); navigation.navigate("Transfer", {
+                        username: route.params.username,
+                        phoneNumber: route.params.phoneNumber,
+                        recipientUsername: data.name,
+                        recipientPhoneNumber: data.phoneNumber,
+                    })}}>
                         <View   style={{borderWidth: 1,
                                     borderColor: COLORS.blueprim,
                                     borderRadius: 10,
@@ -204,4 +189,4 @@ const Search = ({navigation, route}) => {
   )
 }
 
-export default Search;
+export default ViewAdmin;

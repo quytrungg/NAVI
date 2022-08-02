@@ -16,6 +16,8 @@ import Transfer from "./Transfer";
 import Search from "./Search";
 import Bill from "./Bill";
 import History from "./History";
+import Modify from "./Modify";
+import ViewAdmin from "./ViewAdmin";
 
 export {
     Home,
@@ -36,4 +38,6 @@ export {
     Search,
     Bill,
     History,
+    Modify,
+    ViewAdmin
 };

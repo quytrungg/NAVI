@@ -1,12 +1,12 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, Alert, TextInput } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
 
-const Transfer = ({navigation, route}) => {
+const Modify = ({navigation, route}) => {
 
-  var balance = route.params.balance;
+    var balance = 500000;
 
   function renderHeader(){
       return (
@@ -33,7 +33,7 @@ const Transfer = ({navigation, route}) => {
               <View   style={{flex: 1,
                               justifyContent: 'center',
                               alignItems: 'center'}}>
-                  <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Transfer Money</Text>
+                  <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Modify Balance</Text>
               </View>
           </View>
       )
@@ -46,7 +46,7 @@ const Transfer = ({navigation, route}) => {
       return (
               <View style={{marginTop: SIZES.padding * 1, marginHorizontal: SIZES.padding * 3}}>
                   
-                    <View style={{marginTop: SIZES.padding * 2, paddingHorizontal: SIZES.padding * 1}}>
+                    <View style={{marginTop: SIZES.padding * 3, paddingHorizontal: SIZES.padding * 1}}>
                         <View style={{ marginTop: SIZES.padding / 2}}>
                             <CurrencyInput  style={{flex: 1,
                                                 marginBottom: SIZES.padding / 1,
@@ -65,7 +65,8 @@ const Transfer = ({navigation, route}) => {
                                         precision = {value >= 1000 && 0}/>
                         </View>
                     </View>
-                    <View style={{marginTop: SIZES.padding * 5}}>
+                    {renderButton()}
+                    <View style={{marginTop: SIZES.padding * 3}}>
                         <Text style={{color: COLORS.black, ...FONTS.body3}}>Message</Text>
                         <View style={{marginTop: SIZES.padding}}>
                             <TextInput  style={{paddingHorizontal: SIZES.padding * 1,
@@ -88,10 +89,10 @@ const Transfer = ({navigation, route}) => {
       const arr = [
       { password: "",
         email: "",
-        phoneNumber: route.params.recipientPhoneNumber,
-        name: route.params.recipientUsername,
+        phoneNumber: "route.params.recipientPhoneNumber",
+        name: "route.params.recipientUsername",
+        balance: 0,
       }];
-      console.log(route.params.recipientUsername);
       return(
       <View>
           {arr.map(data =>{
@@ -101,7 +102,7 @@ const Transfer = ({navigation, route}) => {
                                   borderRadius: 10,
                                   borderColor: COLORS.blueprim,
                                   backgroundColor: COLORS.white,
-                                  marginHorizontal: 15}}>
+                                  marginHorizontal: 15, marginTop: 10}}>
                           <View style={{flexDirection: 'row', paddingVertical: 10}}>
                               <Image  source={images.avatar}
                                               resizeMode="contain" 
@@ -109,8 +110,8 @@ const Transfer = ({navigation, route}) => {
                                                       height: 50,
                                                       marginLeft: 20, alignSelf: 'center'}}/>
                               <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
-                                  <Text style={{color: COLORS.black, ...FONTS.h3, alignSelf: 'center'}}>{data.name}</Text>
-                                  <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.phoneNumber}</Text>
+                                  <Text style={{color: COLORS.black, ...FONTS.h4, alignSelf: 'center'}}>{data.name}</Text>
+                                  <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.balance}</Text>
                               </View>
                           </View>
                   </View>
@@ -120,56 +121,69 @@ const Transfer = ({navigation, route}) => {
       )
   }
 
-  function handleDeposit(){
+  function handleModify(value){
       if(value <= 0){
-          Alert.alert(
-              "Warning",
-              "Transfer amount cannot be 0!",
-              [
-                  {
-                      text: "OK",
-                  },
-              ]
-          );
+        Alert.alert(
+            "Warning",
+            "Modify amount cannot be 0!",
+            [
+                {
+                    text: "OK",
+                },
+            ]
+        );
       }
       else if(value > balance){
         Alert.alert(
-          "Warning",
-          "Transfer amount is larger than balance!",
-          [
-              {
-                  text: "OK",
-              },
-          ]
+            "Warning",
+            "Modify amount larger than user balance",
+            [
+                {
+                    text: "OK",
+                },
+            ]
         );
       }
       else{
-        console.log(route.params.username,route.params.phoneNumber)
-          navigation.push("Verification", {
-            username: route.params.username,
-            phoneNumber: route.params.phoneNumber,
-            recipientUsername: route.params.recipientUsername,
-            recipientPhoneNumber: route.params.recipientPhoneNumber,
-            balanceChange: value,
-            transactionType: "Transfer",
-            transcMessage: route.params.username + " transfers to " + route.params.recipientUsername,
-          });
+        setTimeout(() => {
+            navigation.push("HomeAdmin");
+            Alert.alert(
+                "Notification",
+                "Modify successful",
+                [
+                    {
+                        text: "OK",
+                    },
+                ]
+            );
+        }, 1000);
       }
   }
 
   function renderButton() {
       return(
-          <View style={{margin: SIZES.padding * 0.5}}>
+          <View style={{marginTop: SIZES.padding * 5, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: SIZES.padding * 1.5}}>
               <TouchableOpacity style={{height: 60,
-                                      width: 180,
+                                      width: 120,
                                       alignSelf: "center",
-                                      backgroundColor: COLORS.bluesec,
-                                      borderRadius: SIZES.radius / 1.5,
+                                      backgroundColor: COLORS.white,
+                                      borderRadius: 10,
                                       alignItems: 'center',
                                       justifyContent: 'center',
-                                      borderColor: COLORS.blueprim}}
-                              onPress={() => handleDeposit()}>
-              <Text style={{color: COLORS.white, ...FONTS.h3}}>Transfer</Text>
+                                      borderColor: COLORS.blueprim, borderWidth: 1}}
+                              onPress={() => handleModify(-1 * value)}>
+                <Image source={images.down} style={{height: 30, width: 30, tintColor: COLORS.blueprim}}/>
+              </TouchableOpacity>
+              <TouchableOpacity style={{height: 60,
+                                      width: 120,
+                                      alignSelf: "center",
+                                      backgroundColor: COLORS.white,
+                                      borderRadius: 10,
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                      borderColor: COLORS.blueprim, borderWidth: 1}}
+                              onPress={() => handleModify(value)}>
+                <Image source={images.up} style={{height: 30, width: 30, tintColor: COLORS.blueprim}}/>
               </TouchableOpacity>
           </View>
       )
@@ -184,15 +198,14 @@ const Transfer = ({navigation, route}) => {
           </SafeAreaView>
           <ScrollView>
               {renderLogo()}
-              {renderBank()} 
+              {renderBank()}
               {renderForm()} 
           </ScrollView>
           <SafeAreaView>
-              {renderButton()}
           </SafeAreaView>
       </LinearGradient>
       </KeyboardAvoidingView>
   )
 }
 
-export default Transfer;
+export default Modify;
