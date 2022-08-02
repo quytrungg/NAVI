@@ -79,7 +79,7 @@ const CustomTabBar = (props) => {
     }
 }
 
-const TabsAdmin = () => {
+const TabsAdmin = ({route}) => {
     return(
         <TabAd.Navigator
             screenOptions={{
@@ -107,6 +107,7 @@ const TabsAdmin = () => {
                         <TabBarCustomButton {...props}/>
                     )
                 }}
+                initialParams={{username: route.params.username}}
             />
             <TabAd.Screen
                 name="Scan"
@@ -125,6 +126,7 @@ const TabsAdmin = () => {
                         <TabBarCustomButton {...props}/>
                     )
                 }}
+                initialParams={{username: route.params.username}}
             />
             <TabAd.Screen
                 name="BankAccount"
@@ -143,6 +145,7 @@ const TabsAdmin = () => {
                         <TabBarCustomButton {...props}/>
                     )
                 }}
+                initialParams={{username: route.params.username}}
             />
         </TabAd.Navigator>
     )

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
-const Admin = ({navigation}) => {
+const Admin = ({navigation, route}) => {
     const featuresData = [
         {   id: 1,
             icon: images.modify,
@@ -43,7 +43,7 @@ const Admin = ({navigation}) => {
             <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
                 <View style={{flex: 1}}>
                     <Text style={{ ...FONTS.h1 }}>Welcome Back!</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>administrator</Text>
+                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>{route.params.username}</Text>
                 </View>
                 <View style={{alignItems: 'center', justifyContent: 'center'}}>
                     <TouchableOpacity   style={{height: 40,
