@@ -157,69 +157,61 @@ const SignUp = ({ navigation }) => {
         [
           {
             text: "Retry",
-            onPress: () => {
-                handleSignUp();
-            },
           },
         ]
       );
-    }
-    firebase
-      .firestore()
-      .collection("user")
-      .doc(phoneNumber)
-      .get()
-      .then((snapshot) => {
-        if (snapshot == undefined) {
-          firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password)
-          .then(() => {
+    } else {
+      firebase
+        .firestore()
+        .collection("user")
+        .doc(phoneNumber)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.data() == undefined) {
             firebase
-              .firestore()
-              .collection("user")
-              .doc(phoneNumber)
-              .set({
-                phoneNumber,
-                email,
-                name,
-                balance,
-                role,
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => {
+              firebase
+                .firestore()
+                .collection("user")
+                .doc(phoneNumber)
+                .set({
+                  phoneNumber,
+                  email,
+                  name,
+                  balance,
+                  role,
+                });
+              navigation.navigate("BankAccount", {
+                username: name,
+                phoneNumber: phoneNumber,
               });
-            navigation.navigate("BankAccount", {
-              username: name,
-              phoneNumber: phoneNumber,
+            })
+            .catch(() => {
+              Alert.alert(
+                "Error",
+                "An account with a similar email already exists. Please try again",
+                [
+                  {
+                    text: "Retry",
+                  },
+                ]
+              );
             });
-          })
-          .catch(() => {
+          }  else {
             Alert.alert(
               "Error",
               "An account with a similar phone number already exists. Please try again",
               [
                 {
                   text: "Retry",
-                  onPress: () => {
-                      handleSignUp();
-                  },
                 },
               ]
             );
-          });
-        }  else {
-          Alert.alert(
-            "Error",
-            "An account with a similar email already exists. Please try again",
-            [
-              {
-                text: "Retry",
-                onPress: () => {
-                    handleSignUp();
-                },
-              },
-            ]
-          );
-        }
-      })
+          }
+        })
+    }
   };
 
   function renderButton() {

@@ -97,8 +97,10 @@ const SignIn = ({ navigation }) => {
   }
 
   function handleForgetPassword(){
-    const { phoneNumber }  = state.password;
+    const { phoneNumber, password} = state;
     if (phoneNumber == "") {
+      console.log(phoneNumber)
+      console.log(password)
       Alert.alert(
         "Error",
         "Need phone number to reset password.",
@@ -112,18 +114,21 @@ const SignIn = ({ navigation }) => {
         ]
       );
     } else {
+      console.log(phoneNumber)
+      console.log(password)
       firebase
         .firestore()
         .collection("user")
         .doc(phoneNumber)
         .get()
         .then((snapshot) => {
-          if (snapshot != undefined) {
+          if (snapshot.data() != undefined) {
             firebase
               .auth()
               .sendPasswordResetEmail(snapshot.data().email)
               .then(() => {
                 Alert.alert(
+                  "",
                   "Password reset email sent!",
                   [
                     {
@@ -149,9 +154,6 @@ const SignIn = ({ navigation }) => {
                 },
                 {
                   text: "No",
-                  onPress: () => {
-                      navigation.navigate("SignIn");
-                  },
                 },
               ]
             );
