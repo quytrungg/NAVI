@@ -39,94 +39,43 @@ const History = ({navigation, route}) => {
 
 
   function renderTransaction(){
-      const arr = [
-      {   id: 1,
-          icon: images.transfer,
-          color: COLORS.purple,
-          backgroundColor: COLORS.lightpurple,
-          description: "Transfer",
-          amount: "-500.000 VND"
-      },
-      {   id: 2,
-          icon: images.withdraw,
-          color: COLORS.yellow,
-          backgroundColor: COLORS.lightyellow,
-          description: "Withdraw",
-          amount: "-500.000 VND"
-      },
-      {   id: 3,
-          icon: images.deposit,
-          color: COLORS.primary,
-          backgroundColor: COLORS.lightGreen,
-          description: "Deposit",
-          amount: "+500.000 VND"
-      },
-      {   id: 4,
-        icon: images.deposit,
-        color: COLORS.primary,
-        backgroundColor: COLORS.lightGreen,
-        description: "Deposit",
-        amount: "+500.000 VND"
-    },
-    {   id: 5,
-        icon: images.deposit,
-        color: COLORS.primary,
-        backgroundColor: COLORS.lightGreen,
-        description: "Deposit",
-        amount: "+500.000 VND"
-    },
-    {   id: 6,
-        icon: images.deposit,
-        color: COLORS.primary,
-        backgroundColor: COLORS.lightGreen,
-        description: "Deposit",
-        amount: "+500.000 VND"
-    },
-    {   id: 7,
-        icon: images.deposit,
-        color: COLORS.primary,
-        backgroundColor: COLORS.lightGreen,
-        description: "Deposit",
-        amount: "+500.000 VND"
-    },
-    {   id: 8,
-        icon: images.deposit,
-        color: COLORS.primary,
-        backgroundColor: COLORS.lightGreen,
-        description: "Deposit",
-        amount: "+500.000 VND"
-    }];
-    // const [transactionList, getTransactionList] = useState([]);
-    // useEffect(() => {
-    //     const getTransactionList_ = async () => {
-    //         var i = 1
-    //         await firebase
-    //             .firestore()
-    //             .collection("transaction-history")
-    //             .where("phoneNumber", "!=", route.params.phoneNumber)
-    //             .get()
-    //             .then((snapshot) => {
-    //                 if (snapshot != undefined) {
-    //                     var list = [], i = 1
-    //                     snapshot.forEach((doc) => {
-    //                         var element = {}
-    //                         element.name = doc.data().name;
-    //                         element.phoneNumber = doc.data().phoneNumber;
-    //                         list.push(element)
-    //                     })
-    //                     getTransactionList(list)
-    //                 } else {
-    //                     console.log("does not exist");
-    //                 }
-    //             })
-    //     }
-    //     getTransactionList_()
-    // }, []);
-      return(
+    const [transactionList, getTransactionList] = useState([]);
+    useEffect(() => {
+        const getTransactionList_ = async () => {
+            var i = 1
+            await firebase
+                .firestore()
+                .collection("transaction-history")
+                .where("senderID", "==", route.params.phoneNumber)
+                .orderBy("ID")
+                .limit(10)
+                .get()
+                .then((snapshot) => {
+                    if (snapshot != undefined) {
+                        var list = [], i = 1
+                        snapshot.forEach((doc) => {
+                            var element = {}
+                            element.ID = i++;
+                            element.description = doc.data().message;
+                            element.senderID = doc.data().senderID;
+                            element.amount = doc.data.balanceChange;
+                            element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
+                            element.date = doc.data().date;
+                            list.push(element)
+                        })
+                        getTransactionList(list)
+                    } else {
+                        console.log("does not exist");
+                    }
+                })
+        }
+        getTransactionList_()
+    }, []);
+    return(
       <View>
-          {arr.map(data =>{
+          {transactionList.map(data =>{
               return(
-                  <View   key={data.id} 
+                  <View   key={data.ID} 
                           style={{borderWidth: 1,
                                   borderColor: COLORS.blueprim,
                                   backgroundColor: COLORS.white,
@@ -144,7 +93,7 @@ const History = ({navigation, route}) => {
                             <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
                                 <Text style={{color: COLORS.black, ...FONTS.h3}}>{data.description}</Text>
                                 <View style={{flexDirection: 'row'}}>
-                                    <Text style={{color: COLORS.black, ...FONTS.body4}}>HH:MM</Text>
+                                    <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
                                     <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: 100, top: -10}}>{data.amount}</Text>
                                 </View>
                             </View>

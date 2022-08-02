@@ -150,65 +150,76 @@ const SignUp = ({ navigation }) => {
       balance,
       role,
     } = state;
-    console.log(email);
+    if(email == "" || phoneNumber == "" || name == "" || password == ""){
+      Alert.alert(
+        "Error",
+        "Some of the information is empty. Please try again",
+        [
+          {
+            text: "Retry",
+            onPress: () => {
+                handleSignUp();
+            },
+          },
+        ]
+      );
+    }
     firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        firebase
-          .firestore()
-          .collection("user")
-          .doc(phoneNumber)
-          .set({
-            phoneNumber,
-            email,
-            name,
-            balance,
-            role,
-            friendList: [],
+      .firestore()
+      .collection("user")
+      .doc(phoneNumber)
+      .get()
+      .then((snapshot) => {
+        if (snapshot == undefined) {
+          firebase
+          .auth()
+          .createUserWithEmailAndPassword(email, password)
+          .then(() => {
+            firebase
+              .firestore()
+              .collection("user")
+              .doc(phoneNumber)
+              .set({
+                phoneNumber,
+                email,
+                name,
+                balance,
+                role,
+              });
+            navigation.navigate("BankAccount", {
+              username: name,
+              phoneNumber: phoneNumber,
+            });
+          })
+          .catch(() => {
+            Alert.alert(
+              "Error",
+              "An account with a similar phone number already exists. Please try again",
+              [
+                {
+                  text: "Retry",
+                  onPress: () => {
+                      handleSignUp();
+                  },
+                },
+              ]
+            );
           });
-        navigation.navigate("BankAccount", {
-          username: name,
-          phoneNumber: phoneNumber,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        if(state.email == "" || state.phoneNumber == "" || state.name == "" || state.password == ""){
+        }  else {
           Alert.alert(
             "Error",
-            "Some of the information is empty. Please try again",
+            "An account with a similar email already exists. Please try again",
             [
               {
                 text: "Retry",
                 onPress: () => {
                     handleSignUp();
                 },
-              },
-              {
-                text: "OK",
               },
             ]
           );
         }
-        else{
-          Alert.alert(
-            "Error",
-            "There are errors while signing up. Please try again",
-            [
-              {
-                text: "Retry",
-                onPress: () => {
-                    handleSignUp();
-                },
-              },
-              {
-                text: "OK",
-              },
-            ]
-          );
-          }
-      });
+      })
   };
 
   function renderButton() {

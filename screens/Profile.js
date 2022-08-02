@@ -95,11 +95,12 @@ const Profile = ({navigation, route}) => {
                 <Text style = {styles.nameText}>{route.params.username}</Text>
                 <Text style = {styles.inforText}>{route.params.phoneNumber}</Text>
                 <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity style = {styles.editButton}>
-                        <Text style = {styles.editText}>Edit Profile</Text>
+                    <TouchableOpacity style = {styles.editButton}
+                                    onPress={() => navigation.navigate("Password")}>
+                        <Text style = {styles.editText}>Edit Password</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style = {styles.editButton}>
-                        <Text style = {styles.editText}>Add Account</Text>
+                        <Text style = {styles.editText}>Edit Profile</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{margin: SIZES.padding * 0.5}}>

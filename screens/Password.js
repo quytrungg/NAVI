@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
@@ -46,17 +46,21 @@ const Password = ({ navigation }) => {
   }
 
   function handleConfirm(text){
+    console.log(text)
+    console.log(password)
     if (text != password){
       Alert.alert(
         "Error",
-        "Confirm password not match. Please try again"
+        "Confirm password not match. Please try again.",
+        [
+          {
+            text: "Retry",
+          },
+        ]
       );
     }
     else{
-      Alert.alert(
-        "Notification",
-        "Correct password"
-      );
+      
     }
   }
 
@@ -78,7 +82,7 @@ const Password = ({ navigation }) => {
                         placeholderTextColor={COLORS.gray}
                         secureTextEntry={!showPassword1}
                         selectionColor={COLORS.black}
-                        onBlur={(text) => password = text}/>
+                        onChangeText={(text) => password = text}/>
             <TouchableOpacity style={{position: 'absolute',
                                         right: 0,
                                         bottom: 10,
@@ -104,7 +108,7 @@ const Password = ({ navigation }) => {
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword2}
-                      onBlur={(text) => handleConfirm(text)}/>
+                      onEndEditing={(value) => handleConfirm(value.nativeEvent.text)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
@@ -122,8 +126,29 @@ const Password = ({ navigation }) => {
   }
 
   function handleChangePassword(){
-    console.log("Change password");
-    navigation.goBack();
+    firebase
+        .auth()
+        .currentUser
+        .updatePassword(password)
+        .then(() => {
+          Alert.alert(
+            "Notification",
+            "Correct password. Password has been changed.",
+            [
+              {
+                text: "OK",
+                onPress:() => {
+                  firebase
+                    .auth()
+                    .signOut()
+                    .then(() => {
+                      navigation.navigate("SignIn")
+                    })
+                }
+              }
+            ]
+          );
+        })
   }
   
   function renderButton(){

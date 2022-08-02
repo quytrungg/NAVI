@@ -13,7 +13,7 @@ const Bill = ({navigation, route}) => {
         ID: 0,
         type: route.params.transactionType,
         date: moment().utcOffset('+07:00').format('YYYY-MM-DD hh:mm:ss'),
-        balanceChange: Math.abs(route.params.balanceChange),
+        balanceChange: route.params.balanceChange,
         senderName: "",
         senderID: "",
         recipientName: "",

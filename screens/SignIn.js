@@ -97,16 +97,93 @@ const SignIn = ({ navigation }) => {
   }
 
   function handleForgetPassword(){
-    navigation.navigate("Password")
-  }
-
-  function randomNum(){
-    return Math.floor(Math.random() * 100) + 1;
+    const { phoneNumber }  = state.password;
+    if (phoneNumber == "") {
+      Alert.alert(
+        "Error",
+        "Need phone number to reset password.",
+        [
+          {
+            text: "Retry",
+            onPress: () => {
+                navigation.navigate("SignIn");
+            },
+          },
+        ]
+      );
+    } else {
+      firebase
+        .firestore()
+        .collection("user")
+        .doc(phoneNumber)
+        .get()
+        .then((snapshot) => {
+          if (snapshot != undefined) {
+            firebase
+              .auth()
+              .sendPasswordResetEmail(snapshot.data().email)
+              .then(() => {
+                Alert.alert(
+                  "Password reset email sent!",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () => {
+                        navigation.navigate("SignIn")
+                      }
+                    }
+                  ]
+                )
+              })
+          }
+          else {
+            Alert.alert(
+              "Error",
+              "Account does not exist. Do you wish to create a new account?",
+              [
+                {
+                  text: "Yes",
+                  onPress: () => {
+                      navigation.navigate("SignUp");
+                  },
+                },
+                {
+                  text: "No",
+                  onPress: () => {
+                      navigation.navigate("SignIn");
+                  },
+                },
+              ]
+            );
+          }
+        })
+    }
   }
 
   function handleSignIn() {
     const { phoneNumber, password } = state;
-    firebase
+    if (phoneNumber == "" || password == "") {
+      Alert.alert(
+        "Error",
+        "Some of the information is empty. Please try again",
+        [
+          {
+            text: "Retry",
+            onPress: () => {
+                navigation.navigate("SignIn");
+            },
+          },
+        ]
+      );
+    } else if (phoneNumber == "123456" && password == "adminnavi") {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword("adminnavi@gmail.com", password)
+        .then(() => {
+          navigation.navigate("HomeAdmin");
+        })
+    } else {
+      firebase
       .firestore()
       .collection("user")
       .doc(phoneNumber)
@@ -117,25 +194,20 @@ const SignIn = ({ navigation }) => {
           .auth()
           .signInWithEmailAndPassword(snapshot.data().email, password)
           .then(() => {
-            if (parseInt(snapshot.data().role) % 2 == 0) {
-              navigation.navigate("Loading", {
-                username: snapshot.data().name,
-                phoneNumber: phoneNumber,
-              });
-            } else {
-              navigation.navigate("HomeAdmin");
-            }
+            navigation.navigate("Loading", {
+              username: snapshot.data().name,
+              phoneNumber: phoneNumber,
+            });
           })
-        } else {
-          if(state.email == "" || state.phoneNumber == "" || state.name == "" || state.password == ""){
+          .catch(() => {
             Alert.alert(
               "Error",
-              "Some of the information is empty. Please try again",
+              "Wrong phone number/password. Please try again",
               [
                 {
                   text: "Retry",
                   onPress: () => {
-                      handleSignIn();
+                    navigation.navigate("SignIn");
                   },
                 },
                 {
@@ -143,26 +215,28 @@ const SignIn = ({ navigation }) => {
                 },
               ]
             );
-          }
-          else{
-            Alert.alert(
-              "Error",
-              "There are errors while signing up. Please try again",
-              [
-                {
-                  text: "Retry",
-                  onPress: () => {
-                      handleSignIn();
-                  },
-                },
-                {
-                  text: "OK",
-                },
-              ]
-            );
-          }
+          }) 
         }
       })
+      .catch(() => {
+        Alert.alert(
+          "Error",
+          "Wrong phone number/password. Please try again",
+          [
+            {
+              text: "Retry",
+              onPress: () => {
+                navigation.navigate("HomeAdmin");
+              },
+            },
+            {
+              text: "OK",
+            },
+          ]
+        );
+      }) 
+    }
+    
   }
   
   function renderButton(){
