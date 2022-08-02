@@ -269,9 +269,9 @@ const Home = ({navigation, route}) => {
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
 
-            <Modal visible={modalVisible} transparent={true} animationType={'fade'}>
-                <View style={{marginHorizontal: '5%', marginTop: "10%", marginBottom: "20%", backgroundColor: COLORS.blueback, borderColor: COLORS.blueprim, borderRadius: 20, borderWidth: 2, flex: 1}}>
-                    <View style={{alignItems: 'center', paddingVertical: "3%", backgroundColor: COLORS.blueprim, width: '100%', borderTopLeftRadius: 18, borderTopRightRadius: 18}}>
+            <Modal visible={modalVisible} transparent={true} animationType={'slide'}>
+                <View style={{marginHorizontal: '5%', marginTop: "30%", marginBottom: "30%", backgroundColor: COLORS.blueback, borderColor: COLORS.bluesec, borderRadius: 20, borderWidth: 2, flex: 1}}>
+                    <View style={{alignItems: 'center', paddingVertical: "3%", backgroundColor: COLORS.bluesec, width: '100%', borderTopLeftRadius: 18, borderTopRightRadius: 18}}>
                         <Text style={{color:COLORS.blueback, ...FONTS.h2}}>Notifications</Text>
                     </View>
 
@@ -293,7 +293,7 @@ const Home = ({navigation, route}) => {
                             renderItem={({item}) => {
                                 return(
                                     <View style={{paddingVertical: 5}}>
-                                        <View style={{backgroundColor: '#ffffff80',borderRadius: 10, paddingHorizontal: 15}}>
+                                        <View style={{backgroundColor: '#ffffff80',borderRadius: 5, paddingHorizontal: 15, borderWidth: 1, borderColor: COLORS.bluesec}}>
                                             <Text style={{...FONTS.h3, paddingTop: 10}}>{item.header}</Text>
                                             <Text style={{...FONTS.body3, paddingBottom: 10}}>{item.body}</Text>
                                         </View>
@@ -303,8 +303,8 @@ const Home = ({navigation, route}) => {
                     </View>
                     
                     <View style={{justifyContent:'center', alignItems: 'center', position: 'absolute', bottom: '2%', width: '100%'}}>
-                        <TouchableOpacity onPress={() => setModalVisible(false)} style={{justifyContent:'center', alignItems: 'center', width: 50, height: 50, borderRadius:25, backgroundColor: COLORS.blueprim}}>
-                            <Text style={{color: COLORS.blueback, ...FONTS.h2,  }}>X</Text>
+                        <TouchableOpacity onPress={() => setModalVisible(false)} style={{justifyContent:'center', alignItems: 'center', width: 50, height: 50, borderRadius:25, backgroundColor: COLORS.bluesec}}>
+                            <Image source={icons.close} style={{width: 20, height: 20, tintColor: COLORS.white}}/>
                         </TouchableOpacity>
                     </View>
                 </View>

@@ -45,7 +45,7 @@ const SignIn = ({ navigation }) => {
   function renderForm(){
     return (
       <View style={{marginTop: SIZES.padding * 7, 
-                    marginHorizontal: SIZES.padding * 3}}>
+                    marginHorizontal: SIZES.padding * 2}}>
         {/* Phone Number */}
         <View style={{position: 'absolute', width: '100%', height:'100%', opacity: 0.5, borderRadius: 20}}></View>
         <View style={{marginTop: SIZES.padding, marginHorizontal: SIZES.padding}}>
