@@ -105,9 +105,6 @@ const SignIn = ({ navigation }) => {
         [
           {
             text: "Retry",
-            onPress: () => {
-                navigation.navigate("SignIn");
-            },
           },
         ]
       );
@@ -180,7 +177,9 @@ const SignIn = ({ navigation }) => {
         .auth()
         .signInWithEmailAndPassword("adminnavi@gmail.com", password)
         .then(() => {
-          navigation.navigate("HomeAdmin");
+          navigation.navigate("HomeAdmin", {
+            username: "admin",
+          });
         })
     } else {
       firebase
