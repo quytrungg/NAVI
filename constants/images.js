@@ -12,7 +12,13 @@ const transfer = require("../assets/images/transfer.png");
 const withdraw = require("../assets/images/withdraw.png");
 const deposit = require("../assets/images/deposit.png");
 const bank = require("../assets/images/bank.png");
-const bg1 = require("../assets/images/navi_background.jpg")
+const bg1 = require("../assets/images/navi_background.jpg");
+const up = require("../assets/images/up.png");
+const down = require("../assets/images/down.png");
+const modify = require("../assets/images/modify.png");
+const view = require("../assets/images/view.png");
+const add = require("../assets/images/add.png");
+const remove = require("../assets/images/remove.png");
 
 export default {
     focus,
@@ -30,5 +36,10 @@ export default {
     withdraw,
     bank,
     bg1,
-
+    up,
+    down,
+    modify,
+    view,
+    add,
+    remove
 };

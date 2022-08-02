@@ -1,29 +1,29 @@
 import React, {useState} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar } from "react-native";
-import { COLORS, SIZES, FONTS, icons } from "../constants";
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
-const Admin = () => {
+const Admin = ({navigation}) => {
     const featuresData = [
         {   id: 1,
-            icon: icons.reload,
+            icon: images.modify,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "Modify"
         },
         {   id: 2,
-            icon: icons.send,
+            icon: images.view,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "View"
         },
         {   id: 3,
-            icon: icons.internet,
+            icon: images.add,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "Add Bank"
         },
         {   id: 4,
-            icon: icons.wallet,
+            icon: images.remove,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
             description: "Remove Bank"
@@ -85,6 +85,23 @@ const Admin = () => {
         )
     }
 
+    function handleFeature(item){
+        if(item.description == 'Modify'){
+            navigation.navigate("Search", {
+                flag: false,
+            });
+        }
+        else if(item.description == 'View'){
+            navigation.navigate("View");
+        }
+        else if(item.description == 'Add Bank'){
+            console.log(item.description);
+        }
+        else if(item.description == 'Remove Bank'){
+            console.log(item.description);
+        }
+    }
+
     function renderFeatures(){
         const Header = () => (
             <View style={{marginBottom: SIZES.padding * 2}}>
@@ -94,11 +111,11 @@ const Admin = () => {
         const renderItem = ({item}) => (
             <TouchableOpacity   style={{marginBottom: SIZES.padding * 2, 
                                         width: 60, alignItems: 'center'}}
-                                onPress={() => console.log(item.description)}>
+                                onPress={() => handleFeature(item)}>
                 <View style={{  height: 50,
                                 width: 50,
                                 marginBottom: 5,
-                                borderRadius: 20,
+                                borderRadius: 10,
                                 backgroundColor: item.backgroundColor,
                                 alignItems: 'center',
                                 justifyContent: 'center'}}>

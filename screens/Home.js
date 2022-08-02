@@ -184,6 +184,7 @@ const Home = ({navigation, route}) => {
             navigation.navigate("Search", {
                 username: route.params.username,
                 phoneNumber: route.params.phoneNumber,
+                flag: true,
             });
         }
     }
