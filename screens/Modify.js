@@ -178,7 +178,9 @@ const Modify = ({navigation, route}) => {
                     text: "Yes",
                     onPress: () => {
                         setTimeout(() => {
-                            navigation.push("HomeAdmin");
+                            navigation.push("HomeAdmin", {
+                                username: "admin",
+                            });
                             Alert.alert(
                                 "Notification",
                                 "Modify successful",
@@ -208,7 +210,7 @@ const Modify = ({navigation, route}) => {
                                         justifyContent: 'center',
                                         borderColor: COLORS.blueprim, borderWidth: 1}}
                                 onPress={() => handleModify(-1 * value)}>
-                    <Image source={images.down} style={{height: 30, width: 30, tintColor: COLORS.blueprim}}/>
+                    <Image source={images.down} style={{height: 30, width: 30, tintColor: COLORS.bluesec}}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={{height: 60,
                                         width: 120,
@@ -219,7 +221,7 @@ const Modify = ({navigation, route}) => {
                                         justifyContent: 'center',
                                         borderColor: COLORS.blueprim, borderWidth: 1}}
                                 onPress={() => handleModify(value)}>
-                    <Image source={images.up} style={{height: 30, width: 30, tintColor: COLORS.blueprim}}/>
+                    <Image source={images.up} style={{height: 30, width: 30, tintColor: COLORS.bluesec}}/>
                 </TouchableOpacity>
             </View>
         )
