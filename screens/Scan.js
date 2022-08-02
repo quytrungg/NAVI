@@ -1,9 +1,13 @@
-import React, {useRef} from "react";
-import {View,Text,Image,TouchableOpacity} from "react-native";
+import React, {useState} from "react";
+import {View,Text,Image,TouchableOpacity, StatusBar} from "react-native";
 import { Camera } from 'expo-camera';
 import { COLORS, FONTS, SIZES, icons, images } from "../constants";
 
-const Scan = ({ navigation }) => {
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
+const Scan = ({ navigation, route }) => {
     const [hasPermission, setHasPermission] = React.useState(null);
 
     React.useEffect(() => {
@@ -11,7 +15,7 @@ const Scan = ({ navigation }) => {
           const { status } = await Camera.requestCameraPermissionsAsync();
           setHasPermission(status === 'granted');
         })();
-      }, []);
+    }, []);
 
     if (hasPermission === null) { return <View />; }
     if (hasPermission === false) { return <Text>No access to camera</Text>; }
@@ -24,7 +28,7 @@ const Scan = ({ navigation }) => {
                 <TouchableOpacity   style={{width: 45,
                                             alignItems: 'center',
                                             justifyContent: 'center'}}
-                                    onPress={() => navigation.goBack("Home")}>
+                                    onPress={() => navigation.goBack()}>
                     <Image  source={icons.close}
                             style={{height: 20,
                                     width: 20,
@@ -122,11 +126,42 @@ const Scan = ({ navigation }) => {
 
     function onBarCodeRead(result) {
         console.log(result.data)
-        
+        if(result.data == 'Deposit'){
+            navigation.navigate("Deposit", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+            });
+        }
+        else if(result.data == 'Withdraw'){
+            navigation.navigate("Withdraw", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+            });
+        }
+        else if(!isNaN(result.data)){
+                firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(result.data)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot.data() != undefined) {
+                            navigation.navigate("Transfer",{
+                                recipientPhoneNumber: result.data,
+                                recipientUsername: snapshot.data().name,
+                                username: route.params.username,
+                                phoneNumber: route.params.phoneNumber,
+                            });
+                        } else {
+                            console.log("does not exist");
+                        }
+                    });
+        }
     }
 
     return (
         <View style={{flex: 1, backgroundColor: COLORS.transparent}}>
+            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             <Camera ref={ref => {Camera.camera = ref}}
                     style={{flex: 1}}
                     captureAudio={false}

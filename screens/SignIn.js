@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Platform, Alert, StatusBar, ImageBackground} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import { ScrollView } from "react-native-gesture-handler";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -9,7 +10,7 @@ import "firebase/compat/firestore";
 
 const SignIn = ({ navigation }) => {
   var state = {
-    fakeEmail: "",
+    phoneNumber: "",
     password: "",
   };
 
@@ -21,14 +22,9 @@ const SignIn = ({ navigation }) => {
                                 alignItems: "center", 
                                 marginTop: SIZES.padding * 6,
                                 paddingHorizontal: SIZES.padding * 2}}>
-        <Image  source={icons.back} 
-                resizeMode="contain" 
-                style={{width: 15, 
-                        height: 15, 
-                        tintColor: COLORS.blueback}}/>
         <Text style={{marginLeft: SIZES.padding,
                       color: COLORS.blueback, 
-                      ...FONTS.h4 }}>Sign In</Text>
+                      ...FONTS.h4 }}></Text>
       </TouchableOpacity>
     )
   }
@@ -49,9 +45,10 @@ const SignIn = ({ navigation }) => {
   function renderForm(){
     return (
       <View style={{marginTop: SIZES.padding * 7, 
-                    marginHorizontal: SIZES.padding * 3}}>
+                    marginHorizontal: SIZES.padding * 2}}>
         {/* Phone Number */}
-        <View style={{marginTop: SIZES.padding * 2}}>
+        <View style={{position: 'absolute', width: '100%', height:'100%', opacity: 0.5, borderRadius: 20}}></View>
+        <View style={{marginTop: SIZES.padding, marginHorizontal: SIZES.padding}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Phone Number</Text>
           <View style={{ flexDirection: 'row' }}>
             <TextInput  style={{flex: 1,
@@ -66,11 +63,11 @@ const SignIn = ({ navigation }) => {
                         placeholderTextColor={COLORS.gray}
                         maxLength={11}
                         selectionColor={COLORS.black}
-                        onChangeText={(phoneNumber) => (state.fakeEmail = phoneNumber + "@gmail.com")}/>
+                        onChangeText={(phoneNumber) => (state.phoneNumber = phoneNumber)}/>
           </View>
         </View>
         {/* Password */}
-        <View style={{marginTop: SIZES.padding * 2}}>
+        <View style={{marginTop: SIZES.padding * 2, marginHorizontal: SIZES.padding}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Password</Text>
           <TextInput  style={{marginVertical: SIZES.padding,
                               borderBottomColor: COLORS.black,
@@ -100,31 +97,147 @@ const SignIn = ({ navigation }) => {
   }
 
   function handleForgetPassword(){
-    navigation.navigate("Password")
+    const { phoneNumber, password} = state;
+    if (phoneNumber == "") {
+      console.log(phoneNumber)
+      console.log(password)
+      Alert.alert(
+        "Error",
+        "Need phone number to reset password.",
+        [
+          {
+            text: "Retry",
+          },
+        ]
+      );
+    } else {
+      console.log(phoneNumber)
+      console.log(password)
+      firebase
+        .firestore()
+        .collection("user")
+        .doc(phoneNumber)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.data() != undefined) {
+            firebase
+              .auth()
+              .sendPasswordResetEmail(snapshot.data().email)
+              .then(() => {
+                Alert.alert(
+                  "",
+                  "Password reset email sent!",
+                  [
+                    {
+                      text: "OK",
+                      onPress: () => {
+                        navigation.navigate("SignIn")
+                      }
+                    }
+                  ]
+                )
+              })
+          }
+          else {
+            Alert.alert(
+              "Error",
+              "Account does not exist. Do you wish to create a new account?",
+              [
+                {
+                  text: "Yes",
+                  onPress: () => {
+                      navigation.navigate("SignUp");
+                  },
+                },
+                {
+                  text: "No",
+                },
+              ]
+            );
+          }
+        })
+    }
   }
 
-  function randomNum(){
-    return Math.floor(Math.random() * 100) + 1;
-  }
-
-  function handleSignIn(num) {
-    const { fakeEmail, password } = state;
-    console.log(fakeEmail);
-    console.log(num);
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(fakeEmail, password)
-      .then((result) => {
-        console.log(result);
-        if(num % 2 == 0){
-          navigation.navigate("Loading");
+  function handleSignIn() {
+    const { phoneNumber, password } = state;
+    if (phoneNumber == "" || password == "") {
+      Alert.alert(
+        "Error",
+        "Some of the information is empty. Please try again",
+        [
+          {
+            text: "Retry",
+            onPress: () => {
+                navigation.navigate("SignIn");
+            },
+          },
+        ]
+      );
+    } else if (phoneNumber == "123456" && password == "adminnavi") {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword("adminnavi@gmail.com", password)
+        .then(() => {
+          navigation.navigate("HomeAdmin", {
+            username: "admin",
+          });
+        })
+    } else {
+      firebase
+      .firestore()
+      .collection("user")
+      .doc(phoneNumber)
+      .get()
+      .then((snapshot) => {
+        if (snapshot != undefined) {
+          firebase
+          .auth()
+          .signInWithEmailAndPassword(snapshot.data().email, password)
+          .then(() => {
+            navigation.navigate("Loading", {
+              username: snapshot.data().name,
+              phoneNumber: phoneNumber,
+            });
+          })
+          .catch(() => {
+            Alert.alert(
+              "Error",
+              "Wrong phone number/password. Please try again",
+              [
+                {
+                  text: "Retry",
+                  onPress: () => {
+                    navigation.navigate("SignIn");
+                  },
+                },
+                {
+                  text: "OK",
+                },
+              ]
+            );
+          }) 
         }
-        else navigation.navigate("HomeAdmin");;
       })
-      .catch((error) => {
-        console.log(error);
-        //woooooooooooooooooooooooooooooo
-      });
+      .catch(() => {
+        Alert.alert(
+          "Error",
+          "Wrong phone number/password. Please try again",
+          [
+            {
+              text: "Retry",
+              onPress: () => {
+                navigation.navigate("HomeAdmin");
+              },
+            },
+            {
+              text: "OK",
+            },
+          ]
+        );
+      }) 
+    }
+    
   }
   
   function renderButton(){
@@ -138,7 +251,7 @@ const SignIn = ({ navigation }) => {
                                   alignItems: 'center',
                                   justifyContent: 'center',
                                   borderColor: COLORS.blueprim}}
-                          onPress={() => handleSignIn(randomNum())}>
+                          onPress={() => handleSignIn()}>
           <Text style={{color: COLORS.white, ...FONTS.h3}}>Sign In</Text>
         </TouchableOpacity>
         <View style={{marginTop: SIZES.padding / 1.5,
@@ -167,8 +280,8 @@ const SignIn = ({ navigation }) => {
   return(
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
                           style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]}
-                      style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex:1}}>
+        <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <ScrollView>
           {renderHeader()}
           {renderLogo()}

@@ -6,54 +6,54 @@ import { COLORS, SIZES, FONTS, images } from "../constants";
 
 const StartUp = ({ navigation, phoneNum }) => {
 
-  function renderHeader(){
-    return (
-      <TouchableOpacity style={{flexDirection: 'row', 
-                                alignItems: "center", 
-                                marginTop: SIZES.padding * 10,
-                                paddingHorizontal: SIZES.padding * 2}} 
-                        onPress={() => console.log("Start Up")}>
-      </TouchableOpacity>
-    );
-  }
+    function renderHeader(){
+        return (
+            <TouchableOpacity style={{flexDirection: 'row', 
+                                    alignItems: "center", 
+                                    marginTop: SIZES.padding * 10,
+                                    paddingHorizontal: SIZES.padding * 2}} 
+                            onPress={() => console.log("Start Up")}>
+            </TouchableOpacity>
+        );
+    }
 
-  function renderLogo(){
-    return (
-      <View style={{marginTop: SIZES.padding * 5, 
-                    height: 120, alignItems: 'center', 
-                    justifyContent: 'center'}}>
-        <Image source={images.navilogo} 
-              resizeMode="contain" 
-              style={{width: "70%"}}/>
-      </View>
-    );
-  }
-
-  function renderForm(){
-    return (
-      <View style={{marginTop: SIZES.padding * 7, 
-                    marginHorizontal: SIZES.padding * 3}}>
-        {/* Phone Number */}
-        <View style={{marginTop: SIZES.padding * 2}}>
-          <Text style={{color: COLORS.black, ...FONTS.body3}}>Phone Number</Text>
-          <View style={{flexDirection: 'row'}}>
-            <TextInput  style={{flex: 1,
-                              marginVertical: SIZES.padding,
-                              borderBottomColor: COLORS.black,
-                              borderBottomWidth: 1,
-                              height: 40,
-                              color: COLORS.black,
-                              ...FONTS.body3}}
-                        keyboardType="number-pad"
-                        placeholder="Enter Phone Number"
-                        placeholderTextColor={COLORS.gray}
-                        selectionColor={COLORS.black}
-                        onChangeText={(text) => phoneNum = text}/>
-          </View>
+    function renderLogo(){
+        return (
+        <View style={{marginTop: SIZES.padding * 5, 
+                        height: 120, alignItems: 'center', 
+                        justifyContent: 'center'}}>
+            <Image source={images.navilogo} 
+                resizeMode="contain" 
+                style={{width: "70%"}}/>
         </View>
-      </View>
-    )
-  }
+        );
+    }
+
+    function renderForm(){
+        return (
+        <View style={{marginTop: SIZES.padding * 7, 
+                        marginHorizontal: SIZES.padding * 3}}>
+            {/* Phone Number */}
+            <View style={{marginTop: SIZES.padding * 2}}>
+                <Text style={{color: COLORS.black, ...FONTS.body3}}>Phone Number</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <TextInput  style={{flex: 1,
+                                    marginVertical: SIZES.padding,
+                                    borderBottomColor: COLORS.black,
+                                    borderBottomWidth: 1,
+                                    height: 40,
+                                    color: COLORS.black,
+                                    ...FONTS.body3}}
+                            keyboardType="number-pad"
+                            placeholder="Enter Phone Number"
+                            placeholderTextColor={COLORS.gray}
+                            selectionColor={COLORS.black}
+                            onChangeText={(text) => phoneNum = text}/>
+                </View>
+            </View>
+        </View>
+        )
+    }
 
   function renderButton(){
     return (

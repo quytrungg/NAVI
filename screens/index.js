@@ -11,6 +11,13 @@ import Deposit from "./Deposit";
 import Loading from "./Loading";
 import Password from "./Password";
 import Profile from "./Profile";
+import Verification from "./Verification";
+import Transfer from "./Transfer";
+import Search from "./Search";
+import Bill from "./Bill";
+import History from "./History";
+import Modify from "./Modify";
+import ViewAdmin from "./ViewAdmin";
 
 export {
     Home,
@@ -25,5 +32,12 @@ export {
     Deposit,
     Loading,
     Password,
-    Profile
+    Profile,
+    Verification,
+    Transfer,
+    Search,
+    Bill,
+    History,
+    Modify,
+    ViewAdmin
 };

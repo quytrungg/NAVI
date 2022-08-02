@@ -1,103 +1,116 @@
-import React, {useState} from "react";
-import { SafeAreaView, View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import React from "react";
+import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar, KeyboardAvoidingView } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
-import {Avatar} from 'react-native-paper';
 import {ScrollView} from 'react-native-gesture-handler';
-import { SafeAreaView, View, ScrollView, Text, Image, FlatList, TouchableOpacity, StyleSheet } from "react-native"
-import { TextInput } from "react-native-gesture-handler";
-import { COLORS, SIZES, FONTS, icons, images } from "../constants";
-import UserAvatar from 'react-native-user-avatar'
+import QRCode from 'react-native-qrcode-svg';
 
-const Profile = ({navigation}) => { 
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
+const Profile = ({navigation, route}) => { 
 
     const styles = StyleSheet.create({
+        header: {
+            height: 60, 
+            width: '100%', 
+            alignSelf: 'center', 
+            marginTop: 10,
+        },
         avatar: {
-          marginBottom: 10
+            marginBottom: 10,
+            backgroundColor: 'white',
+            justifyContent: 'center', 
+            width: 180,
+            height: 180,
+            borderWidth: 1,
+            borderColor: COLORS.blueprim,
+            borderRadius: 150,
         },
-
         avatarBox: {
-            alignItems:'center',
+            alignItems: 'center',
             justifyContent: 'center',
-            borderWidth:2,
-            borderColor:COLORS.blueback,
-            borderRadius: SIZES.radius /1.5,
-            marginTop:30,
-            marginHorizontal:10,
-            paddingVertical:10,
-            marginTop: 10
+            borderWidth: 1,
+            borderColor: COLORS.blueprim,
+            borderRadius: 10,
+            backgroundColor: COLORS.white,
+            marginHorizontal: 10,
+            paddingVertical: SIZES.padding,
+            marginTop: 10,
         },
-
         nameText: {
             ...FONTS.h1
         },
-
         inforText: {
             ...FONTS.h4
         },
-
-        editProfileButton: {
+        editButton: {
             alignItems: 'center',
             justifyContent:'center',
-            backgroundColor:COLORS.white,
-            borderColor:COLORS.blueprim,
-            borderWidth:1,
+            backgroundColor: COLORS.bluesec,
+            borderColor: COLORS.blueprim,
+            borderWidth: 1,
             width: 150,
             height: 50,
-            borderRadius:10,
-            marginTop:20,
+            borderRadius: 10,
+            marginTop: 20,
             margin: 5,
         },
-
-        editProfileText: {
-            color:COLORS.bluetext, 
+        editText: {
+            color: COLORS.white, 
             ...FONTS.h4
         },
-
         logoutButton: {
-            borderColor:COLORS.blueprim,
-            backgroundColor:COLORS.bluesec,
+            borderColor: COLORS.blueprim,
+            backgroundColor: COLORS.bluesec,
             alignSelf: 'center',
             alignItems: 'center',
-            justifyContent:'center',
-            borderWidth:1,
+            justifyContent: 'center',
+            borderWidth: 1,
             width: 180,
             height: 60,
-            borderRadius:SIZES.radius / 1.5,
-            bottom: 30,
-            marginTop: 30,
+            borderRadius: SIZES.radius / 1.5,
         },
-
         logoutText: {
             ...FONTS.h2, 
-            color:COLORS.white
+            color: COLORS.white
         }
     });
 
     function renderHeader() {
-      return (
-          <View style={{backgroundColor: COLORS.white, borderRadius:10, height: 60, width: 350, alignSelf: 'center', marginTop: 10}}>
-              <View   style={{flex: 1,
-                              justifyContent: 'center',
-                              alignItems: 'center'}}>
-                  <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Profile</Text>
-              </View>
-          </View>
+        
+        return (
+            <View style={styles.header}>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Profile</Text>
+                </View>
+            </View>
       )
-  }
+    }
 
     function renderAvatar() {
         return (
             <View style={styles.avatarBox}>
-                <Avatar.Image rounded source={images.avatar} size={160} style = {styles.avatar}/>
-                <Text style = {styles.nameText}>Name Here</Text>
-                <Text style = {styles.inforText}>User ID Here</Text>
+                <Image source={images.avatar} style = {styles.avatar}/>
+                <Text style = {styles.nameText}>{route.params.username}</Text>
+                <Text style = {styles.inforText}>{route.params.phoneNumber}</Text>
                 <View style={{flexDirection: 'row'}}>
-                  <TouchableOpacity style = {styles.editProfileButton}>
-                      <Text style = {styles.editProfileText}>Edit Profile</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style = {styles.editProfileButton}>
-                      <Text style = {styles.editProfileText}>Add Account</Text>
-                  </TouchableOpacity>
+                    <TouchableOpacity style = {styles.editButton}
+                                    onPress={() => navigation.navigate("Password")}>
+                        <Text style = {styles.editText}>Edit Password</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style = {styles.editButton}>
+                        <Text style = {styles.editText}>Edit Profile</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{margin: SIZES.padding * 0.5}}>
+                    <QRCode
+                        value={route.params.phoneNumber}
+                        logo={images.navilogo}
+                        logoBackgroundColor={COLORS.blueback}
+                        logoSize={25}
+                        size={150}
+                    />
                 </View>
             </View>
         );
@@ -108,26 +121,24 @@ const Profile = ({navigation}) => {
     }
   
     function handleSignOut(){
-      return Alert.alert(
-          "Log out",
-          "Are you sure you want to sign out?",
-          [
-            {
-              text: "No",
-            },
-            {
-              text: "Yes",
-              onPress: () => {
-                  signOut();
-              },
-            },
-          ]
+        return Alert.alert(
+            "Log out",
+            "Are you sure you want to sign out?",
+            [
+                {
+                    text: "No",
+                },
+                {
+                    text: "Yes",
+                    onPress: () => { signOut(); },
+                },
+            ]
         );
     }
 
     function renderButton() {
         return (
-            <View>
+            <View style={{marginTop: SIZES.padding * 2}}>
                 <TouchableOpacity style = {styles.logoutButton} onPress={() => handleSignOut()}>
                     <Text style = {styles.logoutText}>Logout</Text>
                 </TouchableOpacity>  
@@ -136,13 +147,18 @@ const Profile = ({navigation}) => {
     }
 
     return (
-        <SafeAreaView style={{flexGrow: 1, backgroundColor: COLORS.blueback}}>
-          {renderHeader()}
-          <ScrollView>
-            {renderAvatar()}
-          </ScrollView>
-          {renderButton()}
-        </SafeAreaView>
+        <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
+                          style={{flex: 1, backgroundColor: COLORS.blueback}}>
+            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
+            <SafeAreaView>
+                {renderHeader()}
+            </SafeAreaView>
+            <ScrollView>
+                {renderAvatar()}
+                {renderButton()}
+            </ScrollView>
+
+        </KeyboardAvoidingView>
     )
 }
 

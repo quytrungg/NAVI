@@ -1,19 +1,18 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert} from "react-native";
-import { LinearGradient } from 'expo-linear-gradient'
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, Alert, StatusBar} from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import { COLORS, SIZES, FONTS, icons } from "../constants";
 
-const BankDescription = ({navigation}) => {
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
+const BankDescription = ({navigation, route}) => {
   var state = {
-    fakeEmail: "",
-    password: "",
-    email: "",
-    phoneNumber: "",
-    name: "",
-    dob: "",
-    balance: "",
-    role: "",
+    bankName: route.params.bankName,
+    bankID: "",
+    ownerName: "",
+    publishDate: "",
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -47,12 +46,7 @@ const BankDescription = ({navigation}) => {
               <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Bank Information</Text>
           </View>
       </View>
-  )
-  }
-
-  function handlePhoneNumber(phoneNumber) {
-    state.phoneNumber = phoneNumber;
-    state.fakeEmail = phoneNumber + "@gmail.com";
+    )
   }
 
   function renderForm(){
@@ -70,8 +64,9 @@ const BankDescription = ({navigation}) => {
                       placeholder="Enter Bank Name" 
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
-                      onChangeText={(name) => (state.name = name)}/>
+                      value={state.bankName}/>
         </View>
+        {/* STK */}
         <View style={{ marginTop: SIZES.padding * 2 }}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Bank ID</Text>
           <TextInput  style={{marginVertical: SIZES.padding,
@@ -85,7 +80,7 @@ const BankDescription = ({navigation}) => {
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
-                      onChangeText={(password) => (state.password = password)}/>
+                      onChangeText={(bankID) => (state.bankID = bankID)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
@@ -98,7 +93,6 @@ const BankDescription = ({navigation}) => {
                             tintColor: COLORS.black}}/>
           </TouchableOpacity>
         </View>
-        {/* STK */}
         {/* Name */}
         <View style={{marginTop: SIZES.padding * 2}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Owner Name</Text>
@@ -113,7 +107,7 @@ const BankDescription = ({navigation}) => {
                         placeholder="Enter Name"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
-                        onChangeText={(email) => (state.email = email)}/>
+                        onChangeText={(ownerName) => (state.ownerName = ownerName)}/>
           </View>
         </View>
         {/* Date */}
@@ -127,12 +121,11 @@ const BankDescription = ({navigation}) => {
                                 height: 40,
                                 color: COLORS.black,
                                 ...FONTS.body3}}
-                        keyboardType="number-pad"
                         maxLength={5}
                         placeholder="e.g. 03/21"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
-                        onChangeText={(phoneNumber) => handlePhoneNumber(phoneNumber)}/>
+                        onChangeText={(publishDate) => (state.publishDate = publishDate)}/>
           </View>
         </View>
       </View>
@@ -140,38 +133,72 @@ const BankDescription = ({navigation}) => {
   }
 
   function handleBankLinking(){
+
     const {
-      fakeEmail,
-      password,
-      email,
-      phoneNumber,
-      name,
-      dob,
-      balance,
-      role,
+      bankName,
+      bankID,
+      ownerName,
+      publishDate,
     } = state;
-    console.log(fakeEmail);
+
+    if (bankName == "") {
+        Alert.alert(
+          "Error",
+          "Bank name cannot be empty. Please try again",
+          [
+            {
+              text: "OK"
+            },
+          ]
+        );
+    }
+
     firebase
-      .auth()
-      .createUserWithEmailAndPassword(fakeEmail, password)
-      .then((result) => {
-        firebase
-          .firestore()
-          .collection("user")
-          .doc(firebase.auth().currentUser.uid)
-          .set({
-            email,
-            phoneNumber,
-            name,
-          });
-        console.log(result);
-        console.log(firebase.auth().currentUser.uid);
-        navigation.navigate("Home");
+      .firestore()
+      .collection("user")
+      .doc(route.params.phoneNumber)
+      .collection("bank")
+      .doc(bankName)
+      .get()
+      .then((snapshot) => {
+        console.log("Path valid!")
+        if (snapshot.data() == undefined) {
+          firebase
+            .firestore()
+            .collection("user")
+            .doc(route.params.phoneNumber)
+            .collection("bank")
+            .doc(bankName)
+            .set({
+              bankName: bankName,
+              bankID: bankID,
+              ownerName: ownerName,
+              publishDate: publishDate,
+              balance: 10000000,
+            }).then(() => {
+              navigation.push("Home", {
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+              });
+            })
+        } else {
+          Alert.alert(
+            "Error",
+            "Bank is already registered.",
+            [
+              {
+                text: "OK",
+                onPress: () => {
+                  navigation.navigate("BankAccount");
+              },
+              },
+            ]
+          );
+        }
       })
       .catch((error) => {
-        console.log(error);
-        //woooooooooooooooooooooooooooooo
-      });
+        console.log(error)
+      })
   };
 
   function renderButton() {
@@ -193,10 +220,9 @@ const BankDescription = ({navigation}) => {
   }
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
-                          style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
-                      style={{flex: 1}}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex: 1}}>
+        <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <ScrollView>
           {renderHeader()}
           {renderLogo()}

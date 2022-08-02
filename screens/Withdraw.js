@@ -1,154 +1,280 @@
-import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert } from "react-native"
-import { TextInput } from "react-native-gesture-handler";
+import React, {useEffect, useState} from "react";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import { LinearGradient } from 'expo-linear-gradient';
+import CurrencyInput from 'react-native-currency-input';
 
-const Withdraw = ({navigation}) => {
-    const featuresData = [
-        {   id: 1,
-            icon: icons.reload,
-            color: COLORS.purple,
-            backgroundColor: COLORS.lightpurple,
-            description: "Bank Account"
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
+const Withdraw = ({navigation, route}) => {
+    function banknameToBankicon(bankName) {
+        if (bankName.substring(0, 4).toLowerCase() == "acb") {
+            return images.acb;
+        } else if (bankName.substring(0, 5).toLowerCase() == "bidv") {
+            return images.bidv;
+        } else if (bankName.substring(0, 2).toLowerCase() == "mb") {
+            return images.mb;
+        } else if (bankName.substring(0, 4).toLowerCase() == "tech") {
+            return images.tech;
+        } else if (bankName.substring(0, 2).toLowerCase() == "vi") {
+            return images.vcb;
+        } else if (bankName.substring(0, 2).toLowerCase() == "vp") {
+            return images.vp;
         }
-    ]
-
-    const [features, setFeatures] = useState(featuresData);
-
-    function renderHeader(){
-        return(
-            <View   style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
-                <TouchableOpacity style={{flexDirection: 'row', 
-                                alignItems: "center", 
-                                marginTop: SIZES.padding * 6,
-                                paddingHorizontal: SIZES.padding * 2}} 
-                        onPress={() => navigation.goBack("Home")}>
-                    <Image  source={icons.back} 
-                resizeMode="contain" 
-                style={{width: 15, 
-                        height: 15, 
-                        tintColor: COLORS.black}}/>
-                </TouchableOpacity>
-                <View style={{flex: 1, 
-                            justifyContent: 'center',
-                            alignItems: 'center'}}>
-                    <Text style={{ ...FONTS.h1 }}>Withdraw Money</Text>
-                    <Text style={{ ...FONTS.body2, color: COLORS.gray }}>quytrungg</Text>
-                </View>
-            </View>
-        )
+        else return icons.internet;
     }
 
-    // Phần đầu của rút tiền
+        const [balance, getBalance] = useState(0);
+        const [bankList, getBankList] = useState([]);
+        useEffect(() => {
+            const getBalance_ = async () => {
+                await firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(route.params.phoneNumber)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot.data() != undefined) {
+                            getBalance(snapshot.data().balance);
+                        } else {
+                            console.log("does not exist");
+                        }
+                    });
+            }
+            const getBankList_ = async () => {
+                await firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(route.params.phoneNumber)
+                    .collection("bank")
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            var list = [], i = 1
+                            snapshot.forEach((doc) => {
+                                var element = {}
+                                element.id = i++;
+                                element.icon = banknameToBankicon(doc.data().bankName);
+                                element.description = doc.data().bankName;
+                                element.bankID = doc.data().bankID;
+                                element.choice = false;
+                                list.push(element)
+                            })
+                            getBankList(list)
+                        } else {
+                            console.log("does not exist");
+                        }
+                    })
+            }
+            getBalance_()
+            getBankList_()
+        }, []);
 
-    function renderBanner(){
-        return (
-            <View style={{height: 120, borderRadius: 10, backgroundColor: COLORS.bluesec}}>
-                
-                <View>
-                    <Image  source={images.navilogo}
-                            style={{height: 22, width: 22}}/>
-                    <Text>Balance: $1200.65</Text>
-                </View>
-                <View>
-                    <Text style={{color: COLORS.black, ...FONTS.body3 }}>Withdraw amount</Text>
-                    <TextInput  style={{marginVertical: SIZES.padding, 
-                                        borderBottomColor: COLORS.black, 
-                                        borderBottomWidth: 1, height: 40, 
-                                        color: COLORS.black, 
-                                        ...FONTS.body3}} 
-                                placeholder="Enter Withdraw Amount" 
-                                placeholderTextColor={COLORS.gray} 
-                                selectionColor={COLORS.black}/>
-                </View>
-            </View>
-        )
+  function renderHeader(){
+      return (
+      <TouchableOpacity style={{flexDirection: 'row', 
+                                  alignItems: "center", 
+                                  marginTop: SIZES.padding * 1,
+                                  paddingHorizontal: SIZES.padding * 2}} 
+                          onPress={() => navigation.goBack()}>
+          <Image  source={icons.back} 
+                  resizeMode="contain" 
+                  style={{width: 15, 
+                          height: 15, 
+                          tintColor: COLORS.black}}/>
+          <Text style={{marginLeft: SIZES.padding / 2, 
+                      color: COLORS.black, 
+                      ...FONTS.h4}}>Home</Text>
+          </TouchableOpacity>
+      );
+  }
+
+  function renderLogo(){
+      return (
+          <View style={{flexDirection: 'row', marginVertical: SIZES.padding * 2}}>
+              <View   style={{flex: 1,
+                              justifyContent: 'center',
+                              alignItems: 'center'}}>
+                  <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Withdraw Money</Text>
+              </View>
+          </View>
+      )
+  }
+
+  function balanceDisplay(){
+    var temp = balance.toString();
+    for (var i = temp.length; i > 0; i -= 3){
+        if(i == temp.length){
+            continue;
+        }
+        temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
     }
+    return temp + " VND";
+  }
 
-    function renderWithdrawSource(){
-        const Header = () => (
-            <View style={{marginBottom: SIZES.padding * 2}}>
-                <Text style={{...FONTS.h3}}>Features</Text>
-            </View>
-        )
-        const renderItem = ({item}) => (
-            <TouchableOpacity   style={{marginBottom: SIZES.padding * 2, 
-                                        width: 60, alignItems: 'center'}}
-                                onPress={() => console.log(item.description)}>
-                <View style={{  height: 50,
-                                width: 50,
-                                marginBottom: 5,
-                                borderRadius: 20,
-                                backgroundColor: item.backgroundColor,
-                                alignItems: 'center',
-                                justifyContent: 'center'}}>
-                    <Image  source={item.icon}
-                            resizeMode="contain"
-                            style={{height: 20,
-                                    width: 20,
-                                    tintColor: item.color}}/>
-                </View>
-                <Text   style={{textAlign: 'center', 
-                                flexWrap: 'wrap', 
-                                ...FONTS.body4 }}>{item.description}</Text>
-            </TouchableOpacity>
-        )
+  const [value, setValue] = useState(0); 
 
-        return (
-            <FlatList
-                ListHeaderComponent={Header}
-                data={features}
-                numColumns={2}
-                columnWrapperStyle={{justifyContent: 'space-between'}}
-                keyExtractor={item => `${item.id}`}
-                renderItem={renderItem}
-                style={{ marginTop: SIZES.padding * 2 }}
-            />
-        )
+  function renderForm(){
+
+      return (
+          <View style={{  borderWidth: 1,
+                          borderColor: COLORS.blueprim,
+                          borderRadius: 10,
+                          backgroundColor: COLORS.white,
+                          marginHorizontal: 10,
+                          paddingVertical: 10,
+                          marginTop: 10}}>
+              <View style={{marginTop: SIZES.padding * 1, marginHorizontal: SIZES.padding * 3}}>
+                  <View style={{ flexDirection: 'row', backgroundColor: "#DDDDDD", flex: 1,
+                                              borderRadius: 10,
+                                              height: 60 }}>
+                      <Image  source={images.navilogo}
+                              resizeMode="contain" 
+                              style={{width: 45,
+                                      height: 45,
+                                      tintColor: COLORS.blueprim,
+                                      alignSelf: 'center',
+                                      marginLeft: 10}}/>
+                      <Text style={{color: COLORS.black, ...FONTS.body3, 
+                                  alignSelf: 'center', marginLeft: 10}}>Balance: </Text>
+                      <TextInput style={{...FONTS.body3, bottom: 0.5}}
+                                      editable={false} 
+                                      value={balanceDisplay()}/>
+                  </View>
+                  <View style={{marginTop: SIZES.padding * 2}}>
+                      <Text style={{color: COLORS.black, ...FONTS.body3}}>Withdraw Amount</Text>
+                      <View style={{ flexDirection: 'row', marginTop: SIZES.padding / 2}}>
+                          <CurrencyInput  style={{flex: 1,
+                                              marginBottom: SIZES.padding / 1,
+                                              paddingHorizontal: SIZES.padding,
+                                              borderColor: COLORS.black,
+                                              borderRadius: 10,
+                                              borderWidth: 1,
+                                              height: 50,
+                                              ...FONTS.body2}}
+                                      keyboardType="number-pad"
+                                      placeholder = "e.g 500.000 VND"
+                                      placeholderTextColor={COLORS.gray}
+                                      value = {value}
+                                      onChangeValue = {setValue}
+                                      separator = "."
+                                      suffix = " VND"
+                                      precision = {value >= 1000 && 0}/>
+                      </View>
+                  </View>
+              </View>
+          </View>
+      )
+  }
+
+  function renderSource(){
+      return(
+          <View>
+              <View style={{flexDirection: 'row', marginTop: SIZES.padding * 3,
+                          paddingHorizontal: SIZES.padding * 2}}>
+                  <View style={{flex: 1}}>
+                      <Text style={{...FONTS.h3}}>Source Money</Text>
+                  </View>
+                  <TouchableOpacity onPress={() => console.log("View All")}>
+                      <Text style={{color: COLORS.gray, ...FONTS.body4}}>View All</Text>
+                  </TouchableOpacity>
+              </View>
+          </View>
+      )
+  }
+
+  function handleWithdraw(data){
+    if(value <= 0){
+        Alert.alert(
+            "Warning",
+            "Withdraw amount cannot be 0!",
+            [
+                {
+                    text: "OK",
+                },
+            ]
+        );
     }
-
-    function renderHomeView(){
-        const HeaderComponent = () => (
-            <View style={{backgroundColor: COLORS.blueback}}>
-                {renderHeader()}
-                {renderBanner()}
-                {renderWithdrawSource()}
-                {renderPromoHeader()}
-            </View>
-        )
-        const renderPromoHeader = () => (
-            <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
-                <View style={{flex: 1}}>
-                    <Text style={{...FONTS.h3}}>Special Promos</Text>
-                </View>
-                <TouchableOpacity onPress={() => console.log("View All")}>
-                    <Text style={{color: COLORS.gray, ...FONTS.body4}}>View All</Text>
-                </TouchableOpacity>
-            </View>
-
-        )
-        return (
-            <FlatList
-                ListHeaderComponent={HeaderComponent}
-                contentContainerStyle={{paddingHorizontal: SIZES.padding * 3}}
-                numColumns={2}
-                columnWrapperStyle={{justifyContent: 'space-between'}}
-                keyExtractor={item => `${item.id}`}
-                showsVerticalScrollIndicator={false}
-                //pay attention to this
-                ListFooterComponent={
-                    <View style={{marginBottom: 80}}>
-                    </View>
-                }
-            />
-        )
+    else if(value > balance){
+        Alert.alert(
+          "Warning",
+          "Withdraw amount is larger than balance!",
+          [
+              {
+                  text: "OK",
+              },
+          ]
+        );
+      }
+    else{
+        navigation.push("Verification",{
+            username: route.params.username,
+            phoneNumber: route.params.phoneNumber,
+            balanceChange: value * -1,
+            transactionType: "Withdraw",
+            bankName: data.description,
+            bankID: data.bankID,
+            transcMessage: route.params.username + " withdraws to " + data.description,
+        })
     }
+  }
 
-    return (
-        <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
-            {renderHomeView()}
-        </SafeAreaView>
-    )
+  function renderBank(){
+      return(
+      <View>
+          {bankList.map(data =>{
+              return(
+                  <View   key={data.id} 
+                          style={{borderWidth: 1,
+                                  borderColor: COLORS.blueprim,
+                                  borderRadius: 10,
+                                  backgroundColor: COLORS.white,
+                                  marginHorizontal: 10,
+                                  marginTop: 10}}>
+
+                      <TouchableHighlight onPress={() => handleWithdraw(data)}
+                                          style={{borderRadius: 10}}
+                                          underlayColor="#DDDDDD">
+                          <View style={{flexDirection: 'row', paddingVertical: 10}}>
+                              <Image  source={data.icon}
+                                              resizeMode="contain" 
+                                              style={{width: 50,
+                                                      height: 50,
+                                                      marginLeft: 20, alignSelf: 'center'}}/>
+                              <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
+                                  <Text style={{color: COLORS.black, ...FONTS.h4, 
+                                              alignSelf: 'center'}}>{data.description}</Text>
+                                  <Text style={{color: COLORS.black, ...FONTS.body4}}>Free charge</Text>
+                              </View>
+                          </View>
+                      </TouchableHighlight>
+                  </View>
+              )
+          })}
+      </View>
+      )
+  }
+
+  return (
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex: 1}}>
+          <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
+          <SafeAreaView>
+              {renderHeader()}
+          </SafeAreaView>
+          <ScrollView>
+              {renderLogo()}
+              {renderForm()}
+              {renderSource()}
+              {renderBank()}          
+          </ScrollView>
+          <SafeAreaView>
+          </SafeAreaView>
+      </LinearGradient>
+      </KeyboardAvoidingView>
+  )
 }
 
 export default Withdraw;

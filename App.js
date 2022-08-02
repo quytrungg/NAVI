@@ -1,32 +1,29 @@
 import React from 'react';
-import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Loading, Password, Profile } from "./screens";
+import { SignUp, SignIn, StartUp, BankAccount, BankDescription, Withdraw, Deposit, Loading, Password, Profile, Verification, Transfer, Search, History, Bill, Modify, ViewAdmin } from "./screens";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import Tabs from "./navigation/tabs";
 import TabsAdmin from "./navigation/tabsAdmin";
-
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
-
-import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import rootReducer from "./redux/reducers";
 import thunk from "redux-thunk";
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD-U8hYj3kzXCYECo_5OWvtij5qB7unRD0",
-  authDomain: "instaclone-75dc2.firebaseapp.com",
-  projectId: "instaclone-75dc2",
-  storageBucket: "instaclone-75dc2.appspot.com",
-  messagingSenderId: "886924551037",
-  appId: "1:886924551037:web:f66ece62d64657abed2214",
-  measurementId: "G-SRJBL28KF6",
+    apiKey: "AIzaSyD4el1dD8ea8s9VSrlM9zH_Nu7jhFAtSrE",
+    authDomain: "fir-test-6daef.firebaseapp.com",
+    projectId: "fir-test-6daef",
+    storageBucket: "fir-test-6daef.appspot.com",
+    messagingSenderId: "623775787174",
+    appId: "1:623775787174:web:8274635b31986cca88ec67",
+    measurementId: "G-F3JJFHX1GL"
 };
 
 if (firebase.apps.length === 0) {
-  firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
 }
 
 const theme = {
@@ -68,6 +65,13 @@ const App = () => {
                 <Stack.Screen name="Deposit" component={Deposit}/>
                 <Stack.Screen name="Password" component={Password}/>
                 <Stack.Screen name="Profile" component={Profile}/>
+                <Stack.Screen name="Verification" component={Verification}/>
+                <Stack.Screen name="Transfer" component={Transfer}/>
+                <Stack.Screen name="Search" component={Search}/>
+                <Stack.Screen name="Bill" component={Bill}/>
+                <Stack.Screen name="History" component={History}/>
+                <Stack.Screen name="Modify" component={Modify}/>
+                <Stack.Screen name="ViewAdmin" component={ViewAdmin}/>
             </Stack.Navigator>
         </NavigationContainer>
         

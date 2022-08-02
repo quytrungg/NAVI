@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView} from "react-native";
-import { LinearGradient } from 'expo-linear-gradient'
-import { COLORS, SIZES, FONTS, icons, images } from "../constants"
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert} from "react-native";
+import { LinearGradient } from 'expo-linear-gradient';
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -15,8 +15,8 @@ const SignUp = ({ navigation }) => {
     phoneNumber: "",
     name: "",
     dob: "",
-    balance: "",
-    role: "",
+    balance: 500000,
+    role: "0",
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -53,27 +53,9 @@ const SignUp = ({ navigation }) => {
     );
   }
 
-  function handleEmailInput(text){
-    
-  }
-
-  function handlePasswordInput(text){
-    
-  }
-
-  function handleName (){
-    
-  }
-
-  function handlePhoneNumber(phoneNumber) {
-    state.phoneNumber = phoneNumber;
-    state.fakeEmail = phoneNumber + "@gmail.com";
-  }
-
   function renderForm(){
     return (
-      <View style={{marginTop: SIZES.padding * 3, 
-                    marginHorizontal: SIZES.padding * 3}}>
+      <View style={{marginTop: SIZES.padding * 3, marginHorizontal: SIZES.padding * 3}}>
         {/* Full Name */}
         <View style={{ marginTop: SIZES.padding * 3 }}>
           <Text style={{color: COLORS.black, ...FONTS.body3 }}>Full Name</Text>
@@ -85,6 +67,7 @@ const SignUp = ({ navigation }) => {
                       placeholder="Enter Full Name" 
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
+                      defaultValue={""}
                       onChangeText={(name) => (state.name = name)}/>
         </View>
         {/* Phone Number */}
@@ -103,7 +86,8 @@ const SignUp = ({ navigation }) => {
                         placeholder="Enter Phone Number"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
-                        onChangeText={(phoneNumber) => handlePhoneNumber(phoneNumber)}/>
+                        defaultValue={""}
+                        onChangeText={(phoneNumber) => (state.phoneNumber = phoneNumber)}/>
           </View>
         </View>
         {/* Email */}
@@ -117,9 +101,11 @@ const SignUp = ({ navigation }) => {
                                 height: 40,
                                 color: COLORS.black,
                                 ...FONTS.body3}}
+                        keyboardType="email-address"
                         placeholder="Enter Email"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
+                        defaultValue={""}
                         onChangeText={(email) => (state.email = email)}/>
           </View>
         </View>
@@ -136,6 +122,7 @@ const SignUp = ({ navigation }) => {
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
+                      defaultValue={""}
                       onChangeText={(password) => (state.password = password)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
@@ -155,7 +142,6 @@ const SignUp = ({ navigation }) => {
 
   function handleSignUp(){
     const {
-      fakeEmail,
       password,
       email,
       phoneNumber,
@@ -164,28 +150,68 @@ const SignUp = ({ navigation }) => {
       balance,
       role,
     } = state;
-    console.log(fakeEmail);
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(fakeEmail, password)
-      .then((result) => {
-        firebase
-          .firestore()
-          .collection("user")
-          .doc(firebase.auth().currentUser.uid)
-          .set({
-            email,
-            phoneNumber,
-            name,
-          });
-        console.log(result);
-        console.log(firebase.auth().currentUser.uid);
-        navigation.navigate("Loading");
-      })
-      .catch((error) => {
-        console.log(error);
-        //woooooooooooooooooooooooooooooo
-      });
+    if(email == "" || phoneNumber == "" || name == "" || password == ""){
+      Alert.alert(
+        "Error",
+        "Some of the information is empty. Please try again",
+        [
+          {
+            text: "Retry",
+          },
+        ]
+      );
+    } else {
+      firebase
+        .firestore()
+        .collection("user")
+        .doc(phoneNumber)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.data() == undefined) {
+            firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => {
+              firebase
+                .firestore()
+                .collection("user")
+                .doc(phoneNumber)
+                .set({
+                  phoneNumber,
+                  email,
+                  name,
+                  balance,
+                  role,
+                });
+              navigation.navigate("BankAccount", {
+                username: name,
+                phoneNumber: phoneNumber,
+              });
+            })
+            .catch(() => {
+              Alert.alert(
+                "Error",
+                "An account with a similar email already exists. Please try again",
+                [
+                  {
+                    text: "Retry",
+                  },
+                ]
+              );
+            });
+          }  else {
+            Alert.alert(
+              "Error",
+              "An account with a similar phone number already exists. Please try again",
+              [
+                {
+                  text: "Retry",
+                },
+              ]
+            );
+          }
+        })
+    }
   };
 
   function renderButton() {
@@ -207,10 +233,9 @@ const SignUp = ({ navigation }) => {
   }
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
-                          style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} 
-                      style={{flex: 1}}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{flex: 1}}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex: 1}}>
+        <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
         <SafeAreaView>
           {renderHeader()}
         </SafeAreaView>

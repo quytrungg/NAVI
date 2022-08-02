@@ -1,46 +1,46 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView} from "react-native";
-import { COLORS, SIZES, FONTS, icons } from "../constants";
+import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, StatusBar} from "react-native";
+import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
-const BankAccount = ({navigation}) => {
+const BankAccount = ({navigation, route}) => {
   const bankData = [
         {   id: 1,
-            icon: icons.bill,
+            icon: images.mb,
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "MB Bank",
             choice: false
         },
         {   id: 2,
-            icon: icons.bill,
+            icon: images.vcb,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "Vietcombank",
             choice: false
         },
         {   id: 3,
-            icon: icons.bill,
+            icon: images.acb,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
-            description: "TP Bank",
+            description: "ACB Bank",
             choice: false
         },
         {   id: 4,
-            icon: icons.bill,
+            icon: images.vp,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
             description: "VP Bank",
             choice: false
         },
         {   id: 5,
-            icon: icons.bill,
+            icon: images.bidv,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "BIDV",
             choice: false
         },
         {   id: 6,
-            icon: icons.bill,
+            icon: images.tech,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "Techcombank",
@@ -61,7 +61,10 @@ const BankAccount = ({navigation}) => {
                 {
                     text: "Yes",
                     onPress: () => {
-                        navigation.navigate("Home");
+                        navigation.navigate("Home", {
+                            username: route.params.username,
+                            phoneNumber: route.params.phoneNumber,
+                        });
                     },
                 },
             ]
@@ -72,8 +75,7 @@ const BankAccount = ({navigation}) => {
         return(
           <TouchableOpacity style={{flexDirection: 'row', 
                                     alignItems: "center", 
-                                    margin: SIZES.padding / 2,
-                                    marginLeft: -10}} 
+                                    marginTop: SIZES.padding * 1}} 
                             onPress={() => handleBackToHome()}>
             <Image  source={icons.back} 
                     resizeMode="contain" 
@@ -105,7 +107,7 @@ const BankAccount = ({navigation}) => {
                 <View style={{ marginBottom: SIZES.padding * 2 }}>
                   <Text style={{...FONTS.h3}}>An account must at least connect to 1 bank account.</Text>
                 </View>
-                <Text style={{...FONTS.h3, color: COLORS.gray}}>This is a list of banks that are able to connect to account.</Text>
+                <Text style={{...FONTS.h3, color: COLORS.gray}}>This is a list of banks that are able to connect to the account.</Text>
             </View>
         )
     }
@@ -117,11 +119,12 @@ const BankAccount = ({navigation}) => {
             </View>
         )
 
-        function handleBank(){
-            return Alert.alert(
-                "Warning",
-                "Select \"Next\" to link a bank account"
-            );
+        function handleBank(item){
+            navigation.navigate("BankDescription", {
+                bankName: item.description,
+                username: route.params.username,
+                phoneNumber: route.params.phoneNumber,
+            })
         }
 
         const renderItem = ({item}) => (
@@ -139,8 +142,8 @@ const BankAccount = ({navigation}) => {
                                 justifyContent: 'center'}}>
                     <Image  source={item.icon}
                             resizeMode="contain"
-                            style={{height: 20,
-                                    width: 20,
+                            style={{height: 55,
+                                    width: 55,
                                     tintColor: item.color}}/>
                 </View>
                 <Text   style={{textAlign: 'center', 
@@ -160,23 +163,6 @@ const BankAccount = ({navigation}) => {
           />
         )
     }
-    function renderButton(){
-        return(
-            <View style={{margin: SIZES.padding * 1.5}}>
-                <TouchableOpacity   style={{height: 60,
-                                            width: 180,
-                                            alignSelf: "center",
-                                            backgroundColor: COLORS.bluesec,
-                                            borderRadius: SIZES.radius / 1.5,
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            borderColor: COLORS.blueprim,}}
-                                    onPress = {() => navigation.push("BankDescription")}>
-                    <Text style={{color: COLORS.white, ...FONTS.h3}}>Next</Text>
-                </TouchableOpacity>
-            </View>
-        )
-    }
 
     function renderBank(){
         const HeaderComponent = () => (
@@ -184,7 +170,6 @@ const BankAccount = ({navigation}) => {
                 {renderHeader()}
                 {renderBanner()}
                 {renderFeatures()}
-                {renderButton()}
             </View>
         )
         return (
@@ -205,7 +190,8 @@ const BankAccount = ({navigation}) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
-            <SafeAreaView style={{paddingHorizontal: SIZES.padding * 3}}>
+            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
+            <SafeAreaView style={{paddingHorizontal: SIZES.padding * 2}}>
                 {renderTop()}
             </SafeAreaView>
             {renderBank()}
