@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput, StatusBar } from "react-native";
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput, StatusBar, Modal } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Home = ({navigation, route}) => {
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const [balance, getBalance] = useState(0);
 
@@ -56,9 +59,7 @@ const Home = ({navigation, route}) => {
     ]
 
     function handelNotification(){
-        return(
-            Alert.alert("Notifications", "No notifications")
-        )
+        setModalVisible(true);
     }
 
     function renderHeader(){
@@ -267,9 +268,52 @@ const Home = ({navigation, route}) => {
 
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
+
+            <Modal visible={modalVisible} transparent={true} animationType={'fade'}>
+                <View style={{marginHorizontal: '5%', marginTop: "10%", marginBottom: "20%", backgroundColor: COLORS.blueback, borderColor: COLORS.blueprim, borderRadius: 20, borderWidth: 2, flex: 1}}>
+                    <View style={{alignItems: 'center', paddingVertical: "3%", backgroundColor: COLORS.blueprim, width: '100%', borderTopLeftRadius: 18, borderTopRightRadius: 18}}>
+                        <Text style={{color:COLORS.blueback, ...FONTS.h2}}>Notifications</Text>
+                    </View>
+
+                    <View style={{padding:'5%', marginBottom: '20%'}} >
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            data={[
+                                {key: '1', header: 'Noti 1 header', body: 'Noti 1 content'},
+                                {key: '2', header: 'Noti 2 header', body: 'Noti 2 content'},
+                                {key: '3', header: 'Noti 3 header', body: 'Noti 3 content'},
+                                {key: '4', header: 'Noti 4 header', body: 'Noti 4 content'},
+                                {key: '5', header: 'Noti 5 header', body: 'Noti 5 content'},
+                                {key: '6', header: 'Noti 6 header', body: 'Noti 6 content'},
+                                {key: '7', header: 'Noti 7 header', body: 'Noti 7 content'},
+                                {key: '8', header: 'Noti 8 header', body: 'Noti 8 content'},
+                                {key: '9', header: 'Noti 9 header', body: 'Noti 9 content'},
+                                {key: '10', header: 'Noti 10 header', body: 'Noti 10 content'},
+                            ]}
+                            renderItem={({item}) => {
+                                return(
+                                    <View style={{paddingVertical: 5}}>
+                                        <View style={{backgroundColor: '#ffffff80',borderRadius: 10, paddingHorizontal: 15}}>
+                                            <Text style={{...FONTS.h3, paddingTop: 10}}>{item.header}</Text>
+                                            <Text style={{...FONTS.body3, paddingBottom: 10}}>{item.body}</Text>
+                                        </View>
+                                    </View>
+                                )}
+                            }/>
+                    </View>
+                    
+                    <View style={{justifyContent:'center', alignItems: 'center', position: 'absolute', bottom: '2%', width: '100%'}}>
+                        <TouchableOpacity onPress={() => setModalVisible(false)} style={{justifyContent:'center', alignItems: 'center', width: 50, height: 50, borderRadius:25, backgroundColor: COLORS.blueprim}}>
+                            <Text style={{color: COLORS.blueback, ...FONTS.h2,  }}>X</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             {renderHomeView()}
         </SafeAreaView>
+
     )
     
 }
