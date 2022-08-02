@@ -65,7 +65,7 @@ const Modify = ({navigation, route}) => {
 
         return (
                 <View style={{marginTop: SIZES.padding * 1, marginHorizontal: SIZES.padding * 3}}>
-                    
+                    <View>
                         <View style={{marginTop: SIZES.padding * 3, paddingHorizontal: SIZES.padding * 1}}>
                             <View style={{ marginTop: SIZES.padding / 2}}>
                                 <CurrencyInput  style={{flex: 1,
@@ -85,25 +85,27 @@ const Modify = ({navigation, route}) => {
                                             precision = {value >= 1000 && 0}/>
                             </View>
                         </View>
-                        {renderButton()}
-                        <View style={{marginTop: SIZES.padding * 3}}>
-                            <Text style={{color: COLORS.black, ...FONTS.body3}}>Message</Text>
-                            <View style={{marginTop: SIZES.padding}}>
-                                <TextInput  style={{paddingHorizontal: SIZES.padding * 1,
-                                                    borderRadius: 10,
-                                                    borderWidth: 1,
-                                                    height: 190,
-                                                    ...FONTS.body2,
-                                                    borderColor: COLORS.blueprim,
-                                                    backgroundColor: COLORS.white}}
-                                            placeholder = "Enter message"
-                                            multiline={true}
-                                            placeholderTextColor={COLORS.gray}/>
-                            </View>
+                    </View>
+                    
+                    <View style={{marginTop: SIZES.padding * 3}}>
+                        <Text style={{color: COLORS.black, ...FONTS.body3}}>Message</Text>
+                        <View style={{marginTop: SIZES.padding}}>
+                            <TextInput  style={{paddingHorizontal: SIZES.padding * 1,
+                                                borderRadius: 10,
+                                                borderWidth: 1,
+                                                height: 190,
+                                                ...FONTS.body2,
+                                                borderColor: COLORS.blueprim,
+                                                backgroundColor: COLORS.white}}
+                                        placeholder = "Enter message"
+                                        multiline={true}
+                                        placeholderTextColor={COLORS.gray}/>
                         </View>
-                </View>
-        )
-    }
+                    </View>
+                    {renderButton()}
+              </View>
+      )
+  }
 
     function renderBank(){
         const arr = [
@@ -141,33 +143,58 @@ const Modify = ({navigation, route}) => {
         )
     }
 
-    function handleModify(value){
-        if(value == 0){
-            Alert.alert(
-                "Warning",
-                "Modify amount cannot be 0!",
-                [
-                    {
-                        text: "OK",
+  function handleModify(value){
+      if(value <= 0){
+        Alert.alert(
+            "Warning",
+            "Modify amount cannot be 0!",
+            [
+                {
+                    text: "OK",
+                },
+            ]
+        );
+      }
+      else if(value > balance){
+        Alert.alert(
+            "Warning",
+            "Modify amount larger than user balance",
+            [
+                {
+                    text: "OK",
+                },
+            ]
+        );
+      }
+      else{
+        Alert.alert(
+            "Warning",
+            "Are you sure? You cannot undo this action",
+            [
+                {
+                    text: "No",
+                },
+                {
+                    text: "Yes",
+                    onPress: () => {
+                        setTimeout(() => {
+                            navigation.push("HomeAdmin");
+                            Alert.alert(
+                                "Notification",
+                                "Modify successful",
+                                [
+                                    {
+                                        text: "OK",
+                                    },
+                                ]
+                            );
+                        }, 1000);
                     },
-                ]
-            );
-        }
-        else if(-value > balance){
-            Alert.alert(
-                "Warning",
-                "Modify amount larger than user balance",
-                [
-                    {
-                        text: "OK",
-                    },
-                ]
-            );
-        }
-        else{
-            
-        }
-    }
+                }
+            ]
+        );
+      }
+  }
 
     function renderButton() {
         return(
