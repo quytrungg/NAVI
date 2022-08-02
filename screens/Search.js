@@ -8,61 +8,45 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const Search = ({navigation, route}) => {
-
-    const [balance, getBalance] = useState(0);
     const [userList, getUserList] = useState([]);
-    useEffect(() => {
-        const getBalance_ = async () => {
-            await firebase
-                .firestore()
-                .collection("user")
-                .doc(route.params.phoneNumber)
-                .get()
-                .then((snapshot) => {
-                    if (snapshot.data() != undefined) {
-                        getBalance(snapshot.data().balance);
-                    } else {
-                        console.log("does not exist");
-                    }
-                });
-        }
-        const getUserList_ = async () => {
-            await firebase
-                .firestore()
-                .collection("user")
-                .where("phoneNumber", "!=", route.params.phoneNumber)
-                .get()
-                .then((snapshot) => {
-                    if (snapshot != undefined) {
-                        var list = [], i = 1
-                        snapshot.forEach((doc) => {
-                            var element = {}
-                            element.name = doc.data().name;
-                            element.phoneNumber = doc.data().phoneNumber;
-                            list.push(element)
-                        })
-                        getUserList(list)
-                    } else {
-                        console.log("does not exist");
-                    }
-                })
-        }
-        getBalance_()
-        getUserList_()
-    }, []);
+    if (route.params.flag == true) {
+        useEffect(() => {
+            const getUserList_ = async () => {
+                await firebase
+                    .firestore()
+                    .collection("user")
+                    .where("phoneNumber", "!=", route.params.phoneNumber)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            var list = [], i = 1
+                            snapshot.forEach((doc) => {
+                                var element = {}
+                                element.name = doc.data().name;
+                                element.phoneNumber = doc.data().phoneNumber;
+                                list.push(element)
+                            })
+                            getUserList(list)
+                        } else {
+                            console.log("does not exist");
+                        }
+                    })
+            }
+            getUserList_()
+        }, []);
+    }
     
     function refreshSearchUser(text) {
         firebase
             .firestore()
             .collection("user")
-            .where("phoneNumber", "!=", route.params.phoneNumber)
             .get()
             .then((snapshot) => {
                 if (snapshot != undefined) {
                     var list = [], i = 1
                     snapshot.forEach((doc) => {
                         var temp = doc.data().phoneNumber
-                        if (temp.substring(0, text.length) == text) {
+                        if (temp.substring(0, text.length) == text && (route.params.flag == false || temp != route.params.phoneNumber)) {
                             var element = {}
                             element.name = doc.data().name;
                             element.phoneNumber = doc.data().phoneNumber;
@@ -136,7 +120,6 @@ const Search = ({navigation, route}) => {
   }
 
   function handleNavigateUser(data){
-    console.log(route.params.username,  route.params.phoneNumber); 
     if(route.params.flag){
         navigation.navigate("Transfer", {
             username: route.params.username,
