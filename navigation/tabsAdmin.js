@@ -3,7 +3,7 @@ import {View, Image, TouchableOpacity, StyleSheet} from "react-native";
 import { createBottomTabNavigator, BottomTabBar } from "@react-navigation/bottom-tabs";
 import Svg, {Path} from 'react-native-svg';
 import { isIphoneX } from 'react-native-iphone-x-helper';
-import { Admin, Scan, Profile } from "../screens";
+import { Admin, Log, Profile } from "../screens";
 import { COLORS, icons } from "../constants";
 
 const TabAd = createBottomTabNavigator();
@@ -111,12 +111,12 @@ const TabsAdmin = ({route}) => {
             />
             <TabAd.Screen
                 name="Scan"
-                component={Scan}
+                component={Log}
                 options={{
                     headerShown: false,
                     tabBarShowLabel: false,
                     tabBarIcon: ({ focused }) => (
-                        <Image  source={icons.scan}
+                        <Image  source={icons.bill}
                                 resizeMode="contain"
                                 style={{width: 25,
                                         height: 25,

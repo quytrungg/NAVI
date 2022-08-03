@@ -18,6 +18,7 @@ import Bill from "./Bill";
 import History from "./History";
 import Modify from "./Modify";
 import ViewAdmin from "./ViewAdmin";
+import Log from "./Log";
 
 export {
     Home,
@@ -39,5 +40,6 @@ export {
     Bill,
     History,
     Modify,
-    ViewAdmin
+    ViewAdmin,
+    Log
 };
