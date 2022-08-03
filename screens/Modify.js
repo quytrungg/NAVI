@@ -190,12 +190,11 @@ const Modify = ({navigation, route}) => {
                                     newAdminLogID = 0;
                                     firebase
                                         .firestore()
-                                        .collection("admin-changelog")
+                                        .collection("admin-log")
                                         .orderBy("ID", "desc")
                                         .limit(1)
                                         .get()
                                         .then((querySnapshot) => {
-                                            console.log("Fetch successfully")
                                             querySnapshot.forEach((doc) => {
                                                 newAdminLogID = doc.data().ID + 1
                                             })
@@ -203,17 +202,17 @@ const Modify = ({navigation, route}) => {
                                         .then(() => {
                                             firebase
                                                 .firestore()
-                                                .collection("admin-changelog")
-                                                .doc(newAdminLogID)
+                                                .collection("admin-log")
+                                                .doc(String(newAdminLogID))
                                                 .set({
-                                                    newAdminLogID,
+                                                    ID: newAdminLogID,
                                                     date: moment().utcOffset('+07:00').format('YYYY-MM-DD hh:mm:ss'),
                                                     balanceChange: value,
                                                     targetUsername: route.params.recipientUsername,
                                                     targetPhoneNumber: route.params.recipientPhoneNumber,
-                                                    actionType: value < 0 ? "Reduce" : "Increase",
-                                                    message: value < 0 ? "Admin reduces your balance by " + String(Math.abs(value)) :
-                                                                        "Admin increases your balance by " + String(value),
+                                                    type: value < 0 ? "Decrease" : "Increase",
+                                                    description: value < 0 ? "Decrease " + route.params.recipientUsername + "'s balance by " + String(Math.abs(value)) :
+                                                                        "Increase " + route.params.recipientUsername + "'s balance by " + String(value),
                                                 })
                                         })
                                 })

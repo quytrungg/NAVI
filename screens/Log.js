@@ -48,6 +48,7 @@ const Log = () => {
             await firebase
                 .firestore()
                 .collection("admin-log")
+                .where("ID", "!=", 0)
                 .get()
                 .then((snapshot) => {
                     if (snapshot != undefined) {
@@ -59,7 +60,8 @@ const Log = () => {
                             element.balanceChange = doc.data().balanceChange
                             element.targetUsername = doc.data().targetUsername
                             element.targetPhoneNumber = doc.data().targetPhoneNumber
-                            element.message = doc.data().message
+                            element.description = doc.data().description
+                            element.icon = doc.data().balanceChange > 0 ? images.up : images.down
                             list.push(element)
                         })
                         getLogList(list)
@@ -87,11 +89,12 @@ const Log = () => {
                         <Image  source={data.icon}
                                 style={{width: 30,
                                     height: 30,
-                                    marginLeft: 20, alignSelf: 'center', tintColor: COLORS.bluesec, 
+                                    marginLeft: 15, alignSelf: 'center', tintColor: COLORS.bluesec, 
                                     resizeMode:"contain",
                                     flexDirection: 'column'}}/>
-                        <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
-                            <Text style={{color: COLORS.black, ...FONTS.h4}}>{data.message}</Text>
+                        <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 15}}>
+                            <Text style={{color: COLORS.black, ...FONTS.h4}}
+                                resizeMode = "contain">{data.description}</Text>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
                                 <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 270, top: -10}}>{data.amount}</Text>
