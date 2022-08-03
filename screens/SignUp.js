@@ -1,11 +1,14 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert, Dimensions} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('window').width;
 
 const SignUp = ({ navigation }) => {
   var state = {
@@ -25,7 +28,7 @@ const SignUp = ({ navigation }) => {
     return (
       <TouchableOpacity style={{flexDirection: 'row', 
                                 alignItems: "center", 
-                                marginTop: SIZES.padding * 1,
+                                marginTop: heightScreen * 0.025,
                                 paddingHorizontal: SIZES.padding * 2}} 
                         onPress={() => navigation.navigate("SignIn")}>
         <Image  source={icons.back} 

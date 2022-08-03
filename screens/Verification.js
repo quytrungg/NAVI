@@ -1,11 +1,14 @@
 import React from "react";
-import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar} from "react-native";
+import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, Dimensions} from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import {ScrollView} from 'react-native-gesture-handler';
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('window').width;
 
 const Verification = ({navigation, route}) => {
     const styles = StyleSheet.create({ 
