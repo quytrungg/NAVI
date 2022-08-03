@@ -23,7 +23,7 @@ const Verification = ({navigation, route}) => {
             alignItems: 'center',
             justifyContent: 'center',
             paddingVertical: 10,
-            marginTop: 10,
+            marginTop: heightScreen * 0.025,
         },
         titleBox: {
             alignItems: 'center',

@@ -9,7 +9,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const heightScreen = Dimensions.get('window').height;
-const widthScreen = Dimensions.get('window').width;
+const widthScreen = Dimensions.get('screen').width;
 
 const Bill = ({navigation, route}) => {
     var UISenderText, UIReceiverText;
@@ -172,6 +172,7 @@ const Bill = ({navigation, route}) => {
             fontSize: 24,
             alignSelf: 'center',
             textAlign: 'right',
+            marginLeft: widthScreen * 0.035,
         },
 
         text2: {
@@ -191,7 +192,7 @@ const Bill = ({navigation, route}) => {
             ...FONTS.body3,
             marginBottom: 5,
             textAlign: 'right',
-            marginLeft: widthScreen - 235,
+            marginLeft: widthScreen - 245,
         },
 
         text5: {
@@ -199,7 +200,7 @@ const Bill = ({navigation, route}) => {
             ...FONTS.body3,
             marginBottom: 5,
             textAlign: 'right',
-            marginLeft: widthScreen - 200,
+            marginLeft: widthScreen - 230,
         },
 
         text6: {
@@ -252,7 +253,7 @@ const Bill = ({navigation, route}) => {
             <View style = {styles.topBox}>
                 <View style = {{flexDirection: 'row', paddingVertical: 10}}>
                     <Image  source = {images.navilogo} style = {styles.logo}/>
-                    <View style = {{flexDirection: 'column', alignSelf: 'center', marginLeft: widthScreen - 380}}>
+                    <View style = {{flexDirection: 'column', alignSelf: 'center'}}>
                         <Text style = {styles.text1}>Successful Transaction</Text>
                         <Text style = {styles.text2}>{handleBalanceChange()}</Text>
                     </View>

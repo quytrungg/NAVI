@@ -1,6 +1,9 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, StatusBar} from "react-native";
+import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, StatusBar, Dimensions} from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('window').width;
 
 const BankAccount = ({navigation, route}) => {
   const bankData = [
@@ -75,7 +78,7 @@ const BankAccount = ({navigation, route}) => {
         return(
           <TouchableOpacity style={{flexDirection: 'row', 
                                     alignItems: "center", 
-                                    marginTop: SIZES.padding * 1}} 
+                                    marginTop: widthScreen * 0.05}} 
                             onPress={() => handleBackToHome()}>
             <Image  source={icons.back} 
                     resizeMode="contain" 

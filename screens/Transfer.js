@@ -16,7 +16,7 @@ const Transfer = ({navigation, route}) => {
       return (
       <TouchableOpacity style={{flexDirection: 'row', 
                                   alignItems: "center", 
-                                  marginTop: SIZES.padding * 1,
+                                  marginTop: heightScreen * 0.025,
                                   paddingHorizontal: SIZES.padding * 2}} 
                           onPress={() => navigation.goBack()}>
           <Image  source={icons.back} 

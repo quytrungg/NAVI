@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('window').width;
 
 const Search = ({navigation, route}) => {
     const [userList, getUserList] = useState([]);
@@ -63,7 +66,7 @@ const Search = ({navigation, route}) => {
 
   function renderHeader(){
       return (
-        <View style={{flexDirection: 'row', marginTop: SIZES.padding * 2}}>
+        <View style={{flexDirection: 'row', marginTop: widthScreen * 0.06}}>
             <TouchableOpacity style={{marginTop: SIZES.padding * 1,
                                     marginLeft: SIZES.padding * 1.5}} 
                           onPress={() => navigation.goBack()}>
@@ -82,7 +85,7 @@ const Search = ({navigation, route}) => {
                                     borderWidth: 1,
                                     height: 40,
                                     width: 310,
-                                    ...FONTS.bdoy3}}
+                                    ...FONTS.body3}}
                             placeholder ="Search by phone number"
                             placeholderTextColor={COLORS.gray}
                             onChangeText = {(text) => refreshSearchUser(text)} />
