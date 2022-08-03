@@ -13,6 +13,8 @@ const Home = ({navigation, route}) => {
 
     const [balance, getBalance] = useState(0);
 
+    const [showNoti, setShowNoti] = useState(true);
+
     useEffect(() => {
         const getBalance_ = async () => {
             await firebase
@@ -60,6 +62,7 @@ const Home = ({navigation, route}) => {
 
     function handelNotification(){
         setModalVisible(true);
+        setShowNoti(!showNoti);
     }
 
     function renderHeader(){
@@ -118,14 +121,13 @@ const Home = ({navigation, route}) => {
                                     style={{width: 20,
                                             height: 20,
                                             tintColor: COLORS.blueprim}}/>
-                            <View   style={{position: 'absolute',
+                            {showNoti && <View   style={{position: 'absolute',
                                             top: -5,
                                             right: -5,
                                             height: 10,
                                             width: 10,
                                             backgroundColor: COLORS.red,
-                                            borderRadius: 5}}>
-                            </View>
+                                            borderRadius: 5}}></View>}
                         </TouchableOpacity>
                     </View>
                 </View>

@@ -50,7 +50,7 @@ const History = ({navigation, route}) => {
                 .firestore()
                 .collection("transaction-history")
                 .where("senderID", "==", route.params.phoneNumber)
-                .orderBy("ID")
+                .orderBy("ID", "desc")
                 .limit(10)
                 .get()
                 .then((snapshot) => {
@@ -78,8 +78,9 @@ const History = ({navigation, route}) => {
       <View>
           {transactionList.map(data =>{
               return(
-                  <View   key={data.ID} 
-                          style={{borderWidth: 1,
+                    <TouchableOpacity key={data.ID} 
+                                onPress={() =>console.log("work")}>
+                        <View   style={{borderWidth: 1,
                                   borderColor: COLORS.blueprim,
                                   backgroundColor: COLORS.white,
                                   borderRadius: 5,
@@ -101,6 +102,7 @@ const History = ({navigation, route}) => {
                             </View>
                         </View>
                     </View>
+                    </TouchableOpacity>
               )
             })}
             </View>

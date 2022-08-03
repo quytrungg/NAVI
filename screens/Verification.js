@@ -258,7 +258,7 @@ const Verification = ({navigation, route}) => {
                         
                             
                     })
-                navigation.navigate("Bill", {
+                navigation.push("Bill", {
                     username: route.params.username,
                     phoneNumber: route.params.phoneNumber,
                     recipientUsername: route.params.recipientUsername,
