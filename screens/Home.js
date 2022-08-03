@@ -6,7 +6,6 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import { ScrollView } from "react-native-gesture-handler";
-import moment from "moment";
 
 const Home = ({navigation, route}) => {
 
@@ -269,38 +268,6 @@ const Home = ({navigation, route}) => {
         )
     }
 
-    function getUpdatedNotif() {
-        var list = []
-            firebase
-                .firestore()
-                .collection("transaction-history")
-                .where("recipientID", "==", route.params.username)
-                .onSnapshot((querySnapshot) => {
-                    querySnapshot.forEach((doc) => {
-                        element = {}
-                        element.key = moment(doc.data().date)
-                        element.header = doc.data().type
-                        element.body = doc.data().description
-                        list.push(element)
-                    });
-                })
-            // firebase
-            //     .firestore()
-            //     .collection("admin-log")
-            //     .where("targetUsername", "==", route.params.username)
-            //     .onSnapshot((querySnapshot) => {
-            //         querySnapshot.forEach((doc) => {
-            //             element = {}
-            //             element.key = moment(doc.data().date)
-            //             element.header = doc.data().type
-            //             element.body = doc.data().description
-            //             list.push(element)
-            //         });
-            //     })
-        list = [...list].sort((a, b) => a.key.isBefore(b.key, "second") ? 1 : -1,)
-        return list
-    }
-
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.blueback}}>
 
@@ -313,20 +280,18 @@ const Home = ({navigation, route}) => {
                     <View style={{padding:'5%', marginBottom: '20%'}} >
                         <FlatList
                             showsVerticalScrollIndicator={false}
-                            // data={[
-                            //     {key: '1', header: 'Noti 1 header', body: 'Noti 1 content'},
-                            //     {key: '2', header: 'Noti 2 header', body: 'Noti 2 content'},
-                            //     {key: '3', header: 'Noti 3 header', body: 'Noti 3 content'},
-                            //     {key: '4', header: 'Noti 4 header', body: 'Noti 4 content'},
-                            //     {key: '5', header: 'Noti 5 header', body: 'Noti 5 content'},
-                            //     {key: '6', header: 'Noti 6 header', body: 'Noti 6 content'},
-                            //     {key: '7', header: 'Noti 7 header', body: 'Noti 7 content'},
-                            //     {key: '8', header: 'Noti 8 header', body: 'Noti 8 content'},
-                            //     {key: '9', header: 'Noti 9 header', body: 'Noti 9 content'},
-                            //     {key: '10', header: 'Noti 10 header', body: 'Noti 10 content'},
-                            // ]}
-                            data = {getUpdatedNotif()}
-                            keyExtractor={(item) => item.key}
+                            data={[
+                                {key: '1', header: 'Noti 1 header', body: 'Noti 1 content'},
+                                {key: '2', header: 'Noti 2 header', body: 'Noti 2 content'},
+                                {key: '3', header: 'Noti 3 header', body: 'Noti 3 content'},
+                                {key: '4', header: 'Noti 4 header', body: 'Noti 4 content'},
+                                {key: '5', header: 'Noti 5 header', body: 'Noti 5 content'},
+                                {key: '6', header: 'Noti 6 header', body: 'Noti 6 content'},
+                                {key: '7', header: 'Noti 7 header', body: 'Noti 7 content'},
+                                {key: '8', header: 'Noti 8 header', body: 'Noti 8 content'},
+                                {key: '9', header: 'Noti 9 header', body: 'Noti 9 content'},
+                                {key: '10', header: 'Noti 10 header', body: 'Noti 10 content'},
+                            ]}
                             renderItem={({item}) => {
                                 return(
                                     <View style={{paddingVertical: 5}}>
