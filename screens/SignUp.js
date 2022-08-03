@@ -11,18 +11,11 @@ const heightScreen = Dimensions.get('window').height;
 const widthScreen = Dimensions.get('window').width;
 
 const SignUp = ({ navigation }) => {
-  var state = {
-    fakeEmail: "",
-    password: "",
-    email: "",
-    phoneNumber: "",
-    name: "",
-    dob: "",
-    balance: 500000,
-    role: "0",
-  };
-
   const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
   function renderHeader(){
     return (
@@ -71,7 +64,7 @@ const SignUp = ({ navigation }) => {
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
                       defaultValue={""}
-                      onChangeText={(name) => (state.name = name)}/>
+                      onChangeText={(name) => setName(name)}/>
         </View>
         {/* Phone Number */}
         <View style={{marginTop: SIZES.padding * 2}}>
@@ -90,7 +83,7 @@ const SignUp = ({ navigation }) => {
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
                         defaultValue={""}
-                        onChangeText={(phoneNumber) => (state.phoneNumber = phoneNumber)}/>
+                        onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}/>
           </View>
         </View>
         {/* Email */}
@@ -109,7 +102,7 @@ const SignUp = ({ navigation }) => {
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
                         defaultValue={""}
-                        onChangeText={(email) => (state.email = email)}/>
+                        onChangeText={(email) => setEmail(email)}/>
           </View>
         </View>
         {/* Password */}
@@ -126,7 +119,7 @@ const SignUp = ({ navigation }) => {
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
                       defaultValue={""}
-                      onChangeText={(password) => (state.password = password)}/>
+                      onChangeText={(password) => setPassword(password)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
@@ -144,15 +137,6 @@ const SignUp = ({ navigation }) => {
   }
 
   function handleSignUp(){
-    const {
-      password,
-      email,
-      phoneNumber,
-      name,
-      dob,
-      balance,
-      role,
-    } = state;
     if(email == "" || phoneNumber == "" || name == "" || password == ""){
       Alert.alert(
         "Error",
@@ -183,13 +167,14 @@ const SignUp = ({ navigation }) => {
                   phoneNumber,
                   email,
                   name,
-                  balance,
-                  role,
-                });
-              navigation.navigate("BankAccount", {
-                username: name,
-                phoneNumber: phoneNumber,
-              });
+                  balance: 500000,
+                })
+                .then(() => {
+                  navigation.navigate("BankAccount", {
+                    username: name,
+                    phoneNumber: phoneNumber,
+                  });
+                })
             })
             .catch(() => {
               Alert.alert(

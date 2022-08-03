@@ -14,7 +14,10 @@ const BankDescription = ({navigation, route}) => {
     ownerName: "",
     publishDate: "",
   };
-
+  const [bankName, setBankName] = useState(route.params.bankName)
+  const [bankID, setBankID] = useState("")
+  const [ownerName, setOwnerName] = useState("")
+  const [publishDate, setPublishDate] = useState("")
   const [showPassword, setShowPassword] = useState(false);
 
   function renderHeader(){
@@ -64,7 +67,7 @@ const BankDescription = ({navigation, route}) => {
                       placeholder="Enter Bank Name" 
                       placeholderTextColor={COLORS.gray} 
                       selectionColor={COLORS.black}
-                      value={state.bankName}/>
+                      value={bankName}/>
         </View>
         {/* STK */}
         <View style={{ marginTop: SIZES.padding * 2 }}>
@@ -80,7 +83,7 @@ const BankDescription = ({navigation, route}) => {
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
-                      onChangeText={(bankID) => (state.bankID = bankID)}/>
+                      onChangeText={(bankID) => setBankID(bankID)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
@@ -107,7 +110,7 @@ const BankDescription = ({navigation, route}) => {
                         placeholder="Enter Name"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
-                        onChangeText={(ownerName) => (state.ownerName = ownerName)}/>
+                        onChangeText={(ownerName) => setOwnerName(ownerName)}/>
           </View>
         </View>
         {/* Date */}
@@ -125,7 +128,7 @@ const BankDescription = ({navigation, route}) => {
                         placeholder="e.g. 03/21"
                         placeholderTextColor={COLORS.gray}
                         selectionColor={COLORS.black}
-                        onChangeText={(publishDate) => (state.publishDate = publishDate)}/>
+                        onChangeText={(publishDate) => setPublishDate(publishDate)}/>
           </View>
         </View>
       </View>
@@ -133,73 +136,64 @@ const BankDescription = ({navigation, route}) => {
   }
 
   function handleBankLinking(){
-
-    const {
-      bankName,
-      bankID,
-      ownerName,
-      publishDate,
-    } = state;
-
-    if (bankName == "") {
-        Alert.alert(
-          "Error",
-          "Bank name cannot be empty. Please try again",
-          [
-            {
-              text: "OK"
-            },
-          ]
-        );
+    if (bankID == "" || ownerName == "" || publishDate == "") {
+      Alert.alert(
+        "Error",
+        "Some of the information is empty. Please try again",
+        [
+          {
+            text: "OK",
+          },
+        ]
+      );
+    } else {
+      firebase
+        .firestore()
+        .collection("user")
+        .doc(route.params.phoneNumber)
+        .collection("bank")
+        .doc(bankName)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.data() == undefined) {
+            firebase
+              .firestore()
+              .collection("user")
+              .doc(route.params.phoneNumber)
+              .collection("bank")
+              .doc(bankName)
+              .set({
+                bankName: bankName,
+                bankID: bankID,
+                ownerName: ownerName,
+                publishDate: publishDate,
+                balance: 10000000,
+              }).then(() => {
+                navigation.push("Home", {
+                  username: route.params.username,
+                  phoneNumber: route.params.phoneNumber,
+                });
+              })
+          } else {
+            Alert.alert(
+              "Error",
+              "Bank is already registered.",
+              [
+                {
+                  text: "OK",
+                  onPress: () => {
+                    setBankID("")
+                    setOwnerName("")
+                    setPublishDate("")
+                    navigation.navigate("BankAccount");
+                  },
+                },
+              ]
+            );
+          }
+        })
+    };
     }
-
-    firebase
-      .firestore()
-      .collection("user")
-      .doc(route.params.phoneNumber)
-      .collection("bank")
-      .doc(bankName)
-      .get()
-      .then((snapshot) => {
-        console.log("Path valid!")
-        if (snapshot.data() == undefined) {
-          firebase
-            .firestore()
-            .collection("user")
-            .doc(route.params.phoneNumber)
-            .collection("bank")
-            .doc(bankName)
-            .set({
-              bankName: bankName,
-              bankID: bankID,
-              ownerName: ownerName,
-              publishDate: publishDate,
-              balance: 10000000,
-            }).then(() => {
-              navigation.push("Home", {
-                username: route.params.username,
-                phoneNumber: route.params.phoneNumber,
-              });
-            })
-        } else {
-          Alert.alert(
-            "Error",
-            "Bank is already registered.",
-            [
-              {
-                text: "OK",
-                onPress: () => {
-                  navigation.navigate("BankAccount");
-              },
-              },
-            ]
-          );
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  };
 
   function renderButton() {
     return(

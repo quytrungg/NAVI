@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, StyleSheet, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
+import moment from "moment";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -45,7 +46,7 @@ const History = ({navigation, route}) => {
     const [transactionList, getTransactionList] = useState([]);
     useEffect(() => {
         const getTransactionList_ = async () => {
-            var i = 1
+            var list = []
             await firebase
                 .firestore()
                 .collection("transaction-history")
@@ -55,10 +56,9 @@ const History = ({navigation, route}) => {
                 .get()
                 .then((snapshot) => {
                     if (snapshot != undefined) {
-                        var list = [], i = 1
                         snapshot.forEach((doc) => {
                             var element = {}
-                            element.ID = i++;
+                            element.ID = doc.data().date;
                             element.description = doc.data().message;
                             element.senderID = doc.data().senderID;
                             element.amount = doc.data.balanceChange;
@@ -66,11 +66,34 @@ const History = ({navigation, route}) => {
                             element.date = doc.data().date;
                             list.push(element)
                         })
-                        getTransactionList(list)
                     } else {
                         console.log("does not exist");
                     }
                 })
+                await firebase
+                    .firestore()
+                    .collection("transaction-history")
+                    .where("recipientID", "==", route.params.phoneNumber)
+                    .orderBy("ID", "desc")
+                    .limit(10)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            snapshot.forEach((doc) => {
+                                var element = {}
+                                element.ID = moment(doc.data().date);
+                                element.description = doc.data().message;
+                                element.senderID = doc.data().recipientID;
+                                element.amount = doc.data.balanceChange;
+                                element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
+                                element.date = doc.data().date;
+                                list.push(element)
+                            })
+                        } else {
+                            console.log("does not exist");
+                        }
+                    })
+                getTransactionList([...list].sort((a, b) => a.ID.isBefore(b.ID, "second") ? 1 : -1,))
         }
         getTransactionList_()
     }, []);

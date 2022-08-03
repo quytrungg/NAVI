@@ -9,12 +9,9 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const SignIn = ({ navigation }) => {
-  var state = {
-    phoneNumber: "",
-    password: "",
-  };
-
   const [showPassword, setShowPassword] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [password, setPassword] = useState("")
 
   function renderHeader(){
     return(
@@ -63,7 +60,7 @@ const SignIn = ({ navigation }) => {
                         placeholderTextColor={COLORS.gray}
                         maxLength={11}
                         selectionColor={COLORS.black}
-                        onChangeText={(phoneNumber) => (state.phoneNumber = phoneNumber)}/>
+                        onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}/>
           </View>
         </View>
         {/* Password */}
@@ -79,7 +76,7 @@ const SignIn = ({ navigation }) => {
                       placeholderTextColor={COLORS.gray}
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
-                      onChangeText={(password) => (state.password = password)}/>
+                      onChangeText={(password) => setPassword(password)}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
@@ -97,10 +94,7 @@ const SignIn = ({ navigation }) => {
   }
 
   function handleForgetPassword(){
-    const { phoneNumber, password} = state;
     if (phoneNumber == "") {
-      console.log(phoneNumber)
-      console.log(password)
       Alert.alert(
         "Error",
         "Need phone number to reset password.",
@@ -111,8 +105,6 @@ const SignIn = ({ navigation }) => {
         ]
       );
     } else {
-      console.log(phoneNumber)
-      console.log(password)
       firebase
         .firestore()
         .collection("user")
@@ -160,8 +152,9 @@ const SignIn = ({ navigation }) => {
   }
 
   function handleSignIn() {
-    const { phoneNumber, password } = state;
     if (phoneNumber == "" || password == "") {
+      console.log(phoneNumber)
+      console.log(password)
       Alert.alert(
         "Error",
         "Some of the information is empty. Please try again",
@@ -184,6 +177,8 @@ const SignIn = ({ navigation }) => {
           });
         })
     } else {
+      console.log(phoneNumber)
+      console.log(password)
       firebase
       .firestore()
       .collection("user")
