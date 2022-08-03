@@ -210,8 +210,10 @@ const Modify = ({navigation, route}) => {
                                                     date: moment().utcOffset('+07:00').format('YYYY-MM-DD hh:mm:ss'),
                                                     balanceChange: value,
                                                     targetUsername: route.params.recipientUsername,
-                                                    targetPhonenumber: route.params.recipientPhoneNumber,
-                                                    
+                                                    targetPhoneNumber: route.params.recipientPhoneNumber,
+                                                    actionType: value < 0 ? "Reduce" : "Increase",
+                                                    message: value < 0 ? "Admin reduces your balance by " + String(Math.abs(value)) :
+                                                                        "Admin increases your balance by " + String(value),
                                                 })
                                         })
                                 })

@@ -10,7 +10,7 @@ import "firebase/compat/firestore";
 const heightScreen = Dimensions.get('window').height;
 const widthScreen = Dimensions.get('window').width;
 
-const Log = ({navigation, route}) => {
+const Log = () => {
 
     function renderLogo(){
         return (
@@ -41,41 +41,38 @@ const Log = ({navigation, route}) => {
     }
 
 
-  function renderTransaction(){
-    const [transactionList, getTransactionList] = useState([]);
+  function renderLog(){
+    const [logList, getLogList] = useState([]);
     useEffect(() => {
-        const getTransactionList_ = async () => {
+        const getLogList_ = async () => {
             await firebase
                 .firestore()
-                .collection("transaction-history")
-                .where("senderID", "==", route.params.phoneNumber)
-                .orderBy("ID", "desc")
-                .limit(10)
+                .collection("admin-log")
                 .get()
                 .then((snapshot) => {
                     if (snapshot != undefined) {
-                        var list = [], i = 1
+                        var list = []
                         snapshot.forEach((doc) => {
                             var element = {}
-                            element.ID = i++;
-                            element.description = doc.data().message;
-                            element.senderID = doc.data().senderID;
-                            element.amount = doc.data.balanceChange;
-                            element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
-                            element.date = doc.data().date;
+                            element.ID = doc.data().ID
+                            element.date = doc.data().date
+                            element.balanceChange = doc.data().balanceChange
+                            element.targetUsername = doc.data().targetUsername
+                            element.targetPhoneNumber = doc.data().targetPhoneNumber
+                            element.message = doc.data().message
                             list.push(element)
                         })
-                        getTransactionList(list)
+                        getLogList(list)
                     } else {
                         console.log("does not exist");
                     }
                 })
         }
-        getTransactionList_()
+        getLogList_()
     }, []);
     return(
       <View>
-          {transactionList.map(data =>{
+          {logList.map(data =>{
               return(
                     <TouchableOpacity key={data.ID} 
                                 onPress={() =>console.log("work")}>
@@ -94,7 +91,7 @@ const Log = ({navigation, route}) => {
                                     resizeMode:"contain",
                                     flexDirection: 'column'}}/>
                         <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
-                            <Text style={{color: COLORS.black, ...FONTS.h4}}>{data.description}</Text>
+                            <Text style={{color: COLORS.black, ...FONTS.h4}}>{data.message}</Text>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
                                 <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 270, top: -10}}>{data.amount}</Text>
@@ -117,7 +114,7 @@ const Log = ({navigation, route}) => {
             </SafeAreaView>
             <ScrollView style={{flexGrow: heightScreen}}>
                 {renderSource()}
-                {renderTransaction()}
+                {renderLog()}
             </ScrollView>
         </LinearGradient>
         </KeyboardAvoidingView>

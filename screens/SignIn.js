@@ -153,8 +153,6 @@ const SignIn = ({ navigation }) => {
 
   function handleSignIn() {
     if (phoneNumber == "" || password == "") {
-      console.log(phoneNumber)
-      console.log(password)
       Alert.alert(
         "Error",
         "Some of the information is empty. Please try again",
@@ -177,8 +175,6 @@ const SignIn = ({ navigation }) => {
           });
         })
     } else {
-      console.log(phoneNumber)
-      console.log(password)
       firebase
       .firestore()
       .collection("user")
@@ -190,9 +186,11 @@ const SignIn = ({ navigation }) => {
           .auth()
           .signInWithEmailAndPassword(snapshot.data().email, password)
           .then(() => {
+            setPhoneNumber("")
+            setPassword("")
             navigation.navigate("Loading", {
               username: snapshot.data().name,
-              phoneNumber: phoneNumber,
+              phoneNumber: snapshot.data().phoneNumber,
             });
           })
           .catch(() => {

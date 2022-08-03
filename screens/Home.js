@@ -62,7 +62,7 @@ const Home = ({navigation, route}) => {
 
     function handelNotification(){
         setModalVisible(true);
-        setShowNoti(!showNoti);
+        setShowNoti(false);
     }
 
     function renderHeader(){
