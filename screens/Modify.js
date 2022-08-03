@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
+import moment from "moment";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -144,7 +145,7 @@ const Modify = ({navigation, route}) => {
     }
 
   function handleModify(value){
-      if(value <= 0){
+      if(value == 0){
         Alert.alert(
             "Warning",
             "Modify amount cannot be 0!",
@@ -155,7 +156,7 @@ const Modify = ({navigation, route}) => {
             ]
         );
       }
-      else if(value > balance){
+      else if(-value > balance){
         Alert.alert(
             "Warning",
             "Modify amount larger than user balance",
@@ -178,15 +179,53 @@ const Modify = ({navigation, route}) => {
                     text: "Yes",
                     onPress: () => {
                         setTimeout(() => {
-                            navigation.push("HomeAdmin", {
-                                username: "admin",
-                            });
+                            firebase
+                                .firestore()
+                                .collection("user")
+                                .doc(route.params.recipientPhoneNumber)
+                                .update({
+                                    balance: balance + value,
+                                })
+                                .then(() => {
+                                    newAdminLogID = 0;
+                                    firebase
+                                        .firestore()
+                                        .collection("admin-changelog")
+                                        .orderBy("ID", "desc")
+                                        .limit(1)
+                                        .get()
+                                        .then((querySnapshot) => {
+                                            console.log("Fetch successfully")
+                                            querySnapshot.forEach((doc) => {
+                                                newAdminLogID = doc.data().ID + 1
+                                            })
+                                        })
+                                        .then(() => {
+                                            firebase
+                                                .firestore()
+                                                .collection("admin-changelog")
+                                                .doc(newAdminLogID)
+                                                .set({
+                                                    newAdminLogID,
+                                                    date: moment().utcOffset('+07:00').format('YYYY-MM-DD hh:mm:ss'),
+                                                    balanceChange: value,
+                                                    targetUsername: route.params.recipientUsername,
+                                                    targetPhonenumber: route.params.recipientPhoneNumber,
+                                                    
+                                                })
+                                        })
+                                })
                             Alert.alert(
                                 "Notification",
                                 "Modify successful",
                                 [
                                     {
                                         text: "OK",
+                                        onPress: () => {
+                                            navigation.push("HomeAdmin", {
+                                                username: "admin",
+                                            });
+                                        }
                                     },
                                 ]
                             );
