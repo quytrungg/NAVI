@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput, StatusBar, Modal } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import moment from "moment"
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -8,12 +9,10 @@ import "firebase/compat/firestore";
 import { ScrollView } from "react-native-gesture-handler";
 
 const Home = ({navigation, route}) => {
-
     const [modalVisible, setModalVisible] = useState(false);
-
     const [balance, getBalance] = useState(0);
-
     const [showNoti, setShowNoti] = useState(true);
+    const [notifList, getNotifList] = useState([]);
 
     useEffect(() => {
         const getBalance_ = async () => {
@@ -30,7 +29,67 @@ const Home = ({navigation, route}) => {
                     }
                 });
         }
+        const getNotifList_ = async () => {
+            await firebase
+                .firestore()
+                .collection("user")
+                .doc(route.params.phoneNumber)
+                .get()
+                .then(async (snapshot) => {
+                    if (snapshot.data().notifCount != 0) {
+                        setShowNoti(true)
+                        var list = []
+                        await firebase
+                            .firestore()
+                            .collection("transaction-history")
+                            .where("recipientID", "==", route.params.phoneNumber)
+                            .orderBy("ID", "desc")
+                            .limit(snapshot.data().notifCount)
+                            .get()
+                            .then((querySnapshot) => {
+                                if (querySnapshot != undefined) {
+                                    querySnapshot.forEach((doc) => {
+                                        var element = {}
+                                        element.key = moment(doc.data().date)
+                                        element.header = doc.data().type + " - " + doc.data().date
+                                        element.body = doc.data().message
+                                        //console.log(element)
+                                        list.push(element)
+                                    })
+                                }
+                            })
+                        await firebase
+                            .firestore()
+                            .collection("admin-log")
+                            .where("targetPhoneNumber", "==", route.params.phoneNumber)
+                            .orderBy("ID", "desc")
+                            .limit(snapshot.data().notifCount)
+                            .get()
+                            .then((querySnapshot) => {
+                                if (querySnapshot != undefined) {
+                                    querySnapshot.forEach((doc) => {
+                                        var element = {}
+                                        element.key = moment(doc.data().date)
+                                        element.header = doc.data().type + " - " + doc.data().date
+                                        element.body = doc.data().message
+                                        //console.log(element)
+                                        list.push(element)
+                                    })
+                                }
+                            })
+                        await firebase
+                            .firestore()
+                            .collection("user")
+                            .doc(route.params.phoneNumber)
+                            .update({
+                                notifCount: 0,
+                            })
+                        getNotifList([...list].sort((a, b) => a.key.isBefore(b.key, "second") ? 1 : -1,))
+                    }
+                })
+            }
         getBalance_()
+        getNotifList_()
     })
 
     const featuresData = [
@@ -280,18 +339,19 @@ const Home = ({navigation, route}) => {
                     <View style={{padding:'5%', marginBottom: '20%'}} >
                         <FlatList
                             showsVerticalScrollIndicator={false}
-                            data={[
-                                {key: '1', header: 'Noti 1 header', body: 'Noti 1 content'},
-                                {key: '2', header: 'Noti 2 header', body: 'Noti 2 content'},
-                                {key: '3', header: 'Noti 3 header', body: 'Noti 3 content'},
-                                {key: '4', header: 'Noti 4 header', body: 'Noti 4 content'},
-                                {key: '5', header: 'Noti 5 header', body: 'Noti 5 content'},
-                                {key: '6', header: 'Noti 6 header', body: 'Noti 6 content'},
-                                {key: '7', header: 'Noti 7 header', body: 'Noti 7 content'},
-                                {key: '8', header: 'Noti 8 header', body: 'Noti 8 content'},
-                                {key: '9', header: 'Noti 9 header', body: 'Noti 9 content'},
-                                {key: '10', header: 'Noti 10 header', body: 'Noti 10 content'},
-                            ]}
+                            // data={[
+                            //     {key: '1', header: 'Noti 1 header', body: 'Noti 1 content'},
+                            //     {key: '2', header: 'Noti 2 header', body: 'Noti 2 content'},
+                            //     {key: '3', header: 'Noti 3 header', body: 'Noti 3 content'},
+                            //     {key: '4', header: 'Noti 4 header', body: 'Noti 4 content'},
+                            //     {key: '5', header: 'Noti 5 header', body: 'Noti 5 content'},
+                            //     {key: '6', header: 'Noti 6 header', body: 'Noti 6 content'},
+                            //     {key: '7', header: 'Noti 7 header', body: 'Noti 7 content'},
+                            //     {key: '8', header: 'Noti 8 header', body: 'Noti 8 content'},
+                            //     {key: '9', header: 'Noti 9 header', body: 'Noti 9 content'},
+                            //     {key: '10', header: 'Noti 10 header', body: 'Noti 10 content'},
+                            // ]}
+                            data = {notifList}
                             renderItem={({item}) => {
                                 return(
                                     <View style={{paddingVertical: 5}}>

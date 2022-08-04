@@ -70,30 +70,30 @@ const History = ({navigation, route}) => {
                         console.log("does not exist");
                     }
                 })
-                await firebase
-                    .firestore()
-                    .collection("transaction-history")
-                    .where("recipientID", "==", route.params.phoneNumber)
-                    .orderBy("ID", "desc")
-                    .limit(10)
-                    .get()
-                    .then((snapshot) => {
-                        if (snapshot != undefined) {
-                            snapshot.forEach((doc) => {
-                                var element = {}
-                                element.ID = moment(doc.data().date);
-                                element.description = doc.data().message;
-                                element.senderID = doc.data().recipientID;
-                                element.amount = doc.data().balanceChange;
-                                element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
-                                element.date = doc.data().date;
-                                list.push(element)
-                            })
-                        } else {
-                            console.log("does not exist");
-                        }
-                    })
-                getTransactionList([...list].sort((a, b) => a.ID.isBefore(b.ID, "second") ? 1 : -1,))
+            await firebase
+                .firestore()
+                .collection("transaction-history")
+                .where("recipientID", "==", route.params.phoneNumber)
+                .orderBy("ID", "desc")
+                .limit(10)
+                .get()
+                .then((snapshot) => {
+                    if (snapshot != undefined) {
+                        snapshot.forEach((doc) => {
+                            var element = {}
+                            element.ID = moment(doc.data().date);
+                            element.description = doc.data().message;
+                            element.senderID = doc.data().recipientID;
+                            element.amount = doc.data().balanceChange;
+                            element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
+                            element.date = doc.data().date;
+                            list.push(element)
+                        })
+                    } else {
+                        console.log("does not exist");
+                    }
+                })
+            getTransactionList([...list].sort((a, b) => a.ID.isBefore(b.ID, "second") ? 1 : -1,))
         }
         getTransactionList_()
     }, []);

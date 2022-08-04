@@ -64,12 +64,29 @@ const Bill = ({navigation, route}) => {
             }
         })
         .then(() => {
-            console.log(transactionDetail)
             firebase
                 .firestore()
                 .collection("transaction-history")
                 .doc(String(transactionDetail.ID))
                 .set(transactionDetail)
+        })
+        .then(() => {
+            if (transactionType == "Transfer") {
+                firebase
+                    .firestore()
+                    .collection("user")
+                    .doc(transactionDetail.recipientID)
+                    .get()
+                    .then((snapshot) => {
+                        firebase
+                            .firestore()
+                            .collection("user")
+                            .doc(transactionDetail.recipientID)
+                            .update({
+                                notifCount: snapshot.data().notifCount + 1,
+                            })
+                    })
+            }
         })
 
     const styles = StyleSheet.create({

@@ -211,7 +211,7 @@ const Modify = ({navigation, route}) => {
                                                     targetUsername: route.params.recipientUsername,
                                                     targetPhoneNumber: route.params.recipientPhoneNumber,
                                                     type: value < 0 ? "Decrease" : "Increase",
-                                                    description: value < 0 ? "Decrease " + route.params.recipientUsername + "'s balance by " + String(Math.abs(value)) :
+                                                    message: value < 0 ? "Decrease " + route.params.recipientUsername + "'s balance by " + String(Math.abs(value)) :
                                                                         "Increase " + route.params.recipientUsername + "'s balance by " + String(value),
                                                 })
                                         })

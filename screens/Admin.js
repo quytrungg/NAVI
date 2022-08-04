@@ -92,7 +92,7 @@ const Admin = ({navigation, route}) => {
             });
         }
         else if(item.description == 'View'){
-            navigation.navigate("View");
+            navigation.navigate("ViewAdmin");
         }
         else if(item.description == 'Add Bank'){
             console.log(item.description);

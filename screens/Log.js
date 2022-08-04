@@ -60,7 +60,7 @@ const Log = () => {
                             element.balanceChange = doc.data().balanceChange
                             element.targetUsername = doc.data().targetUsername
                             element.targetPhoneNumber = doc.data().targetPhoneNumber
-                            element.description = doc.data().description
+                            element.description = doc.data().message
                             element.icon = doc.data().balanceChange > 0 ? images.up : images.down
                             list.push(element)
                         })
