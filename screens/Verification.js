@@ -218,6 +218,7 @@ const Verification = ({navigation, route}) => {
                     bankName: route.params.bankName,
                     bankID: route.params.bankID,
                     transcMessage: route.params.transcMessage,
+                    flag: true,
                 });
             }
             else {
@@ -269,6 +270,7 @@ const Verification = ({navigation, route}) => {
                     balanceChange: route.params.balanceChange,
                     transactionType: route.params.transactionType,
                     transcMessage: route.params.transcMessage,
+                    flag: true,
                 });
             }
         }

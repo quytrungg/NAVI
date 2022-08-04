@@ -120,7 +120,8 @@ const History = ({navigation, route}) => {
                         console.log("does not exist");
                     }
                 })
-            getTransactionList([...list].sort((a, b) => a.ID.isBefore(b.ID, "second") ? 1 : -1,))
+            list = [...list].sort((a, b) => a.ID.isBefore(b.ID, "second") ? 1 : -1,)
+            getTransactionList(list.slice(0, 10))
         }
         getTransactionList_()
     }, []);

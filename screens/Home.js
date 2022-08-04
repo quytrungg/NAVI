@@ -84,7 +84,8 @@ const Home = ({navigation, route}) => {
                             .update({
                                 notifCount: 0,
                             })
-                        getNotifList([...list].sort((a, b) => a.key.isBefore(b.key, "second") ? 1 : -1,))
+                        list = [...list].sort((a, b) => a.key.isBefore(b.key, "second") ? 1 : -1,)
+                        getNotifList(list.slice(0, snapshot.data().notifCount))
                     }
                 })
             }

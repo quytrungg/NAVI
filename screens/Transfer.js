@@ -44,6 +44,7 @@ const Transfer = ({navigation, route}) => {
   }
 
   const [value, setValue] = useState(0); 
+  var mess = "";
 
   function renderForm(){
 
@@ -81,7 +82,8 @@ const Transfer = ({navigation, route}) => {
                                                 backgroundColor: COLORS.white}}
                                         placeholder = "Enter message"
                                         multiline={true}
-                                        placeholderTextColor={COLORS.gray}/>
+                                        placeholderTextColor={COLORS.gray}
+                                        onChangeText = {(text) => mess = text}/>
                         </View>
                     </View>
               </View>
@@ -156,7 +158,7 @@ const Transfer = ({navigation, route}) => {
             recipientPhoneNumber: route.params.recipientPhoneNumber,
             balanceChange: value,
             transactionType: "Transfer",
-            transcMessage: route.params.username + " transfers to " + route.params.recipientUsername,
+            transcMessage: mess != "" ? mess : route.params.username + " transfers to " + route.params.recipientUsername,
           });
       }
   }
