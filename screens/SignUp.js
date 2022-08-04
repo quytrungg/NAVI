@@ -8,7 +8,6 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const heightScreen = Dimensions.get('window').height;
-const widthScreen = Dimensions.get('window').width;
 
 const SignUp = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);

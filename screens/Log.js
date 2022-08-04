@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, StyleSheet, Dimensions } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -54,15 +54,15 @@ const Log = () => {
                     if (snapshot != undefined) {
                         var list = []
                         snapshot.forEach((doc) => {
-                            var element = {}
-                            element.ID = doc.data().ID
-                            element.date = doc.data().date
-                            element.balanceChange = doc.data().balanceChange
-                            element.targetUsername = doc.data().targetUsername
-                            element.targetPhoneNumber = doc.data().targetPhoneNumber
-                            element.description = doc.data().message
-                            element.icon = doc.data().balanceChange > 0 ? images.up : images.down
-                            list.push(element)
+                            list.push({
+                                ID: doc.data().ID,
+                                date: doc.data().date,
+                                balanceChange: doc.data().balanceChange,
+                                targetUsername: doc.data().targetUsername,
+                                targetPhoneNumber: doc.data().targetPhoneNumber,
+                                description: doc.data().message,
+                                icon: doc.data().balanceChange > 0 ? images.up : images.down
+                            })
                         })
                         getLogList(list)
                     } else {

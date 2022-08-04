@@ -1,16 +1,16 @@
 import React, {useState} from "react";
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput, Dimensions } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, Alert, TextInput, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
 
-
 const heightScreen = Dimensions.get('window').height;
-const widthScreen = Dimensions.get('window').width;
 
 const Transfer = ({navigation, route}) => {
 
   var balance = route.params.balance;
+  const [value, setValue] = useState(0); 
+  var mess = "";
 
   function renderHeader(){
       return (
@@ -42,9 +42,6 @@ const Transfer = ({navigation, route}) => {
           </View>
       )
   }
-
-  const [value, setValue] = useState(0); 
-  var mess = "";
 
   function renderForm(){
 
@@ -130,24 +127,12 @@ const Transfer = ({navigation, route}) => {
       if(value <= 0){
           Alert.alert(
               "Warning",
-              "Transfer amount cannot be 0!",
-              [
-                  {
-                      text: "OK",
-                  },
-              ]
-          );
+              "Transfer amount cannot be 0!");
       }
       else if(value > balance){
         Alert.alert(
           "Warning",
-          "Transfer amount is larger than balance!",
-          [
-              {
-                  text: "OK",
-              },
-          ]
-        );
+          "Transfer amount is larger than balance!");
       }
       else{
         console.log(route.params.username,route.params.phoneNumber)

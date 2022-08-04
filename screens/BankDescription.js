@@ -8,12 +8,7 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const BankDescription = ({navigation, route}) => {
-  var state = {
-    bankName: route.params.bankName,
-    bankID: "",
-    ownerName: "",
-    publishDate: "",
-  };
+
   const [bankName, setBankName] = useState(route.params.bankName)
   const [bankID, setBankID] = useState("")
   const [ownerName, setOwnerName] = useState("")
@@ -56,7 +51,6 @@ const BankDescription = ({navigation, route}) => {
     return (
       <View style={{marginTop: SIZES.padding, 
                     marginHorizontal: SIZES.padding * 3}}>
-        {/* Bank Name */}
         <View style={{ marginTop: SIZES.padding * 2 }}>
           <Text style={{color: COLORS.black, ...FONTS.body3 }}>Bank Name</Text>
           <TextInput  style={{marginVertical: SIZES.padding, 
@@ -139,14 +133,9 @@ const BankDescription = ({navigation, route}) => {
     if (bankID == "" || ownerName == "" || publishDate == "") {
       Alert.alert(
         "Error",
-        "Some of the information is empty. Please try again",
-        [
-          {
-            text: "OK",
-          },
-        ]
-      );
-    } else {
+        "Some of the information is empty. Please try again");
+    } 
+    else {
       firebase
         .firestore()
         .collection("user")

@@ -1,14 +1,12 @@
 import React from "react";
-import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, Dimensions} from "react-native";
+import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, Dimensions, ScrollView} from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
-import {ScrollView} from 'react-native-gesture-handler';
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const heightScreen = Dimensions.get('window').height;
-const widthScreen = Dimensions.get('window').width;
 
 const Verification = ({navigation, route}) => {
     const styles = StyleSheet.create({ 
@@ -160,11 +158,9 @@ const Verification = ({navigation, route}) => {
 
     function handleNavigation() {
         var flag = false;
-
         if(digit.pin1 == randomOTP.num1 && digit.pin2 == randomOTP.num2 && digit.pin3 == randomOTP.num3 && digit.pin4 == randomOTP.num4) {
             flag = true;
         }
-
         if (flag == true) {
             if (route.params.transactionType == "Withdraw" || route.params.transactionType == "Deposit") {
                 var temp = 0;
@@ -259,8 +255,6 @@ const Verification = ({navigation, route}) => {
                             .update({
                                 balance: temp
                             })
-                        
-                            
                     })
                 navigation.push("Bill", {
                     username: route.params.username,

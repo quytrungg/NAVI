@@ -1,14 +1,11 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert, Dimensions} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-
-const heightScreen = Dimensions.get('window').height;
-const widthScreen = Dimensions.get('window').width;
 
 const Password = ({ navigation }) => {
 
@@ -49,8 +46,6 @@ const Password = ({ navigation }) => {
   }
 
   function handleConfirm(text){
-    console.log(text)
-    console.log(password)
     if (text != password){
       Alert.alert(
         "Error",
@@ -61,9 +56,6 @@ const Password = ({ navigation }) => {
           },
         ]
       );
-    }
-    else{
-      
     }
   }
 

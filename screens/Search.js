@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput, Dimensions } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, TextInput, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -7,7 +7,6 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-const heightScreen = Dimensions.get('window').height;
 const widthScreen = Dimensions.get('window').width;
 
 const Search = ({navigation, route}) => {
@@ -24,10 +23,10 @@ const Search = ({navigation, route}) => {
                         if (snapshot != undefined) {
                             var list = [], i = 1
                             snapshot.forEach((doc) => {
-                                var element = {}
-                                element.name = doc.data().name;
-                                element.phoneNumber = doc.data().phoneNumber;
-                                list.push(element)
+                                list.push({
+                                    name: doc.data().name,
+                                    phoneNumber: doc.data().phoneNumber
+                                })
                             })
                             getUserList(list)
                         } else {
@@ -50,11 +49,11 @@ const Search = ({navigation, route}) => {
                     snapshot.forEach((doc) => {
                         var temp = doc.data().phoneNumber
                         if (temp.substring(0, text.length) == text && (route.params.flag == false || temp != route.params.phoneNumber)) {
-                            var element = {}
-                            element.name = doc.data().name;
-                            element.phoneNumber = doc.data().phoneNumber;
-                            element.balance = doc.data().balance;
-                            list.push(element)
+                            list.push({
+                                name: doc.data().name,
+                                phoneNumber: doc.data().phoneNumber,
+                                balance: doc.data().balance
+                            })
                         }
                     })
                     getUserList(list)

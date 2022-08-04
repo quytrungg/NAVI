@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput, Dimensions } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, TextInput, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import moment from "moment";
@@ -8,10 +8,7 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-const heightScreen = Dimensions.get('window').height;
-const widthScreen = Dimensions.get('window').width;
-
-const ViewAdmin = ({navigation, route}) => {
+const ViewAdmin = ({navigation}) => {
 
     const [userList, getUserList] = useState([]);
     
@@ -27,14 +24,14 @@ const ViewAdmin = ({navigation, route}) => {
                 .then((snapshot) => {
                     if (snapshot != undefined) {
                         snapshot.forEach((doc) => {
-                            var element = {}
-                            element.ID = moment(doc.data().date);
-                            element.description = doc.data().message;
-                            element.senderID = doc.data().senderID;
-                            element.amount = doc.data().balanceChange;
-                            element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
-                            element.date = doc.data().date;
-                            list.push(element)
+                            list.push({
+                                ID: moment(doc.data().date),
+                                description: doc.data().message,
+                                senderID: doc.data().senderID,
+                                amount: doc.data().balanceChange,
+                                icon: doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer),
+                                date: doc.data().date
+                            })
                         })
                     } else {
                         console.log("does not exist");
@@ -50,14 +47,14 @@ const ViewAdmin = ({navigation, route}) => {
                     .then((snapshot) => {
                         if (snapshot != undefined) {
                             snapshot.forEach((doc) => {
-                                var element = {}
-                                element.ID = moment(doc.data().date);
-                                element.description = doc.data().message;
-                                element.senderID = doc.data().recipientID;
-                                element.amount = doc.data().balanceChange;
-                                element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
-                                element.date = doc.data().date;
-                                list.push(element)
+                                list.push({
+                                    ID: moment(doc.data().date),
+                                    description: doc.data().message,
+                                    senderID: doc.data().recipientID,
+                                    amount: doc.data().balanceChange,
+                                    icon: doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer),
+                                    date: doc.data().date
+                                })
                             })
                         } else {
                             console.log("does not exist");
@@ -163,7 +160,6 @@ const ViewAdmin = ({navigation, route}) => {
               {renderUsers()}
           </ScrollView>
           <SafeAreaView>
-              
           </SafeAreaView>
       </LinearGradient>
       </KeyboardAvoidingView>

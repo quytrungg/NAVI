@@ -52,7 +52,7 @@ const History = ({navigation, route}) => {
     }
 
     function handleDisplay(type, balance){
-        return type == "Withdraw" ? "+" + balanceDisplay((String(balance))) : (type == "Deposit" ? "-" + balanceDisplay(balance) : "+"+ balanceDisplay((String(balance))));
+        return type == "Withdraw" ? ("+" + balanceDisplay((String(balance)))) : (type == "Deposit" ? ("-" + balanceDisplay(String(balance))) : balanceDisplay((String(balance))));
     }
 
   function renderTransaction(){
@@ -70,21 +70,21 @@ const History = ({navigation, route}) => {
                 .then((snapshot) => {
                     if (snapshot != undefined) {
                         snapshot.forEach((doc) => {
-                            var element = {}
-                            element.ID = moment(doc.data().date);
-                            element.description = doc.data().message;
-                            element.senderID = doc.data().senderID;
-                            element.senderName = doc.data().senderName;
-                            element.amount = doc.data().balanceChange;
-                            element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
-                            element.date = doc.data().date;
-                            element.recipientID = doc.data().recipientID;
-                            element.recipientName = doc.data().recipientName;
-                            element.type = doc.data().type;
-                            element.message = doc.data().message;
-                            element.bankName = doc.data().bankName;
-                            element.bankID = doc.data().bankID;
-                            list.push(element)
+                            list.push({
+                                ID: moment(doc.data().date),
+                                senderID: doc.data().senderID,
+                                senderName: doc.data().senderName,
+                                amount: doc.data().balanceChange,
+                                icon: doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer),
+                                date: doc.data().date,
+                                recipientID: doc.data().recipientID,
+                                recipientName: doc.data().recipientName,
+                                type: doc.data().type,
+                                message: doc.data().message,
+                                bankName: doc.data().bankName,
+                                bankID: doc.data().bankID
+                            })
+                            
                         })
                     } else {
                         console.log("does not exist");
@@ -100,21 +100,20 @@ const History = ({navigation, route}) => {
                 .then((snapshot) => {
                     if (snapshot != undefined) {
                         snapshot.forEach((doc) => {
-                            var element = {}
-                            element.ID = moment(doc.data().date);
-                            element.description = doc.data().message;
-                            element.senderID = doc.data().recipientID;
-                            element.senderName = doc.data().recipientName;
-                            element.amount = doc.data().balanceChange;
-                            element.recipientID = doc.data().recipientID;
-                            element.recipientName = doc.data().recipientName;
-                            element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
-                            element.date = doc.data().date;
-                            element.type = doc.data().type;
-                            element.message = doc.data().message;
-                            element.bankName = doc.data().bankName;
-                            element.bankID = doc.data().bankID;
-                            list.push(element)
+                            list.push({
+                                ID: moment(doc.data().date),
+                                senderID: doc.data().recipientID,
+                                senderName: doc.data().recipientName,
+                                amount: doc.data().balanceChange,
+                                recipientID: doc.data().recipientID,
+                                recipientName: doc.data().recipientName,
+                                icon: doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer),
+                                date: doc.data().date,
+                                type: doc.data().type,
+                                message: doc.data().message,
+                                bankName: doc.data().bankName,
+                                bankID: doc.data().bankID
+                            })
                         })
                     } else {
                         console.log("does not exist");
@@ -130,7 +129,7 @@ const History = ({navigation, route}) => {
           {transactionList.map(data =>{
               return(
                     <TouchableOpacity key={moment(data.ID)} 
-                                onPress={() => navigation.navigate("Bill", {
+                                onPress={() => navigation.push("Bill", {
                                     transactionType: data.type,
                                     balanceChange: data.amount,
                                     phoneNumber: data.senderID,
@@ -157,7 +156,7 @@ const History = ({navigation, route}) => {
                                     resizeMode:"contain",
                                     flexDirection: 'column'}}/>
                         <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
-                            <Text style={{color: COLORS.black, ...FONTS.h4}}>{data.description}</Text>
+                            <Text style={{color: COLORS.black, ...FONTS.h4}}>{data.message}</Text>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
                                 <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 360}}>{handleDisplay(data.type, data.amount)}</Text>

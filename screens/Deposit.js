@@ -9,7 +9,6 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const heightScreen = Dimensions.get('window').height;
-const widthScreen = Dimensions.get('window').width;
 
 const Deposit = ({navigation, route}) => {
     function banknameToBankicon(bankName) {
@@ -57,13 +56,13 @@ const Deposit = ({navigation, route}) => {
                     if (snapshot != undefined) {
                         var list = [], i = 1
                         snapshot.forEach((doc) => {
-                            var element = {}
-                            element.id = i++;
-                            element.icon = banknameToBankicon(doc.data().bankName);
-                            element.description = doc.data().bankName;
-                            element.bankID = doc.data().bankID;
-                            element.choice = false;
-                            list.push(element)
+                            list.push({
+                                id: i++,
+                                icon: banknameToBankicon(doc.data().bankName),
+                                description: doc.data().bankName,
+                                bankID: doc.data().bankID,
+                                choice: false
+                            })
                         })
                         getBankList(list)
                     } else {
@@ -192,13 +191,7 @@ const Deposit = ({navigation, route}) => {
         if(value <= 0){
             Alert.alert(
                 "Warning",
-                "Withdraw amount cannot be 0!",
-                [
-                    {
-                        text: "OK",
-                    },
-                ]
-            );
+                "Withdraw amount cannot be 0!");
         }
         else{
             navigation.push("Verification",{
@@ -225,7 +218,6 @@ const Deposit = ({navigation, route}) => {
                                     backgroundColor: COLORS.white,
                                     marginHorizontal: 10,
                                     marginTop: 10}}>
-
                         <TouchableHighlight onPress={() => handleDeposit(data)}
                                             style={{borderRadius: 10}}
                                             underlayColor="#DDDDDD">
@@ -261,7 +253,6 @@ const Deposit = ({navigation, route}) => {
                 {renderForm()}
                 {renderSource()}
                 {renderBank()}
-                
             </ScrollView>
             <SafeAreaView>
             </SafeAreaView>

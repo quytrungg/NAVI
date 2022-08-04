@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, StatusBar, Dimensions} from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
-const heightScreen = Dimensions.get('window').height;
 const widthScreen = Dimensions.get('window').width;
 
 const BankAccount = ({navigation, route}) => {
@@ -12,42 +11,36 @@ const BankAccount = ({navigation, route}) => {
             color: COLORS.purple,
             backgroundColor: COLORS.lightpurple,
             description: "MB Bank",
-            choice: false
         },
         {   id: 2,
             icon: images.vcb,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "Vietcombank",
-            choice: false
         },
         {   id: 3,
             icon: images.acb,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "ACB Bank",
-            choice: false
         },
         {   id: 4,
             icon: images.vp,
             color: COLORS.red,
             backgroundColor: COLORS.lightRed,
             description: "VP Bank",
-            choice: false
         },
         {   id: 5,
             icon: images.bidv,
             color: COLORS.yellow,
             backgroundColor: COLORS.lightyellow,
             description: "BIDV",
-            choice: false
         },
         {   id: 6,
             icon: images.tech,
             color: COLORS.primary,
             backgroundColor: COLORS.lightGreen,
             description: "Techcombank",
-            choice: false
         }
     ]
 

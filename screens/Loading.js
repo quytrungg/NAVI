@@ -3,9 +3,6 @@ import {View, Text, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, P
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, images } from "../constants";
 
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
-
 const Loading = ({navigation, route}) => {
 
   setTimeout(() => {

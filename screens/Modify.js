@@ -11,6 +11,8 @@ import "firebase/compat/firestore";
 
 const Modify = ({navigation, route}) => {
     const [balance, getBalance] = useState(0);
+    const [value, setValue] = useState(0); 
+    var mess = "";
     useEffect(() => {
         const getBalance_ = async () => {
             await firebase
@@ -60,8 +62,6 @@ const Modify = ({navigation, route}) => {
         )
     }
 
-    const [value, setValue] = useState(0); 
-
     function renderForm(){
 
         return (
@@ -100,7 +100,8 @@ const Modify = ({navigation, route}) => {
                                                 backgroundColor: COLORS.white}}
                                         placeholder = "Enter message"
                                         multiline={true}
-                                        placeholderTextColor={COLORS.gray}/>
+                                        placeholderTextColor={COLORS.gray}
+                                        onChangeText={(text) => mess = text}/>
                         </View>
                     </View>
                     {renderButton()}
@@ -159,24 +160,12 @@ const Modify = ({navigation, route}) => {
       if(value == 0){
         Alert.alert(
             "Warning",
-            "Modify amount cannot be 0!",
-            [
-                {
-                    text: "OK",
-                },
-            ]
-        );
+            "Modify amount cannot be 0!");
       }
       else if(-value > balance){
         Alert.alert(
             "Warning",
-            "Modify amount larger than user balance",
-            [
-                {
-                    text: "OK",
-                },
-            ]
-        );
+            "Modify amount larger than user balance");
       }
       else{
         Alert.alert(
@@ -222,8 +211,8 @@ const Modify = ({navigation, route}) => {
                                                     targetUsername: route.params.recipientUsername,
                                                     targetPhoneNumber: route.params.recipientPhoneNumber,
                                                     type: value < 0 ? "Decrease" : "Increase",
-                                                    message: value < 0 ? "Decrease " + route.params.recipientUsername + "'s balance by " + String(Math.abs(value)) :
-                                                                        "Increase " + route.params.recipientUsername + "'s balance by " + String(value),
+                                                    message: mess != "" ? mess : (value < 0 ? "Decrease " + route.params.recipientUsername + "'s balance by " + String(Math.abs(value)) :
+                                                                        "Increase " + route.params.recipientUsername + "'s balance by " + String(value)),
                                                 })
                                                 .then(() => {
                                                     firebase

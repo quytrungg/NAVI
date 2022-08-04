@@ -1,12 +1,7 @@
 import React from "react";
-import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar, KeyboardAvoidingView } from "react-native";
+import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar, KeyboardAvoidingView, ScrollView } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
-import {ScrollView} from 'react-native-gesture-handler';
 import QRCode from 'react-native-qrcode-svg';
-
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
 
 const Profile = ({navigation, route}) => { 
 
@@ -92,8 +87,8 @@ const Profile = ({navigation, route}) => {
         return (
             <View style={styles.avatarBox}>
                 <Image source={images.avatar} style = {styles.avatar}/>
-                <Text style = {styles.nameText}>{route.params.username}</Text>
-                <Text style = {styles.inforText}>{route.params.phoneNumber}</Text>
+                <Text style = {styles.nameText}>username: {route.params.username}</Text>
+                <Text style = {styles.inforText}>ID: {route.params.phoneNumber}</Text>
                 <View style={{flexDirection: 'row'}}>
                     <TouchableOpacity style = {styles.editButton}
                                     onPress={() => navigation.navigate("Password")}>

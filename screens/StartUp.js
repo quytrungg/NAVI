@@ -33,7 +33,6 @@ const StartUp = ({ navigation, phoneNum }) => {
         return (
         <View style={{marginTop: SIZES.padding * 7, 
                         marginHorizontal: SIZES.padding * 3}}>
-            {/* Phone Number */}
             <View style={{marginTop: SIZES.padding * 2}}>
                 <Text style={{color: COLORS.black, ...FONTS.body3}}>Phone Number</Text>
                 <View style={{flexDirection: 'row'}}>

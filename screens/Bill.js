@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from "react";
-import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, StatusBar, Dimensions } from "react-native";
+import React from "react";
+import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, StatusBar, Dimensions, ScrollView } from "react-native";
 import { COLORS, SIZES, FONTS, images, icons } from "../constants";
 import moment from "moment";
-import { ScrollView } from "react-native-gesture-handler";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -97,20 +96,17 @@ const Bill = ({navigation, route}) => {
             color: COLORS.black,
             ...FONTS.h4,
         },
-        
         banner: {
             height: 60,
             alignSelf: 'center',
             marginTop: SIZES.padding * 2,
         },
-
         logo: {
             resizeMode: 'contain',
             width: widthScreen * 0.15,
             height: widthScreen * 0.15,
             marginLeft: widthScreen * 0.045,
         },
-
         topBox: {
             flex: 1,
             alignSelf: 'center',
@@ -121,7 +117,6 @@ const Bill = ({navigation, route}) => {
             width: widthScreen - 20,
             marginTop: 10,
         },
-
         middleBox: {
             flex: 1,
             alignSelf: 'center',
@@ -134,7 +129,6 @@ const Bill = ({navigation, route}) => {
             marginTop: 5,
             borderStyle: 'dashed',
         },
-
         bottomBox: {
             flex: 1,
             alignSelf: 'center',
@@ -144,7 +138,6 @@ const Bill = ({navigation, route}) => {
             width: widthScreen - 20,
             borderStyle: 'dashed',
         },
-
         messageBox: {
             borderWidth: 1,
             borderColor: COLORS.blueprim,
@@ -154,7 +147,6 @@ const Bill = ({navigation, route}) => {
             marginHorizontal: 10,
             borderStyle: 'dashed',
         },
-
         confirmButton: {
             borderColor: COLORS.blueprim,
             backgroundColor: COLORS.bluesec,
@@ -166,12 +158,10 @@ const Bill = ({navigation, route}) => {
             height: 60,
             borderRadius: SIZES.radius / 1.5,
         },
-
         confirmText: {
             ...FONTS.h2, 
             color: COLORS.white
         },
-
         text1: {
             ...FONTS.h2,
             color: '#2B7A0B',
@@ -180,19 +170,16 @@ const Bill = ({navigation, route}) => {
             textAlign: 'right',
             marginLeft: widthScreen * 0.035,
         },
-
         text2: {
             color: COLORS.black,
             ...FONTS.body2,
             textAlign: 'right',
         },
-
         text3: {
             color: '#355764',
             ...FONTS.body3,
             marginBottom: 5,
         },
-
         text4: {
             color: COLORS.black,
             ...FONTS.body3,
@@ -200,7 +187,6 @@ const Bill = ({navigation, route}) => {
             textAlign: 'right',
             marginLeft: widthScreen - 245,
         },
-
         text5: {
             color: COLORS.black,
             ...FONTS.body3,
@@ -208,7 +194,6 @@ const Bill = ({navigation, route}) => {
             textAlign: 'right',
             marginLeft: widthScreen - 230,
         },
-
         text6: {
             color: '#355764',
             ...FONTS.body3,
@@ -216,7 +201,6 @@ const Bill = ({navigation, route}) => {
             marginBottom: 5,
             marginLeft: 15,
         },
-
         text7: {
             flex: 1,
             color: COLORS.black,
@@ -256,10 +240,7 @@ const Bill = ({navigation, route}) => {
     }
 
     function handleBalanceChange(){
-        if(transactionDetail.balanceChange > 0){
-            return "+" + transactionDetail.balanceChange.toString() + " VND";
-        }
-        else return "-" + transactionDetail.balanceChange.toString() + " VND";
+        return (transactionDetail.balanceChange > 0 ? "+" + transactionDetail.balanceChange.toString() : "-" + transactionDetail.balanceChange.toString()) + " VND";
     }
 
     function renderTop() {

@@ -33,9 +33,7 @@ const Admin = ({navigation, route}) => {
     const [features, setFeatures] = useState(featuresData);
 
     function handelNotification(){
-      return(
-        Alert.alert("Notifications", "No notifications")
-      )
+       Alert.alert("Notifications", "No notifications")
     }
 
     function renderHeader(){
@@ -50,14 +48,14 @@ const Admin = ({navigation, route}) => {
                                                 width: 40,
                                                 justifyContent: 'center',
                                                 alignItems: 'center',
-                                                backgroundColor: COLORS.blueback,
-                                                borderColor: COLORS.bluetext,
+                                                backgroundColor: COLORS.white,
+                                                borderColor: COLORS.blueprim,
                                                 borderWidth: 1.5}}
                                         onPress = {() => handelNotification()}>
                         <Image  source={icons.bell}
                                 style={{width: 20,
                                         height: 20,
-                                        tintColor: COLORS.bluetext}}/>
+                                        tintColor: COLORS.blueprim}}/>
                         <View   style={{position: 'absolute',
                                         top: -5,
                                         right: -5,
@@ -94,10 +92,7 @@ const Admin = ({navigation, route}) => {
         else if(item.description == 'View'){
             navigation.navigate("ViewAdmin");
         }
-        else if(item.description == 'Add Bank'){
-            console.log(item.description);
-        }
-        else if(item.description == 'Remove Bank'){
+        else{
             console.log(item.description);
         }
     }

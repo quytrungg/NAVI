@@ -1,8 +1,7 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Platform, Alert, StatusBar, ImageBackground} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Platform, Alert, StatusBar, ScrollView} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
-import { ScrollView } from "react-native-gesture-handler";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -43,7 +42,6 @@ const SignIn = ({ navigation }) => {
     return (
       <View style={{marginTop: SIZES.padding * 7, 
                     marginHorizontal: SIZES.padding * 2}}>
-        {/* Phone Number */}
         <View style={{position: 'absolute', width: '100%', height:'100%', opacity: 0.5, borderRadius: 20}}></View>
         <View style={{marginTop: SIZES.padding, marginHorizontal: SIZES.padding}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Phone Number</Text>
@@ -63,7 +61,6 @@ const SignIn = ({ navigation }) => {
                         onChangeText={(phoneNumber) => setPhoneNumber(phoneNumber)}/>
           </View>
         </View>
-        {/* Password */}
         <View style={{marginTop: SIZES.padding * 2, marginHorizontal: SIZES.padding}}>
           <Text style={{ color: COLORS.black, ...FONTS.body3 }}>Password</Text>
           <TextInput  style={{marginVertical: SIZES.padding,

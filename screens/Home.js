@@ -1,17 +1,16 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, TextInput, StatusBar, Modal } from "react-native";
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, TextInput, StatusBar, Modal } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 import moment from "moment"
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
-import { ScrollView } from "react-native-gesture-handler";
 
 const Home = ({navigation, route}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [balance, getBalance] = useState(0);
-    const [showNoti, setShowNoti] = useState(true);
+    const [showNoti, setShowNoti] = useState(false);
     const [notifList, getNotifList] = useState([]);
 
     useEffect(() => {
@@ -49,12 +48,11 @@ const Home = ({navigation, route}) => {
                             .then((querySnapshot) => {
                                 if (querySnapshot != undefined) {
                                     querySnapshot.forEach((doc) => {
-                                        var element = {}
-                                        element.key = moment(doc.data().date)
-                                        element.header = doc.data().type + " - " + doc.data().date
-                                        element.body = doc.data().message
-                                        //console.log(element)
-                                        list.push(element)
+                                        list.push({
+                                            key: moment(doc.data().date),
+                                            header: doc.data().type + " - " + doc.data().date + " - admin",
+                                            body: doc.data().message
+                                        })
                                     })
                                 }
                             })
@@ -68,12 +66,11 @@ const Home = ({navigation, route}) => {
                             .then((querySnapshot) => {
                                 if (querySnapshot != undefined) {
                                     querySnapshot.forEach((doc) => {
-                                        var element = {}
-                                        element.key = moment(doc.data().date)
-                                        element.header = doc.data().type + " - " + doc.data().date
-                                        element.body = doc.data().message
-                                        //console.log(element)
-                                        list.push(element)
+                                        list.push({
+                                            key: moment(doc.data().date),
+                                            header: doc.data().type + " - " + doc.data().date + " - admin",
+                                            body: doc.data().message
+                                        })
                                     })
                                 }
                             })
@@ -123,10 +120,6 @@ const Home = ({navigation, route}) => {
     function handelNotification(){
         setModalVisible(true);
         setShowNoti(false);
-    }
-
-    function renderHeader(){
-
     }
 
     function balanceDisplay(){
@@ -295,7 +288,6 @@ const Home = ({navigation, route}) => {
     function renderHomeView(){
         const HeaderComponent = () => (
             <View style={{backgroundColor: COLORS.blueback}}>
-                {renderHeader()}
                 {renderBanner()}
                 {renderFeatures()}
                 {renderPromoHeader()}
@@ -340,28 +332,14 @@ const Home = ({navigation, route}) => {
                     <View style={{padding:'5%', marginBottom: '20%'}} >
                         <FlatList
                             showsVerticalScrollIndicator={false}
-                            // data={[
-                            //     {key: '1', header: 'Noti 1 header', body: 'Noti 1 content'},
-                            //     {key: '2', header: 'Noti 2 header', body: 'Noti 2 content'},
-                            //     {key: '3', header: 'Noti 3 header', body: 'Noti 3 content'},
-                            //     {key: '4', header: 'Noti 4 header', body: 'Noti 4 content'},
-                            //     {key: '5', header: 'Noti 5 header', body: 'Noti 5 content'},
-                            //     {key: '6', header: 'Noti 6 header', body: 'Noti 6 content'},
-                            //     {key: '7', header: 'Noti 7 header', body: 'Noti 7 content'},
-                            //     {key: '8', header: 'Noti 8 header', body: 'Noti 8 content'},
-                            //     {key: '9', header: 'Noti 9 header', body: 'Noti 9 content'},
-                            //     {key: '10', header: 'Noti 10 header', body: 'Noti 10 content'},
-                            // ]}
                             data = {notifList}
                             renderItem={({item}) => {
                                 return(
-                                    <TouchableOpacity onPress={() => navigation.navigate("Bill", {
-                                            flag: true,
-                                        })}>
+                                    <TouchableOpacity onPress={() => navigation.navigate("Bill", {flag: true})}>
                                         <View style={{paddingVertical: 5}}>
                                         <View style={{backgroundColor: '#ffffff80',borderRadius: 5, paddingHorizontal: 15, borderWidth: 1, borderColor: COLORS.bluesec}}>
                                             <Text style={{...FONTS.h3, paddingTop: 10}}>{item.header}</Text>
-                                            <Text style={{...FONTS.body3, paddingBottom: 10}}>{item.body}</Text>
+                                            <Text style={{...FONTS.body3, paddingBottom: 10}}>Message: {item.body}</Text>
                                         </View>
                                         </View>
                                     </TouchableOpacity>
@@ -380,9 +358,7 @@ const Home = ({navigation, route}) => {
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             {renderHomeView()}
         </SafeAreaView>
-
     )
-    
 }
 
 export default Home;
