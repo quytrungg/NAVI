@@ -92,19 +92,6 @@ const Bill = ({navigation, route}) => {
     }
 
     const styles = StyleSheet.create({
-        header: {
-            flexDirection: 'row',
-            alignItems: "center",
-            marginTop: SIZES.padding * 1,
-            paddingHorizontal: SIZES.padding * 2,
-        },
-
-        button: {
-            width: 15,
-            height: 15,
-            tintColor: COLORS.blueback,
-        },
-
         buttonText: {
             marginLeft: SIZES.padding / 2,
             color: COLORS.black,
@@ -114,7 +101,7 @@ const Bill = ({navigation, route}) => {
         banner: {
             height: 60,
             alignSelf: 'center',
-            marginTop: 5,
+            marginTop: SIZES.padding * 2,
         },
 
         logo: {
@@ -239,15 +226,23 @@ const Bill = ({navigation, route}) => {
         },
     });
 
-    function renderHeader() {
+    function renderBack(){
         return (
-            <TouchableOpacity  style={styles.header}>
-            <Image  source = {icons.back} 
-                resizeMode = "contain" 
-                style = {styles.button}/>
-            <Text style = {styles.buttonText}></Text>
+        <TouchableOpacity style={{flexDirection: 'row', 
+                                    alignItems: "center", 
+                                    marginTop: heightScreen * 0.025,
+                                    paddingHorizontal: SIZES.padding * 2}} 
+                            onPress={() => navigation.goBack()}>
+            <Image  source={icons.back} 
+                    resizeMode="contain" 
+                    style={{width: 15, 
+                            height: 15, 
+                            tintColor: COLORS.black}}/>
+            <Text style={{marginLeft: SIZES.padding / 2, 
+                        color: COLORS.black, 
+                        ...FONTS.h4}}>Home</Text>
             </TouchableOpacity>
-        )
+        );
     }
 
     function renderBanner() {
@@ -349,7 +344,7 @@ const Bill = ({navigation, route}) => {
     return (
         <SafeAreaView style={{flexGrow: 1, backgroundColor: COLORS.blueback}}>
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
-                {renderHeader()}
+                {renderBack()}
                 <ScrollView>
                     {renderBanner()}
                     {renderTop()}
