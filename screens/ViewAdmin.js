@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, TouchableHighlight, StatusBar, ScrollView, Alert, TextInput, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
+import moment from "moment";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -12,71 +13,57 @@ const widthScreen = Dimensions.get('window').width;
 
 const ViewAdmin = ({navigation, route}) => {
 
-    const [balance, getBalance] = useState(0);
     const [userList, getUserList] = useState([]);
-    useEffect(() => {
-        const getBalance_ = async () => {
+    
+    async function trackUserHistory(text) {
+        var list = []
             await firebase
                 .firestore()
-                .collection("user")
-                .doc(route.params.phoneNumber)
-                .get()
-                .then((snapshot) => {
-                    if (snapshot.data() != undefined) {
-                        getBalance(snapshot.data().balance);
-                    } else {
-                        console.log("does not exist");
-                    }
-                });
-        }
-        const getUserList_ = async () => {
-            await firebase
-                .firestore()
-                .collection("user")
-                .where("phoneNumber", "!=", route.params.phoneNumber)
+                .collection("transaction-history")
+                .where("senderID", "==", text)
+                .orderBy("ID", "desc")
+                .limit(10)
                 .get()
                 .then((snapshot) => {
                     if (snapshot != undefined) {
-                        var list = [], i = 1
                         snapshot.forEach((doc) => {
                             var element = {}
-                            element.name = doc.data().name;
-                            element.phoneNumber = doc.data().phoneNumber;
+                            element.ID = moment(doc.data().date);
+                            element.description = doc.data().message;
+                            element.senderID = doc.data().senderID;
+                            element.amount = doc.data().balanceChange;
+                            element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
+                            element.date = doc.data().date;
                             list.push(element)
                         })
-                        getUserList(list)
                     } else {
                         console.log("does not exist");
                     }
                 })
-        }
-        getBalance_()
-        getUserList_()
-    }, []);
-    
-    function refreshSearchUser(text) {
-        firebase
-            .firestore()
-            .collection("user")
-            .where("phoneNumber", "!=", route.params.phoneNumber)
-            .get()
-            .then((snapshot) => {
-                if (snapshot != undefined) {
-                    var list = [], i = 1
-                    snapshot.forEach((doc) => {
-                        var temp = doc.data().phoneNumber
-                        if (temp.substring(0, text.length) == text) {
-                            var element = {}
-                            element.name = doc.data().name;
-                            element.phoneNumber = doc.data().phoneNumber;
-                            list.push(element)
+                await firebase
+                    .firestore()
+                    .collection("transaction-history")
+                    .where("recipientID", "==", text)
+                    .orderBy("ID", "desc")
+                    .limit(10)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            snapshot.forEach((doc) => {
+                                var element = {}
+                                element.ID = moment(doc.data().date);
+                                element.description = doc.data().message;
+                                element.senderID = doc.data().recipientID;
+                                element.amount = doc.data().balanceChange;
+                                element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
+                                element.date = doc.data().date;
+                                list.push(element)
+                            })
+                        } else {
+                            console.log("does not exist");
                         }
                     })
-                    getUserList(list)
-                } else {
-                    console.log("does not exist");
-                }
-            })
+                getUserList([...list].sort((a, b) => a.ID.isBefore(b.ID, "second") ? 1 : -1,))
     }
 
   function renderHeader(){
@@ -103,19 +90,13 @@ const ViewAdmin = ({navigation, route}) => {
                                     ...FONTS.bdoy3}}
                             placeholder ="Search by phone number"
                             placeholderTextColor={COLORS.gray}
-                            onChangeText = {(text) => refreshSearchUser(text)} />
+                            onChangeText = {(text) => trackUserHistory(text)} />
 
             </View>
             <TouchableOpacity onPress={() => console.log("Search")}>
             <Image  source={icons.search}
                     resizeMode="contain"
                     style={{width: 20, height: 20, tintColor: COLORS.gray, marginTop: SIZES.padding * 1, marginLeft: -300}}/>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("Scan")}>
-            <Image  source={icons.scan}
-                    resizeMode="contain"
-                    style={{width: 20, height: 20, tintColor: COLORS.bluesec, marginTop: SIZES.padding * 1, marginLeft: -30}}
-                    onPress={() => navigation.navigate("Scan")}/>
             </TouchableOpacity>
         </View>
       );
@@ -142,27 +123,24 @@ const ViewAdmin = ({navigation, route}) => {
         <View>
             {userList.map(data =>{
                 return(
-                    <TouchableOpacity key={data.phoneNumber} onPress={() => {console.log(route.params.username,  route.params.phoneNumber); navigation.navigate("Transfer", {
-                        username: route.params.username,
-                        phoneNumber: route.params.phoneNumber,
-                        recipientUsername: data.name,
-                        recipientPhoneNumber: data.phoneNumber,
-                    })}}>
+                    <TouchableOpacity key={data.ID} onPress={() => {console.log('worked')}}>
                         <View   style={{borderWidth: 1,
                                     borderColor: COLORS.blueprim,
                                     borderRadius: 10,
                                     backgroundColor: COLORS.white,
                                     marginHorizontal: 20,
                                     marginTop: 10}}>
-                            <View style={{flexDirection: 'row', paddingVertical: 10}}>
-                                <Image  source={images.avatar}
+                            <View style={{flexDirection: 'row', paddingVertical: 10, marginRight: 70}}>
+                                <Image  source={data.icon}
                                                 resizeMode="contain" 
                                                 style={{width: 50,
-                                                        height: 50,
-                                                        marginLeft: 20, alignSelf: 'center'}}/>
-                                <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
-                                    <Text style={{color: COLORS.black, ...FONTS.h3,}}>{data.name}</Text>
-                                    <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.phoneNumber}</Text>
+                                                        height: 80,
+                                                        marginLeft: 15, alignSelf: 'center', tintColor: COLORS.bluesec}}/>
+                                <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 15}}>
+                                    <Text style={{color: COLORS.black, ...FONTS.h4,}}>ID: {data.senderID}</Text>
+                                    <Text style={{color: COLORS.black, ...FONTS.h4,}}>Amount: {data.amount}</Text>
+                                    <Text style={{color: COLORS.black, ...FONTS.body4}}><Text style={{fontFamily: "Roboto-Bold"}}>Message:</Text> {data.description}</Text>
+                                    <Text style={{color: COLORS.black, ...FONTS.body4}}><Text style={{fontFamily: "Roboto-Bold"}}>Date/Time:</Text> {data.date}</Text>
                                 </View>
                             </View>
                         </View>

@@ -58,10 +58,10 @@ const History = ({navigation, route}) => {
                     if (snapshot != undefined) {
                         snapshot.forEach((doc) => {
                             var element = {}
-                            element.ID = doc.data().date;
+                            element.ID = moment(doc.data().date);
                             element.description = doc.data().message;
                             element.senderID = doc.data().senderID;
-                            element.amount = doc.data.balanceChange;
+                            element.amount = doc.data().balanceChange;
                             element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
                             element.date = doc.data().date;
                             list.push(element)
@@ -84,7 +84,7 @@ const History = ({navigation, route}) => {
                                 element.ID = moment(doc.data().date);
                                 element.description = doc.data().message;
                                 element.senderID = doc.data().recipientID;
-                                element.amount = doc.data.balanceChange;
+                                element.amount = doc.data().balanceChange;
                                 element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
                                 element.date = doc.data().date;
                                 list.push(element)
@@ -101,7 +101,7 @@ const History = ({navigation, route}) => {
       <View>
           {transactionList.map(data =>{
               return(
-                    <TouchableOpacity key={data.ID} 
+                    <TouchableOpacity key={moment(data.ID)} 
                                 onPress={() =>console.log("work")}>
                         <View   style={{borderWidth: 1,
                                   borderColor: COLORS.blueprim,
