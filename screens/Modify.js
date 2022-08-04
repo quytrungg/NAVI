@@ -225,6 +225,22 @@ const Modify = ({navigation, route}) => {
                                                     message: value < 0 ? "Decrease " + route.params.recipientUsername + "'s balance by " + String(Math.abs(value)) :
                                                                         "Increase " + route.params.recipientUsername + "'s balance by " + String(value),
                                                 })
+                                                .then(() => {
+                                                    firebase
+                                                        .firestore()
+                                                        .collection("user")
+                                                        .doc(route.params.recipientPhoneNumber)
+                                                        .get()
+                                                        .then((snapshot) => {
+                                                            firebase
+                                                                .firestore()
+                                                                .collection("user")
+                                                                .doc(route.params.recipientPhoneNumber)
+                                                                .update({
+                                                                    notifCount: snapshot.data().notifCount + 1,
+                                                                })
+                                                        })
+                                                })
                                         })
                                 })
                             Alert.alert(

@@ -49,7 +49,8 @@ const Bill = ({navigation, route}) => {
         transactionDetail.recipientName = route.params.recipientUsername,
         transactionDetail.recipientID = route.params.recipientPhoneNumber
     }
-    firebase
+    if (route.params.flag == true) {
+        firebase
         .firestore()
         .collection("transaction-history")
         .orderBy("ID", "desc")
@@ -88,6 +89,7 @@ const Bill = ({navigation, route}) => {
                     })
             }
         })
+    }
 
     const styles = StyleSheet.create({
         header: {

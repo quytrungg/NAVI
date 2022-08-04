@@ -51,6 +51,10 @@ const History = ({navigation, route}) => {
         return temp + " VND";
     }
 
+    function handleDisplay(type, balance){
+        return type == "Withdraw" ? "+" + balanceDisplay((String(balance))) : (type == "Deposit" ? "-" + balanceDisplay(balance) : "+"+ balanceDisplay((String(balance))));
+    }
+
   function renderTransaction(){
     const [transactionList, getTransactionList] = useState([]);
     useEffect(() => {
@@ -70,9 +74,16 @@ const History = ({navigation, route}) => {
                             element.ID = moment(doc.data().date);
                             element.description = doc.data().message;
                             element.senderID = doc.data().senderID;
-                            element.amount = doc.data().type == "Withdraw" ? "+" + balanceDisplay((String(doc.data().balanceChange))) : (doc.data().type == "Deposit" ? "-" + balanceDisplay(doc.data().balanceChange) : "-" + balanceDisplay(doc.data().balanceChange));
+                            element.senderName = doc.data().senderName;
+                            element.amount = doc.data().balanceChange;
                             element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
                             element.date = doc.data().date;
+                            element.recipientID = doc.data().recipientID;
+                            element.recipientName = doc.data().recipientName;
+                            element.type = doc.data().type;
+                            element.message = doc.data().message;
+                            element.bankName = doc.data().bankName;
+                            element.bankID = doc.data().bankID;
                             list.push(element)
                         })
                     } else {
@@ -93,9 +104,16 @@ const History = ({navigation, route}) => {
                             element.ID = moment(doc.data().date);
                             element.description = doc.data().message;
                             element.senderID = doc.data().recipientID;
-                            element.amount =  doc.data().type == "Withdraw" ? "+" + balanceDisplay((String(doc.data().balanceChange))) : (doc.data().type == "Deposit" ? "-" + balanceDisplay(doc.data().balanceChange) : "+"+ balanceDisplay((String(doc.data().balanceChange))));
+                            element.senderName = doc.data().recipientName;
+                            element.amount = doc.data().balanceChange;
+                            element.recipientID = doc.data().recipientID;
+                            element.recipientName = doc.data().recipientName;
                             element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
                             element.date = doc.data().date;
+                            element.type = doc.data().type;
+                            element.message = doc.data().message;
+                            element.bankName = doc.data().bankName;
+                            element.bankID = doc.data().bankID;
                             list.push(element)
                         })
                     } else {
@@ -111,7 +129,16 @@ const History = ({navigation, route}) => {
           {transactionList.map(data =>{
               return(
                     <TouchableOpacity key={moment(data.ID)} 
-                                onPress={() =>navigation.navigate("Bill", {
+                                onPress={() => navigation.navigate("Bill", {
+                                    transactionType: data.type,
+                                    balanceChange: data.amount,
+                                    phoneNumber: data.senderID,
+                                    username: data.senderName,
+                                    transcMessage: data.message,
+                                    recipientPhoneNumber: data.recipientID,
+                                    recipientUsername: data.recipientName,
+                                    bankID: data.bankID,
+                                    bankName: data.bankName,
                                     flag: false,
                                 })}>
                         <View   style={{borderWidth: 1,
@@ -132,7 +159,7 @@ const History = ({navigation, route}) => {
                             <Text style={{color: COLORS.black, ...FONTS.h4}}>{data.description}</Text>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
-                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 360}}>{data.amount}</Text>
+                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 360}}>{handleDisplay(data.type, data.amount)}</Text>
                             </View>
                         </View>
                     </View>
