@@ -40,7 +40,16 @@ const History = ({navigation, route}) => {
             </View>
         )
     }
-
+    function balanceDisplay(text){
+        var temp = text.toString();
+        for (var i = temp.length; i > 0; i -= 3){
+            if(i == temp.length){
+                continue;
+            }
+            temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
+        }
+        return temp + " VND";
+    }
 
   function renderTransaction(){
     const [transactionList, getTransactionList] = useState([]);
@@ -61,7 +70,7 @@ const History = ({navigation, route}) => {
                             element.ID = moment(doc.data().date);
                             element.description = doc.data().message;
                             element.senderID = doc.data().senderID;
-                            element.amount = doc.data().balanceChange;
+                            element.amount = doc.data().type == "Withdraw" ? "+" + balanceDisplay((String(doc.data().balanceChange))) : (doc.data().type == "Deposit" ? "-" + balanceDisplay(doc.data().balanceChange) : "-" + balanceDisplay(doc.data().balanceChange));
                             element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
                             element.date = doc.data().date;
                             list.push(element)
@@ -84,7 +93,7 @@ const History = ({navigation, route}) => {
                             element.ID = moment(doc.data().date);
                             element.description = doc.data().message;
                             element.senderID = doc.data().recipientID;
-                            element.amount = doc.data().balanceChange;
+                            element.amount =  doc.data().type == "Withdraw" ? "+" + balanceDisplay((String(doc.data().balanceChange))) : (doc.data().type == "Deposit" ? "-" + balanceDisplay(doc.data().balanceChange) : "+"+ balanceDisplay((String(doc.data().balanceChange))));
                             element.icon = doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer);
                             element.date = doc.data().date;
                             list.push(element)
@@ -102,7 +111,9 @@ const History = ({navigation, route}) => {
           {transactionList.map(data =>{
               return(
                     <TouchableOpacity key={moment(data.ID)} 
-                                onPress={() =>console.log("work")}>
+                                onPress={() =>navigation.navigate("Bill", {
+                                    flag: false,
+                                })}>
                         <View   style={{borderWidth: 1,
                                   borderColor: COLORS.blueprim,
                                   backgroundColor: COLORS.white,
@@ -121,7 +132,7 @@ const History = ({navigation, route}) => {
                             <Text style={{color: COLORS.black, ...FONTS.h4}}>{data.description}</Text>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
-                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 270, top: -10}}>{data.amount}</Text>
+                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 360}}>{data.amount}</Text>
                             </View>
                         </View>
                     </View>

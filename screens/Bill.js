@@ -71,7 +71,7 @@ const Bill = ({navigation, route}) => {
                 .set(transactionDetail)
         })
         .then(() => {
-            if (transactionType == "Transfer") {
+            if (transactionDetail.type == "Transfer") {
                 firebase
                     .firestore()
                     .collection("user")

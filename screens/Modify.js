@@ -108,6 +108,17 @@ const Modify = ({navigation, route}) => {
       )
   }
 
+  function balanceDisplay(text){
+    var temp = text.toString();
+    for (var i = temp.length; i > 0; i -= 3){
+        if(i == temp.length){
+            continue;
+        }
+        temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
+    }
+    return temp + " VND";
+}
+
     function renderBank(){
         const arr = [
         { password: "",
@@ -133,8 +144,8 @@ const Modify = ({navigation, route}) => {
                                                         height: 50,
                                                         marginLeft: 20, alignSelf: 'center'}}/>
                                 <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
-                                    <Text style={{color: COLORS.black, ...FONTS.h4, alignSelf: 'center'}}>{data.name}</Text>
-                                    <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.balance}</Text>
+                                    <Text style={{color: COLORS.black, ...FONTS.h4, textAlign: 'left'}}>{data.name}</Text>
+                                    <Text style={{color: COLORS.black, ...FONTS.body4, textAlign: 'left'}}>{balanceDisplay(data.balance)}</Text>
                                 </View>
                             </View>
                     </View>

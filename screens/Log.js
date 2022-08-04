@@ -93,7 +93,7 @@ const Log = () => {
                                     resizeMode:"contain",
                                     flexDirection: 'column'}}/>
                         <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 15}}>
-                            <Text style={{color: COLORS.black, ...FONTS.h4}}
+                            <Text style={{color: COLORS.black, ...FONTS.h4, marginRight: 55}}
                                 resizeMode = "contain">{data.description}</Text>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
