@@ -41,14 +41,16 @@ const History = ({navigation, route}) => {
         )
     }
     function balanceDisplay(text){
-        var temp = text.toString();
+        var mark = text[0] == '-' ? "-" : "+";
+        var temp = text[0] == '-' ? text.substring(1, text.length) : text;
         for (var i = temp.length; i > 0; i -= 3){
             if(i == temp.length){
                 continue;
             }
             temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
         }
-        return temp + " VND";
+        console.log(temp)
+        return mark + temp + " VND";
     }
 
     function handleDisplay(type, balance){
@@ -74,7 +76,7 @@ const History = ({navigation, route}) => {
                                 ID: moment(doc.data().date),
                                 senderID: doc.data().senderID,
                                 senderName: doc.data().senderName,
-                                amount: doc.data().balanceChange,
+                                amount: doc.data().type == "Transfer" ? -doc.data().balanceChange : doc.data().balanceChange,
                                 icon: doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer),
                                 date: doc.data().date,
                                 recipientID: doc.data().recipientID,
@@ -119,8 +121,31 @@ const History = ({navigation, route}) => {
                         console.log("does not exist");
                     }
                 })
+                await firebase
+                    .firestore()
+                    .collection("admin-log")
+                    .where("targetPhoneNumber", "==", route.params.phoneNumber)
+                    .orderBy("ID", "desc")
+                    .limit(10)
+                    .get()
+                    .then((snapshot) => {
+                        if (snapshot != undefined) {
+                            snapshot.forEach((doc) => {
+                                list.push({
+                                    ID: moment(doc.data().date),
+                                    amount: doc.data().balanceChange,
+                                    icon: doc.data().type == "Increase" ? images.up : images.down,
+                                    date: doc.data().date,
+                                    type: doc.data().type,
+                                    message: doc.data().message,
+                                })
+                            })
+                        } else {
+                            console.log("does not exist");
+                        }
+                    })
             list = [...list].sort((a, b) => a.ID.isBefore(b.ID, "second") ? 1 : -1,)
-            getTransactionList(list.slice(0, 10))
+            getTransactionList(list.slice(0, 15))
         }
         getTransactionList_()
     }, []);
@@ -129,18 +154,22 @@ const History = ({navigation, route}) => {
           {transactionList.map(data =>{
               return(
                     <TouchableOpacity key={moment(data.ID)} 
-                                onPress={() => navigation.push("Bill", {
-                                    transactionType: data.type,
-                                    balanceChange: data.amount,
-                                    phoneNumber: data.senderID,
-                                    username: data.senderName,
-                                    transcMessage: data.message,
-                                    recipientPhoneNumber: data.recipientID,
-                                    recipientUsername: data.recipientName,
-                                    bankID: data.bankID,
-                                    bankName: data.bankName,
-                                    flag: false,
-                                })}>
+                                onPress={() => {
+                                    if (data.type != "Increase" && data.type != "Decrease") {
+                                        navigation.push("Bill", {
+                                            transactionType: data.type,
+                                            balanceChange: data.amount,
+                                            phoneNumber: data.senderID,
+                                            username: data.senderName,
+                                            transcMessage: data.message,
+                                            recipientPhoneNumber: data.recipientID,
+                                            recipientUsername: data.recipientName,
+                                            bankID: data.bankID,
+                                            bankName: data.bankName,
+                                            flag: false,
+                                        })
+                                    }
+                                }}>
                         <View   style={{borderWidth: 1,
                                   borderColor: COLORS.blueprim,
                                   backgroundColor: COLORS.white,
