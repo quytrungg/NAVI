@@ -53,7 +53,8 @@ const History = ({navigation, route}) => {
     }
 
     function handleDisplay(type, balance){
-        return type == "Withdraw" ? ("+" + balanceDisplay((String(balance)))) : (type == "Deposit" ? ("-" + balanceDisplay(String(balance))) : balanceDisplay((String(balance))));
+        return balanceDisplay((String(balance)));
+        //return type == "Withdraw" ? ("+" + balanceDisplay((String(balance)))) : (type == "Deposit" ? ("-" + balanceDisplay(String(balance))) : balanceDisplay((String(balance))));
     }
 
   function renderTransaction(){
