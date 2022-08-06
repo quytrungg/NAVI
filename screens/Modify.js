@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, Alert, TextInput } from "react-native";
+import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, Alert, TextInput, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
@@ -8,6 +8,8 @@ import moment from "moment";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+
+const widthScreen = Dimensions.get('window').width;
 
 const Modify = ({navigation, route}) => {
     const [balance, getBalance] = useState(0);
@@ -35,7 +37,7 @@ const Modify = ({navigation, route}) => {
         return (
         <TouchableOpacity style={{flexDirection: 'row', 
                                     alignItems: "center", 
-                                    marginTop: SIZES.padding * 1,
+                                    marginTop: widthScreen * 0.05,
                                     paddingHorizontal: SIZES.padding * 2}} 
                             onPress={() => navigation.goBack()}>
             <Image  source={icons.back} 
