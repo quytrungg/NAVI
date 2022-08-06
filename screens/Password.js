@@ -48,7 +48,7 @@ const Password = ({ navigation }) => {
   }
 
   function handleConfirm(text){
-    if (text != password){
+    if (text != password || text == "" || password == ""){
       Alert.alert(
         "Error",
         "Confirm password not match. Please try again.",
@@ -123,7 +123,8 @@ const Password = ({ navigation }) => {
   }
 
   function handleChangePassword(){
-    firebase
+    if (password != "") {
+      firebase
         .auth()
         .currentUser
         .updatePassword(password)
@@ -146,6 +147,7 @@ const Password = ({ navigation }) => {
             ]
           );
         })
+    }
   }
   
   function renderButton(){

@@ -198,7 +198,7 @@ const SignIn = ({ navigation }) => {
                 {
                   text: "Retry",
                   onPress: () => {
-                    navigation.navigate("SignIn");
+                    handleSignIn();
                   },
                 },
                 {
@@ -217,7 +217,7 @@ const SignIn = ({ navigation }) => {
             {
               text: "Retry",
               onPress: () => {
-                navigation.navigate("HomeAdmin");
+                handleSignIn();
               },
             },
             {

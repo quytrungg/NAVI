@@ -41,8 +41,7 @@ const History = ({navigation, route}) => {
         )
     }
     function balanceDisplay(text){
-        var mark = text[0] == '-' ? "-" : "+";
-        var temp = text[0] == '-' ? text.substring(1, text.length) : text;
+        temp = Math.abs(parseInt(text, 10))
         for (var i = temp.length; i > 0; i -= 3){
             if(i == temp.length){
                 continue;
@@ -53,6 +52,7 @@ const History = ({navigation, route}) => {
     }
 
     function handleDisplay(type, balance){
+        //return balanceDisplay((String(balance)));
         return type == "Withdraw" ? ("+" + balanceDisplay((String(balance)))) : (type == "Deposit" ? ("-" + balanceDisplay(String(balance))) : balanceDisplay((String(balance))));
     }
 
