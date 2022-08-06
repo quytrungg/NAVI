@@ -335,7 +335,7 @@ const Home = ({navigation, route}) => {
                             data = {notifList}
                             renderItem={({item}) => {
                                 return(
-                                    <TouchableOpacity onPress={() => navigation.navigate("Bill", {flag: true})}>
+                                    <TouchableOpacity>
                                         <View style={{paddingVertical: 5}}>
                                         <View style={{backgroundColor: '#ffffff80',borderRadius: 5, paddingHorizontal: 15, borderWidth: 1, borderColor: COLORS.bluesec}}>
                                             <Text style={{...FONTS.h3, paddingTop: 10}}>{item.header}</Text>
