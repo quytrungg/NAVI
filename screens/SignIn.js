@@ -162,10 +162,10 @@ const SignIn = ({ navigation }) => {
           },
         ]
       );
-    } else if (phoneNumber == "123456" && password == "adminnavi") {
+    } else if (phoneNumber == "123456") {
       firebase
         .auth()
-        .signInWithEmailAndPassword("adminnavi@gmail.com", password)
+        .signInWithEmailAndPassword("mqtrung20@clc.fitus.edu.vn", password)
         .then(() => {
           navigation.navigate("HomeAdmin", {
             username: "admin",

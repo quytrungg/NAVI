@@ -11,7 +11,7 @@ const widthScreen = Dimensions.get('window').width;
 
 const Password = ({ navigation }) => {
 
-  var password = "";
+  const [password, setPassword] = useState("");
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
 
@@ -79,7 +79,8 @@ const Password = ({ navigation }) => {
                         placeholderTextColor={COLORS.gray}
                         secureTextEntry={!showPassword1}
                         selectionColor={COLORS.black}
-                        onChangeText={(text) => password = text}/>
+                        onChangeText={(text) => setPassword(text)}
+                        onEndEditing={(value) => {value.nativeEvent.text.length < 6 ? Alert.alert("Warning", "Password must be at least 6 characters") : true}}/>
             <TouchableOpacity style={{position: 'absolute',
                                         right: 0,
                                         bottom: 10,

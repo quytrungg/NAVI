@@ -118,7 +118,8 @@ const SignUp = ({ navigation }) => {
                       selectionColor={COLORS.black}
                       secureTextEntry={!showPassword}
                       defaultValue={""}
-                      onChangeText={(password) => setPassword(password)}/>
+                      onChangeText={(password) => setPassword(password)}
+                      onEndEditing={(value) => {value.nativeEvent.text.length < 6 ? Alert.alert("Warning", "Password must be at least 6 characters") : true}}/>
           <TouchableOpacity style={{position: 'absolute',
                                     right: 0,
                                     bottom: 10,
