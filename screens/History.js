@@ -41,7 +41,7 @@ const History = ({navigation, route}) => {
         )
     }
     function balanceDisplay(text){
-        temp = Math.abs(parseInt(text, 10))
+        var temp = String(Math.abs(parseInt(text, 10)))
         for (var i = temp.length; i > 0; i -= 3){
             if(i == temp.length){
                 continue;
@@ -51,9 +51,8 @@ const History = ({navigation, route}) => {
         return temp + " VND";
     }
 
-    function handleDisplay(type, balance){
-        //return balanceDisplay((String(balance)));
-        return type == "Withdraw" ? ("+" + balanceDisplay((String(balance)))) : (type == "Deposit" ? ("-" + balanceDisplay(String(balance))) : balanceDisplay((String(balance))));
+    function handleDisplay(balance){
+        return (balance > 0 ? "+" : "-") + balanceDisplay((String(balance)))
     }
 
   function renderTransaction(){
@@ -105,7 +104,7 @@ const History = ({navigation, route}) => {
                                 ID: moment(doc.data().date),
                                 senderID: doc.data().recipientID,
                                 senderName: doc.data().recipientName,
-                                amount: doc.data().balanceChange,
+                                amount: doc.data().type == "Transfer" ? doc.data().balanceChange : -doc.data().balanceChange,
                                 recipientID: doc.data().recipientID,
                                 recipientName: doc.data().recipientName,
                                 icon: doc.data().type == "Withdraw" ? images.withdraw : (doc.data().type == "Deposit" ? images.deposit : images.transfer),
@@ -184,10 +183,11 @@ const History = ({navigation, route}) => {
                                     resizeMode:"contain",
                                     flexDirection: 'column'}}/>
                         <View style={{flexDirection: 'column', alignSelf: 'center', marginLeft: 20}}>
-                            <Text style={{color: COLORS.black, ...FONTS.h4}}>{data.message}</Text>
+                        <Text style={{color: COLORS.black, ...FONTS.h4, marginRight: 55}}
+                                resizeMode = "contain">{data.message}</Text>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
-                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 360}}>{handleDisplay(data.type, data.amount)}</Text>
+                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 360}}>{handleDisplay(data.amount)}</Text>
                             </View>
                         </View>
                     </View>

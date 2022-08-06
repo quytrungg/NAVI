@@ -40,6 +40,21 @@ const Log = () => {
         )
     }
 
+    function balanceDisplay(text){
+        var temp = String(Math.abs(parseInt(text, 10)))
+        for (var i = temp.length; i > 0; i -= 3){
+            if(i == temp.length){
+                continue;
+            }
+            temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
+        }
+        return temp + " VND";
+    }
+
+    function handleDisplay(balance){
+        return (balance > 0 ? "+" : "-") + balanceDisplay((String(balance)))
+    }
+
 
   function renderLog(){
     const [logList, getLogList] = useState([]);
@@ -49,6 +64,7 @@ const Log = () => {
                 .firestore()
                 .collection("admin-log")
                 .where("ID", "!=", 0)
+                .orderBy("ID", "desc")
                 .get()
                 .then((snapshot) => {
                     if (snapshot != undefined) {
@@ -57,11 +73,11 @@ const Log = () => {
                             list.push({
                                 ID: doc.data().ID,
                                 date: doc.data().date,
-                                balanceChange: doc.data().balanceChange,
+                                amount: doc.data().balanceChange,
                                 targetUsername: doc.data().targetUsername,
                                 targetPhoneNumber: doc.data().targetPhoneNumber,
                                 description: doc.data().message,
-                                icon: doc.data().balanceChange > 0 ? images.up : images.down
+                                icon: doc.data().balanceChange > 0 ? images.up : images.down,
                             })
                         })
                         getLogList(list)
@@ -97,7 +113,7 @@ const Log = () => {
                                 resizeMode = "contain">{data.description}</Text>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
-                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 270, top: -10}}>{data.amount}</Text>
+                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 380, top: 0}}>{handleDisplay(data.amount)}</Text>
                             </View>
                         </View>
                     </View>

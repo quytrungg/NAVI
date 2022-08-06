@@ -158,6 +158,21 @@ const Modify = ({navigation, route}) => {
         )
     }
 
+    function balanceDisplay(text){
+        var temp = String(Math.abs(parseInt(text, 10)))
+        for (var i = temp.length; i > 0; i -= 3){
+            if(i == temp.length){
+                continue;
+            }
+            temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
+        }
+        return temp + " VND";
+    }
+
+    function handleDisplay(balance){
+        return (balance > 0 ? "+" : "-") + balanceDisplay((String(balance)))
+    }
+
   function handleModify(value){
       if(value == 0){
         Alert.alert(
@@ -189,7 +204,7 @@ const Modify = ({navigation, route}) => {
                                     balance: balance + value,
                                 })
                                 .then(() => {
-                                    newAdminLogID = 0;
+                                    var newAdminLogID = 0;
                                     firebase
                                         .firestore()
                                         .collection("admin-log")
@@ -213,8 +228,8 @@ const Modify = ({navigation, route}) => {
                                                     targetUsername: route.params.recipientUsername,
                                                     targetPhoneNumber: route.params.recipientPhoneNumber,
                                                     type: value < 0 ? "Decrease" : "Increase",
-                                                    message: mess != "" ? mess : (value < 0 ? "Decrease " + route.params.recipientUsername + "'s balance by " + String(Math.abs(value)) :
-                                                                        "Increase " + route.params.recipientUsername + "'s balance by " + String(value)),
+                                                    message: mess != "" ? mess : (value < 0 ? "Decrease " + route.params.recipientUsername + "'s balance":
+                                                                        "Increase " + route.params.recipientUsername + "'s balance"),
                                                 })
                                                 .then(() => {
                                                     firebase
