@@ -1,11 +1,13 @@
 import React, {useState} from "react";
-import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert, Dimensions} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+
+const widthScreen = Dimensions.get('window').width;
 
 const Password = ({ navigation }) => {
 
@@ -17,7 +19,7 @@ const Password = ({ navigation }) => {
     return(
       <TouchableOpacity style={{flexDirection: 'row', 
                                 alignItems: "center",
-                                marginTop: SIZES.padding * 1,
+                                marginTop: widthScreen * 0.05,
                                 paddingHorizontal: SIZES.padding * 2}}
                         onPress={() => navigation.goBack()}>
         <Image  source={icons.back} 
