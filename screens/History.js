@@ -187,7 +187,7 @@ const History = ({navigation, route}) => {
                                 resizeMode = "contain">{data.message}</Text>
                             <View style={{flexDirection: 'row'}}>
                                 <Text style={{color: COLORS.black, ...FONTS.body4}}>{data.date}</Text>
-                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 360}}>{handleDisplay(data.amount)}</Text>
+                                <Text style={{color: '#2B7A0B', ...FONTS.h4, marginLeft: widthScreen - 369}}>{handleDisplay(data.amount)}</Text>
                             </View>
                         </View>
                     </View>
