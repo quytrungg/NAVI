@@ -48,7 +48,7 @@ const History = ({navigation, route}) => {
             }
             temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
         }
-        return mark + temp + " VND";
+        return temp + " VND";
     }
 
     function handleDisplay(type, balance){
