@@ -49,7 +49,6 @@ const History = ({navigation, route}) => {
             }
             temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
         }
-        console.log(temp)
         return mark + temp + " VND";
     }
 
