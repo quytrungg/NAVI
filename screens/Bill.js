@@ -15,7 +15,7 @@ const Bill = ({navigation, route}) => {
     var transactionDetail = {
         ID: 0,
         type: route.params.transactionType,
-        date: moment().utcOffset('+07:00').format('YYYY-MM-DD hh:mm:ss'),
+        date: moment().utcOffset('+07:00').format('YYYY-MM-DD HH:mm:ss'),
         balanceChange: route.params.balanceChange,
         senderName: "",
         senderID: "",

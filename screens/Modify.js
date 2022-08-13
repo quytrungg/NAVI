@@ -223,7 +223,7 @@ const Modify = ({navigation, route}) => {
                                                 .doc(String(newAdminLogID))
                                                 .set({
                                                     ID: newAdminLogID,
-                                                    date: moment().utcOffset('+07:00').format('YYYY-MM-DD hh:mm:ss'),
+                                                    date: moment().utcOffset('+07:00').format('YYYY-MM-DD HH:mm:ss'),
                                                     balanceChange: value,
                                                     targetUsername: route.params.recipientUsername,
                                                     targetPhoneNumber: route.params.recipientPhoneNumber,
