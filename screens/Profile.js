@@ -2,6 +2,7 @@ import React from "react";
 import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, StatusBar, KeyboardAvoidingView, ScrollView } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
 import QRCode from 'react-native-qrcode-svg';
+import { CommonActions } from '@react-navigation/native';
 
 const Profile = ({navigation, route}) => { 
 
@@ -112,7 +113,14 @@ const Profile = ({navigation, route}) => {
     }
 
     function signOut(){
-      navigation.navigate("SignIn");
+        navigation.dispatch(
+            CommonActions.reset({
+              index: 1,
+              routes: [
+                { name: 'SignIn' }
+              ],
+            })
+          );
     }
   
     function handleSignOut(){

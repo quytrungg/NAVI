@@ -13,82 +13,80 @@ const Home = ({navigation, route}) => {
     const [showNoti, setShowNoti] = useState(false);
     const [notifList, getNotifList] = useState([]);
 
-    useEffect(() => {
-        const getBalance_ = async () => {
-            await firebase
-                .firestore()
-                .collection("user")
-                .doc(route.params.phoneNumber)
-                .get()
-                .then((snapshot) => {
-                    if (snapshot.data() != undefined) {
-                        getBalance(snapshot.data().balance);
-                    } else {
-                        console.log("does not exist");
-                    }
-                });
+    const getBalance_ = async () => {
+        await firebase
+            .firestore()
+            .collection("user")
+            .doc(route.params.phoneNumber)
+            .get()
+            .then((snapshot) => {
+                if (snapshot.data() != undefined) {
+                    getBalance(snapshot.data().balance);
+                } else {
+                    console.log("does not exist");
+                }
+            });
+    }
+    const getNotifList_ = async () => {
+        await firebase
+            .firestore()
+            .collection("user")
+            .doc(route.params.phoneNumber)
+            .get()
+            .then(async (snapshot) => {
+                if (snapshot.data().notifCount != 0) {
+                    setShowNoti(true)
+                    var list = []
+                    await firebase
+                        .firestore()
+                        .collection("transaction-history")
+                        .where("recipientID", "==", route.params.phoneNumber)
+                        .orderBy("ID", "desc")
+                        .limit(snapshot.data().notifCount)
+                        .get()
+                        .then((querySnapshot) => {
+                            if (querySnapshot != undefined) {
+                                querySnapshot.forEach((doc) => {
+                                    list.push({
+                                        key: moment(doc.data().date),
+                                        header: doc.data().type + " - " + doc.data().date,
+                                        body: doc.data().message
+                                    })
+                                })
+                            }
+                        })
+                    await firebase
+                        .firestore()
+                        .collection("admin-log")
+                        .where("targetPhoneNumber", "==", route.params.phoneNumber)
+                        .orderBy("ID", "desc")
+                        .limit(snapshot.data().notifCount)
+                        .get()
+                        .then((querySnapshot) => {
+                            if (querySnapshot != undefined) {
+                                querySnapshot.forEach((doc) => {
+                                    list.push({
+                                        key: moment(doc.data().date),
+                                        header: doc.data().type + " - " + doc.data().date + " - admin",
+                                        body: doc.data().message
+                                    })
+                                })
+                            }
+                        })
+                    await firebase
+                        .firestore()
+                        .collection("user")
+                        .doc(route.params.phoneNumber)
+                        .update({
+                            notifCount: 0,
+                        })
+                    list = [...list].sort((a, b) => a.key.isBefore(b.key, "second") ? 1 : -1,)
+                    getNotifList(list.slice(0, snapshot.data().notifCount))
+                }
+            })
         }
-        const getNotifList_ = async () => {
-            await firebase
-                .firestore()
-                .collection("user")
-                .doc(route.params.phoneNumber)
-                .get()
-                .then(async (snapshot) => {
-                    if (snapshot.data().notifCount != 0) {
-                        setShowNoti(true)
-                        var list = []
-                        await firebase
-                            .firestore()
-                            .collection("transaction-history")
-                            .where("recipientID", "==", route.params.phoneNumber)
-                            .orderBy("ID", "desc")
-                            .limit(snapshot.data().notifCount)
-                            .get()
-                            .then((querySnapshot) => {
-                                if (querySnapshot != undefined) {
-                                    querySnapshot.forEach((doc) => {
-                                        list.push({
-                                            key: moment(doc.data().date),
-                                            header: doc.data().type + " - " + doc.data().date + " - admin",
-                                            body: doc.data().message
-                                        })
-                                    })
-                                }
-                            })
-                        await firebase
-                            .firestore()
-                            .collection("admin-log")
-                            .where("targetPhoneNumber", "==", route.params.phoneNumber)
-                            .orderBy("ID", "desc")
-                            .limit(snapshot.data().notifCount)
-                            .get()
-                            .then((querySnapshot) => {
-                                if (querySnapshot != undefined) {
-                                    querySnapshot.forEach((doc) => {
-                                        list.push({
-                                            key: moment(doc.data().date),
-                                            header: doc.data().type + " - " + doc.data().date + " - admin",
-                                            body: doc.data().message
-                                        })
-                                    })
-                                }
-                            })
-                        await firebase
-                            .firestore()
-                            .collection("user")
-                            .doc(route.params.phoneNumber)
-                            .update({
-                                notifCount: 0,
-                            })
-                        list = [...list].sort((a, b) => a.key.isBefore(b.key, "second") ? 1 : -1,)
-                        getNotifList(list.slice(0, snapshot.data().notifCount))
-                    }
-                })
-            }
-        getBalance_()
-        getNotifList_()
-    })
+    getBalance_()
+    getNotifList_()
 
     const featuresData = [
         {   id: 1,
@@ -123,7 +121,7 @@ const Home = ({navigation, route}) => {
     }
 
     function balanceDisplay(){
-        var temp = balance.toString();
+        var temp = String(Math.abs(parseInt(balance, 10)))
         for (var i = temp.length; i > 0; i -= 3){
             if(i == temp.length){
                 continue;
@@ -189,7 +187,7 @@ const Home = ({navigation, route}) => {
                     <View style={{flexDirection: 'row', marginBottom: SIZES.padding}}>
                         <Text style={{...FONTS.h3}}>Balance: </Text>
                         <View >
-                            <TextInput style={{...FONTS.h3, marginTop: 3}}
+                            <TextInput style={{...FONTS.h3}}
                                         editable={false} 
                                         value={balanceDisplay()}
                                         underlineColorAndroid="transparent"

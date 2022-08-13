@@ -210,25 +210,6 @@ const Bill = ({navigation, route}) => {
         },
     });
 
-    function renderBack(){
-        return (
-        <TouchableOpacity style={{flexDirection: 'row', 
-                                    alignItems: "center", 
-                                    marginTop: heightScreen * 0.025,
-                                    paddingHorizontal: SIZES.padding * 2}} 
-                            onPress={() => navigation.goBack()}>
-            <Image  source={icons.back} 
-                    resizeMode="contain" 
-                    style={{width: 15, 
-                            height: 15, 
-                            tintColor: COLORS.black}}/>
-            <Text style={{marginLeft: SIZES.padding / 2, 
-                        color: COLORS.black, 
-                        ...FONTS.h4}}>Home</Text>
-            </TouchableOpacity>
-        );
-    }
-
     function renderBanner() {
         return (
             <View style = {styles.banner}>
@@ -239,8 +220,19 @@ const Bill = ({navigation, route}) => {
         )
     }
 
-    function handleBalanceChange(){
-        return (transactionDetail.balanceChange > 0 ? "+" + transactionDetail.balanceChange.toString() : "-" + transactionDetail.balanceChange.toString()) + " VND";
+    function balanceDisplay(text){
+        var temp = String(Math.abs(parseInt(text, 10)))
+        for (var i = temp.length; i > 0; i -= 3){
+            if(i == temp.length){
+                continue;
+            }
+            temp = temp.substring(0, i) + "." + temp.substring(i, temp.length);
+        }
+        return temp + " VND";
+    }
+
+    function handleDisplay(){
+        return (transactionDetail.type == "Withdraw" ? "-" : (transactionDetail.type == "Transfer" ? "-" : "+")) + balanceDisplay((String(transactionDetail.balanceChange)))
     }
 
     function renderTop() {
@@ -250,7 +242,7 @@ const Bill = ({navigation, route}) => {
                     <Image  source = {images.navilogo} style = {styles.logo}/>
                     <View style = {{flexDirection: 'column', alignSelf: 'center'}}>
                         <Text style = {styles.text1}>Successful Transaction</Text>
-                        <Text style = {styles.text2}>{handleBalanceChange()}</Text>
+                        <Text style = {styles.text2}>{handleDisplay()}</Text>
                     </View>
                 </View>
         </View>
@@ -287,10 +279,10 @@ const Bill = ({navigation, route}) => {
                         <Text style = {styles.text3}>{UIReceiverText} ID</Text>
                     </View>
                     <View style = {{alignSelf: 'center'}}>
-                        <Text style = {styles.text5}>{transactionDetail.senderName}</Text>
-                        <Text style = {styles.text5}>{transactionDetail.senderID}</Text>
-                        <Text style = {styles.text5}>{transactionDetail.recipientName}</Text>
-                        <Text style = {styles.text5}>{transactionDetail.recipientID}</Text>
+                        <Text style = {styles.text5}>{transactionDetail.type == "Withdraw" ? transactionDetail.recipientName : transactionDetail.senderName}</Text>
+                        <Text style = {styles.text5}>{transactionDetail.type == "Withdraw" ? transactionDetail.recipientID : transactionDetail.senderID}</Text>
+                        <Text style = {styles.text5}>{transactionDetail.type == "Withdraw" ? transactionDetail.senderName : transactionDetail.recipientName}</Text>
+                        <Text style = {styles.text5}>{transactionDetail.type == "Withdraw" ? transactionDetail.senderID : transactionDetail.recipientID}</Text>
                     </View>
                 </View>
         </View>
@@ -325,7 +317,6 @@ const Bill = ({navigation, route}) => {
     return (
         <SafeAreaView style={{flexGrow: 1, backgroundColor: COLORS.blueback}}>
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
-                {renderBack()}
                 <ScrollView>
                     {renderBanner()}
                     {renderTop()}

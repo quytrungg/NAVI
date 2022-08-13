@@ -187,22 +187,51 @@ const Deposit = ({navigation, route}) => {
         )
     }
 
-    function handleDeposit(data){
-        if(value <= 0){
+    async function handleDeposit(data){
+        if (value <= 0) {
             Alert.alert(
                 "Warning",
-                "Withdraw amount cannot be 0!");
+                "Deposit amount cannot be equal to or lower than 0!",
+                [
+                    {
+                      text: "OK",
+                    },
+                  ]
+            );
         }
-        else{
-            navigation.push("Verification",{
-                username: route.params.username,
-                phoneNumber: route.params.phoneNumber,
-                balanceChange: value,
-                transactionType: "Deposit",
-                bankName: data.description,
-                bankID: data.bankID,
-                transcMessage: route.params.username + " deposits from " + data.description,
-            })
+        else {
+            await firebase
+                .firestore()
+                .collection("user")
+                .doc(route.params.phoneNumber)
+                .collection("bank")
+                .doc(data.description)
+                .get()
+                .then((snapshot) => {
+                    if (snapshot.data().balance < value) {
+                        Alert.alert(
+                            "Warning",
+                            "Deposit amount cannot be bigger than bank's balance!",
+                            [
+                                {
+                                  text: "OK",
+                                },
+                              ]
+                        );
+                    }
+                    else {
+                        setValue(0)
+                        navigation.push("Verification",{
+                            username: route.params.username,
+                            phoneNumber: route.params.phoneNumber,
+                            balanceChange: value,
+                            transactionType: "Deposit",
+                            bankName: data.description,
+                            bankID: data.bankID,
+                            transcMessage: route.params.username + " deposits from " + data.description,
+                        })
+                    }
+                })
         }
     }
 

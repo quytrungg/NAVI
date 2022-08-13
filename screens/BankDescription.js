@@ -223,7 +223,10 @@ const BankDescription = ({ navigation, route }) => {
                   setBankID("");
                   setOwnerName("");
                   setPublishDate("");
-                  navigation.navigate("BankAccount");
+                  navigation.navigate("BankAccount", {
+                    username: route.params.username,
+                    phoneNumber: route.params.phoneNumber,
+                  });
                 },
               },
             ]);

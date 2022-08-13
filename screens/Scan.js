@@ -125,7 +125,6 @@ const Scan = ({ navigation, route }) => {
     }
 
     function onBarCodeRead(result) {
-        console.log(result.data)
         if(result.data == 'Deposit'){
             navigation.navigate("Deposit", {
                 username: route.params.username,

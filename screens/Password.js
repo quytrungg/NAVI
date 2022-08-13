@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert, Dimensions} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../constants";
+import { CommonActions } from '@react-navigation/native';
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -141,7 +142,14 @@ const Password = ({ navigation }) => {
                     .auth()
                     .signOut()
                     .then(() => {
-                      navigation.navigate("SignIn")
+                      navigation.dispatch(
+                        CommonActions.reset({
+                          index: 1,
+                          routes: [
+                            { name: 'SignIn' }
+                          ],
+                        })
+                      );
                     })
                 }
               }

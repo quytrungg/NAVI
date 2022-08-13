@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, Dimensions, ScrollView} from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../constants";
+import { StackActions } from '@react-navigation/native';
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
@@ -102,9 +103,15 @@ const Verification = ({navigation, route}) => {
         )
     }
 
-    function showOTPTimeout(){
+    function showOTPTimeout(flag){
         setTimeout(() => {
-            showOTP();
+            if (flag == true) {
+                navigation.dispatch(
+                    StackActions.replace('Verification', route.params)
+                );
+            } else {
+                showOTP();
+            }
         }, 1000);
     }
 
@@ -276,7 +283,7 @@ const Verification = ({navigation, route}) => {
                 [{
                     text: "Resend",
                     onPress: () => {
-                        showOTPTimeout();
+                        showOTPTimeout(true);
                     },
                 },
                 {
@@ -291,7 +298,7 @@ const Verification = ({navigation, route}) => {
             <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
             <ScrollView>
                 {renderImage()}
-                {showOTPTimeout()}
+                {showOTPTimeout(false)}
                 {OTP()}
                 {renderButton()}
             </ScrollView>

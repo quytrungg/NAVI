@@ -29,51 +29,51 @@ const Withdraw = ({navigation, route}) => {
         else return icons.internet;
     }
 
-        const [balance, getBalance] = useState(0);
-        const [bankList, getBankList] = useState([]);
-        useEffect(() => {
-            const getBalance_ = async () => {
-                await firebase
-                    .firestore()
-                    .collection("user")
-                    .doc(route.params.phoneNumber)
-                    .get()
-                    .then((snapshot) => {
-                        if (snapshot.data() != undefined) {
-                            getBalance(snapshot.data().balance);
-                        } else {
-                            console.log("does not exist");
-                        }
-                    });
-            }
-            const getBankList_ = async () => {
-                await firebase
-                    .firestore()
-                    .collection("user")
-                    .doc(route.params.phoneNumber)
-                    .collection("bank")
-                    .get()
-                    .then((snapshot) => {
-                        if (snapshot != undefined) {
-                            var list = [], i = 1
-                            snapshot.forEach((doc) => {
-                                list.push({
-                                    id: i++,
-                                    icon: banknameToBankicon(doc.data().bankName),
-                                    description: doc.data().bankName,
-                                    bankID: doc.data().bankID,
-                                    choice: false
-                                })
+    const [balance, getBalance] = useState(0);
+    const [bankList, getBankList] = useState([]);
+    useEffect(() => {
+        const getBalance_ = async () => {
+            await firebase
+                .firestore()
+                .collection("user")
+                .doc(route.params.phoneNumber)
+                .get()
+                .then((snapshot) => {
+                    if (snapshot.data() != undefined) {
+                        getBalance(snapshot.data().balance);
+                    } else {
+                        console.log("does not exist");
+                    }
+                });
+        }
+        const getBankList_ = async () => {
+            await firebase
+                .firestore()
+                .collection("user")
+                .doc(route.params.phoneNumber)
+                .collection("bank")
+                .get()
+                .then((snapshot) => {
+                    if (snapshot != undefined) {
+                        var list = [], i = 1
+                        snapshot.forEach((doc) => {
+                            list.push({
+                                id: i++,
+                                icon: banknameToBankicon(doc.data().bankName),
+                                description: doc.data().bankName,
+                                bankID: doc.data().bankID,
+                                choice: false
                             })
-                            getBankList(list)
-                        } else {
-                            console.log("does not exist");
-                        }
-                    })
-            }
-            getBalance_()
-            getBankList_()
-        }, []);
+                        })
+                        getBankList(list)
+                    } else {
+                        console.log("does not exist");
+                    }
+                })
+        }
+        getBalance_()
+        getBankList_()
+    }, []);
 
   function renderHeader(){
       return (
@@ -190,7 +190,7 @@ const Withdraw = ({navigation, route}) => {
     if(value <= 0){
         Alert.alert(
             "Warning",
-            "Withdraw amount cannot be 0!",
+            "Withdraw amount cannot be equal to or lower than 0!",
             [
                 {
                     text: "OK",
@@ -209,8 +209,9 @@ const Withdraw = ({navigation, route}) => {
           ]
         );
       }
-    else{
-        navigation.push("Verification",{
+    else {
+        setValue(0)
+        navigation.push("Verification", {
             username: route.params.username,
             phoneNumber: route.params.phoneNumber,
             balanceChange: value * -1,
