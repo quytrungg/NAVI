@@ -8,7 +8,7 @@ import featuresData from "./data";
 const Admin = ({ navigation, route }) => {
 
   function handelNotification() {
-    Alert.alert("Notifications", "No notifications");
+    Alert.alert("Notifications", defineMesaages.noNotifications.defaultMessage);
   }
 
   function renderHeader() {

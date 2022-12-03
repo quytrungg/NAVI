@@ -1,66 +1,11 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  FlatList,
-  Alert,
-  SafeAreaView,
-  StatusBar,
-  Dimensions,
-} from "react-native";
-import { COLORS, SIZES, FONTS, icons, images } from "../../constants";
+import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, StatusBar, Dimensions,} from "react-native";
+import { COLORS, SIZES, FONTS, icons } from "../../constants";
+import bankData from "./data";
 
 const widthScreen = Dimensions.get("window").width;
 
 const BankAccount = ({ navigation, route }) => {
-  const bankData = [
-    {
-      id: 1,
-      icon: images.mb,
-      color: COLORS.purple,
-      backgroundColor: COLORS.lightpurple,
-      description: "MB Bank",
-    },
-    {
-      id: 2,
-      icon: images.vcb,
-      color: COLORS.yellow,
-      backgroundColor: COLORS.lightyellow,
-      description: "Vietcombank",
-    },
-    {
-      id: 3,
-      icon: images.acb,
-      color: COLORS.primary,
-      backgroundColor: COLORS.lightGreen,
-      description: "ACB Bank",
-    },
-    {
-      id: 4,
-      icon: images.vp,
-      color: COLORS.red,
-      backgroundColor: COLORS.lightRed,
-      description: "VP Bank",
-    },
-    {
-      id: 5,
-      icon: images.bidv,
-      color: COLORS.yellow,
-      backgroundColor: COLORS.lightyellow,
-      description: "BIDV",
-    },
-    {
-      id: 6,
-      icon: images.tech,
-      color: COLORS.primary,
-      backgroundColor: COLORS.lightGreen,
-      description: "Techcombank",
-    },
-  ];
-
-  const [bank, setBank] = useState(bankData);
 
   function handleBackToHome() {
     return Alert.alert(
@@ -195,7 +140,7 @@ const BankAccount = ({ navigation, route }) => {
     return (
       <FlatList
         ListHeaderComponent={Header}
-        data={bank}
+        data={bankData}
         numColumns={2}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         keyExtractor={(item) => `${item.id}`}
