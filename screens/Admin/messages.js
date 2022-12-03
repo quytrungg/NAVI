@@ -1,31 +1,31 @@
 import React from 'react';
 
 export default defineMessages({
-    noNotifications:{
+    noNotifications: {
         id: 'noNotifications',
         defaultMessage: 'No notifications',
     },
-    welcomeBack:{
+    welcomeBack: {
         id: 'welcomeBack',
         defaultMessage: 'Welcome Back!',
     },
-    modify:{
+    modify: {
         id: 'modify',
         defaultMessage: 'Modify',
     },
-    view:{
+    view: {
         id: 'view',
         defaultMessage: 'View',
     },
-    features:{
+    features: {
         id: 'features',
         defaultMessage: 'Features',
     },
-    whatsNew:{
+    whatsNew: {
         id: 'whatsNew',
         defaultMessage: "What's New",
     },
-    viewAll:{
+    viewAll: {
         id: 'viewAll',
         defaultMessage: 'View All',
     },

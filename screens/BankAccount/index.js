@@ -32,41 +32,18 @@ const BankAccount = ({ navigation, route }) => {
 
   function renderTop() {
     return (
-      <TouchableOpacity
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginTop: widthScreen * 0.05,
-        }}
-        onPress={() => handleBackToHome()}
-      >
-        <Image
-          source={icons.back}
-          resizeMode="contain"
-          style={{ width: 15, height: 15, tintColor: COLORS.black }}
-        />
-        <Text
-          style={{
-            marginLeft: SIZES.padding / 2,
-            color: COLORS.black,
-            ...FONTS.h4,
-          }}
-        >
-          Home
-        </Text>
+      <TouchableOpacity style={styles.top} onPress={() => handleBackToHome()}>
+        <Image source={icons.back} resizeMode="contain" style={styles.top.image}/>
+        <Text style={styles.top.text}>Home</Text>
       </TouchableOpacity>
     );
   }
 
   function renderHeader() {
     return (
-      <View style={{ flexDirection: "row", marginVertical: SIZES.padding * 2 }}>
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Text style={{ ...FONTS.h1, color: COLORS.blueprim }}>
-            Bank Linking
-          </Text>
+      <View style={styles.header}>
+        <View style={styles.header.sub}>
+          <Text style={styles.header.text}>Bank Linking</Text>
         </View>
       </View>
     );
@@ -74,28 +51,19 @@ const BankAccount = ({ navigation, route }) => {
 
   function renderBanner() {
     return (
-      <View style={{ height: 120, borderRadius: 10 }}>
-        <View style={{ marginBottom: SIZES.padding * 2 }}>
-          <Text style={{ ...FONTS.h3 }}>
-            An account must at least connect to 1 bank account.
-          </Text>
+      <View style={styles.banner}>
+        <View style={styles.banner.sub}>
+          <Text style={styles.banner.text}>An account must at least connect to 1 bank account.</Text>
         </View>
-        <Text style={{ ...FONTS.h3, color: COLORS.gray }}>
-          This is a list of banks that are able to connect to the account.
-        </Text>
+        <Text style={styles.banner.text.sub}>This is a list of banks that are able to connect to the account.</Text>
       </View>
     );
   }
 
   function renderFeatures() {
     const Header = () => (
-      <View
-        style={{
-          marginBottom: SIZES.padding * 2,
-          marginTop: SIZES.padding * 1,
-        }}
-      >
-        <Text style={{ ...FONTS.h3 }}>Banks</Text>
+      <View style={styles.features.header}>
+        <Text style={styles.features.text}>Banks</Text>
       </View>
     );
 
@@ -107,50 +75,54 @@ const BankAccount = ({ navigation, route }) => {
       });
     }
 
-    const renderItem = ({ item }) => (
-      <TouchableOpacity
-        style={{
-          marginBottom: SIZES.padding * 1.5,
-          width: 111,
+    const buttonStyle = (item) => {
+      return(
+        StyleSheet.create({
+          height: 50,
+          width: 100,
+          marginBottom: 5,
+          borderRadius: 10,
+          borderColor: COLORS.black,
+          backgroundColor: item.backgroundColor,
           alignItems: "center",
-        }}
-        onPress={() => handleBank(item)}
-      >
-        <View
-          style={{
-            height: 50,
-            width: 100,
-            marginBottom: 5,
-            borderRadius: 10,
-            borderColor: COLORS.black,
-            backgroundColor: item.backgroundColor,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Image
-            source={item.icon}
-            resizeMode="contain"
-            style={{ height: 55, width: 55, tintColor: item.color }}
-          />
+          justifyContent: "center",
+        })
+      )
+    }
+
+    const imageStyle = (item) => {
+      return(
+        StyleSheet.create({
+          height: 55, 
+          width: 55, 
+          tintColor: item.color,
+        })
+      )
+    }
+
+    const renderItem = ({ item }) => (
+      <TouchableOpacity style={styles.features.items} onPress={() => handleBank(item)}>
+        <View style={buttonStyle(item)}>
+          <Image source={item.icon} resizeMode="contain" style={imageStyle(item)}/>
         </View>
-        <Text style={{ textAlign: "center", flexWrap: "wrap", ...FONTS.body4 }}>
-          {item.description}
-        </Text>
+        <Text style={styles.features.description}>{item.description}</Text>
       </TouchableOpacity>
     );
+
     return (
       <FlatList
         ListHeaderComponent={Header}
         data={bankData}
         numColumns={2}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
+        columnWrapperStyle={styles.features.flatlist.wrapper}
         keyExtractor={(item) => `${item.id}`}
         renderItem={renderItem}
-        style={{ marginTop: SIZES.padding * 2 }}
+        style={styles.features.flatlist}
       />
     );
   }
+
+  debugger
 
   function renderBank() {
     const HeaderComponent = () => (

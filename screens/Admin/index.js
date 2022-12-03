@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar, StyleSheet} from "react-native";
+import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar, StyleSheet } from "react-native";
 import styles from "./styles";
 import { icons } from "../../constants";
 import defineMesaages from './messages';
@@ -20,7 +20,7 @@ const Admin = ({ navigation, route }) => {
         </View>
         <View style={styles.notification}>
           <TouchableOpacity style={styles.notification.button} onPress={() => handelNotification()}>
-            <Image source={icons.bell} style={styles.notification.bell}/>
+            <Image source={icons.bell} style={styles.notification.bell} />
             <View style={styles.notification.reddot}></View>
           </TouchableOpacity>
         </View>
@@ -31,7 +31,7 @@ const Admin = ({ navigation, route }) => {
   function renderBanner() {
     return (
       <View style={styles.banner}>
-        <Image source={icons.barcode} resizeMode="cover" style={styles.barcode}/>
+        <Image source={icons.barcode} resizeMode="cover" style={styles.barcode} />
       </View>
     );
   }
@@ -56,7 +56,7 @@ const Admin = ({ navigation, route }) => {
     );
 
     const buttonStyle = (item) => {
-      return(
+      return (
         StyleSheet.create({
           height: 50,
           width: 50,
@@ -70,10 +70,10 @@ const Admin = ({ navigation, route }) => {
     }
 
     const iconStyle = (item) => {
-      return(
+      return (
         StyleSheet.create({
-          height: 20, 
-          width: 20, 
+          height: 20,
+          width: 20,
           tintColor: item.color,
         })
       )
@@ -82,7 +82,7 @@ const Admin = ({ navigation, route }) => {
     const renderItem = ({ item }) => (
       <TouchableOpacity style={styles.features.items} onPress={() => handleFeature(item)}>
         <View style={buttonStyle(item)}>
-          <Image source={item.icon} resizeMode="contain" style={iconStyle(item)}/>
+          <Image source={item.icon} resizeMode="contain" style={iconStyle(item)} />
         </View>
         <Text style={styles.features.description}>{item.description}</Text>
       </TouchableOpacity>
