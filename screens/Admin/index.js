@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar} from "react-native";
+import {SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar, StyleSheet} from "react-native";
 import { COLORS, SIZES, icons, images } from "../../constants";
 import styles from "./styles";
 
@@ -84,10 +84,34 @@ const Admin = ({ navigation, route }) => {
       </View>
     );
 
+    const buttonStyle = (item) => {
+      return(
+        StyleSheet.create({
+          height: 50,
+          width: 50,
+          marginBottom: 5,
+          borderRadius: 10,
+          backgroundColor: item.backgroundColor,
+          alignItems: "center",
+          justifyContent: "center",
+        })
+      )
+    }
+
+    const iconStyle = (item) => {
+      return(
+        StyleSheet.create({
+          height: 20, 
+          width: 20, 
+          tintColor: item.color,
+        })
+      )
+    }
+
     const renderItem = ({ item }) => (
       <TouchableOpacity style={styles.features.items} onPress={() => handleFeature(item)}>
-        <View style={styles.features.button}>
-          <Image source={item.icon} resizeMode="contain" style={styles.features.image}/>
+        <View style={buttonStyle(item)}>
+          <Image source={item.icon} resizeMode="contain" style={iconStyle(item)}/>
         </View>
         <Text style={styles.features.description}>{item.description}</Text>
       </TouchableOpacity>

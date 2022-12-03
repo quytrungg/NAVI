@@ -66,20 +66,6 @@ const styles = StyleSheet.create({
         width: 60,
         alignItems: "center",
       },
-      button:{
-        height: 50,
-        width: 50,
-        marginBottom: 5,
-        borderRadius: 10,
-        backgroundColor: item.backgroundColor,
-        alignItems: "center",
-        justifyContent: "center",
-      },
-      image:{
-        height: 20, 
-        width: 20, 
-        tintColor: item.color,
-      },
       description:{
         textAlign: "center", 
         flexWrap: "wrap", 
