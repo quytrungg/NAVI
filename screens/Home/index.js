@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react";
 import { SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, TextInput, StatusBar, Modal } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../../constants";
-import moment from "moment"
+import moment from "moment";
+import styles from "./styles";
+import messages from "./messages";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";

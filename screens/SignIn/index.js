@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS, SIZES, FONTS, icons, images } from "../../constants";
+import styles from "./styles";
+import messages from "./messages";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";

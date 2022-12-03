@@ -3,6 +3,8 @@ import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity
 import { COLORS, SIZES, FONTS, icons, images } from "../../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import moment from "moment";
+import styles from "./styles";
+import messages from "./messages";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";

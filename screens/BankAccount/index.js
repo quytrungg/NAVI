@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, StatusBar, Dimensions,} from "react-native";
 import { COLORS, SIZES, FONTS, icons } from "../../constants";
 import bankData from "./data";
+import styles from "./styles";
+import messages from "./messages";
 
 const widthScreen = Dimensions.get("window").width;
 

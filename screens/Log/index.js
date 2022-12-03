@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity, StatusBar, ScrollView, Dimensions } from "react-native";
 import { COLORS, SIZES, FONTS, icons, images } from "../../constants"
 import { LinearGradient } from 'expo-linear-gradient';
+import styles from "./styles";
+import messages from "./messages";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";

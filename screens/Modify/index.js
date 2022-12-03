@@ -4,6 +4,8 @@ import { COLORS, SIZES, FONTS, icons, images } from "../../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
 import moment from "moment";
+import styles from "./styles";
+import messages from "./messages";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";

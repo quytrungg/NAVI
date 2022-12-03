@@ -3,6 +3,8 @@ import { SafeAreaView, Image, View, Text, TouchableOpacity, StyleSheet, Alert, S
 import { COLORS, SIZES, FONTS, images } from "../../constants";
 import QRCode from 'react-native-qrcode-svg';
 import { CommonActions } from '@react-navigation/native';
+import styles from "./styles";
+import messages from "./messages";
 
 const Profile = ({navigation, route}) => { 
 

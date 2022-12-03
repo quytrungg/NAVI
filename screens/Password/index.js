@@ -3,6 +3,8 @@ import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Sc
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, icons, images } from "../../constants";
 import { CommonActions } from '@react-navigation/native';
+import styles from "./styles";
+import messages from "./messages";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";

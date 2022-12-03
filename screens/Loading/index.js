@@ -2,6 +2,8 @@ import React from "react";
 import {View, Text, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform, StatusBar} from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, images } from "../../constants";
+import styles from "./styles";
+import messages from "./messages";
 
 const Loading = ({navigation, route}) => {
 

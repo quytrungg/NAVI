@@ -3,6 +3,8 @@ import { SafeAreaView, View, Text, Image, KeyboardAvoidingView, TouchableOpacity
 import { COLORS, SIZES, FONTS, icons, images } from "../../constants"
 import { LinearGradient } from 'expo-linear-gradient';
 import CurrencyInput from 'react-native-currency-input';
+import styles from "./styles";
+import messages from "./messages";
 
 const heightScreen = Dimensions.get('window').height;
 

@@ -2,6 +2,8 @@ import React from "react";
 import {View,Text,Image,TouchableOpacity, StatusBar} from "react-native";
 import { Camera } from 'expo-camera';
 import { COLORS, FONTS, SIZES, icons, images } from "../../constants";
+import styles from "./styles";
+import messages from "./messages";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";

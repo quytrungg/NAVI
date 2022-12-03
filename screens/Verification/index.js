@@ -2,6 +2,8 @@ import React from "react";
 import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, Dimensions, ScrollView} from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../../constants";
 import { StackActions } from '@react-navigation/native';
+import styles from "./styles";
+import messages from "./messages";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
