@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
       alignSelf: "center",
       borderRadius: 20,
     },
-    feature:{
+    features:{
       marginBottom: SIZES.padding * 2,
   
       text:{
@@ -73,6 +73,10 @@ const styles = StyleSheet.create({
       },
       flatlist:{
         marginTop: SIZES.padding * 2,
+
+        wrapper:{
+          justifyContent: "space-between",
+        }
       },
     },
     homeview:{
@@ -80,6 +84,13 @@ const styles = StyleSheet.create({
   
       flatlist:{
         marginBottom: 80,
+
+        container:{
+          paddingHorizontal: SIZES.padding * 3,
+        },
+        wrapper:{
+          justifyContent: "space-between",
+        }
       },
     },
     promo:{

@@ -1,38 +1,9 @@
 import React, { useState } from "react";
 import {SafeAreaView, View, Text, Image, FlatList, TouchableOpacity, Alert, StatusBar, StyleSheet} from "react-native";
-import { COLORS, SIZES, icons, images } from "../../constants";
 import styles from "./styles";
-
-const featuresData = [
-  {
-    id: 1,
-    icon: images.modify,
-    color: COLORS.purple,
-    backgroundColor: COLORS.lightpurple,
-    description: "Modify",
-  },
-  {
-    id: 2,
-    icon: images.view,
-    color: COLORS.yellow,
-    backgroundColor: COLORS.lightyellow,
-    description: "View",
-  },
-  {
-    id: 3,
-    icon: images.add,
-    color: COLORS.primary,
-    backgroundColor: COLORS.lightGreen,
-    description: "Add Bank",
-  },
-  {
-    id: 4,
-    icon: images.remove,
-    color: COLORS.red,
-    backgroundColor: COLORS.lightRed,
-    description: "Remove Bank",
-  },
-];
+import { icons } from "../../constants";
+import defineMesaages from './messages';
+import featuresData from "./data";
 
 const Admin = ({ navigation, route }) => {
 
@@ -44,7 +15,7 @@ const Admin = ({ navigation, route }) => {
     return (
       <View style={styles.header}>
         <View style={styles.header.sub}>
-          <Text style={styles.header.text}>Welcome Back!</Text>
+          <Text style={styles.header.text}>{defineMesaages.welcomeBack.defaultMessage}</Text>
           <Text style={styles.header.username}> {route.params.username}</Text>
         </View>
         <View style={styles.notification}>
@@ -66,11 +37,11 @@ const Admin = ({ navigation, route }) => {
   }
 
   function handleFeature(item) {
-    if (item.description == "Modify") {
+    if (item.description === defineMesaages.modify.defaultMessage) {
       navigation.navigate("Search", {
         flag: false,
       });
-    } else if (item.description == "View") {
+    } else if (item.description === defineMesaages.view.defaultMessage) {
       navigation.navigate("ViewAdmin");
     } else {
       // console.log(item.description);
@@ -80,7 +51,7 @@ const Admin = ({ navigation, route }) => {
   function renderFeatures() {
     const Header = () => (
       <View style={styles.features}>
-        <Text style={styles.features.text}>Features</Text>
+        <Text style={styles.features.text}>{defineMesaages.features.defaultMessage}</Text>
       </View>
     );
 
@@ -122,7 +93,7 @@ const Admin = ({ navigation, route }) => {
         ListHeaderComponent={Header}
         data={featuresData}
         numColumns={4}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
+        columnWrapperStyle={styles.features.flatlist.wrapper}
         keyExtractor={(item) => `${item.id}`}
         renderItem={renderItem}
         style={styles.features.flatlist}
@@ -142,19 +113,19 @@ const Admin = ({ navigation, route }) => {
     const renderPromoHeader = () => (
       <View style={styles.promo.header}>
         <View style={styles.promo.header.sub}>
-          <Text style={styles.promo.text}>What's New</Text>
+          <Text style={styles.promo.text}>{defineMesaages.whatsNew.defaultMessage}</Text>
         </View>
         <TouchableOpacity onPress={() => console.log("View All")}>
-          <Text style={styles.promo.subtext}>View All</Text>
+          <Text style={styles.promo.subtext}>{defineMesaages.viewAll.defaultMessage}</Text>
         </TouchableOpacity>
       </View>
     );
     return (
       <FlatList
         ListHeaderComponent={HeaderComponent}
-        contentContainerStyle={{ paddingHorizontal: SIZES.padding * 3 }}
+        contentContainerStyle={styles.homeview.container}
         numColumns={2}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
+        columnWrapperStyle={styles.homeview.wrapper}
         keyExtractor={(item) => `${item.id}`}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={<View style={styles.homeview.flatlist}></View>}
