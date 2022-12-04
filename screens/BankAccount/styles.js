@@ -8,47 +8,47 @@ const styles = StyleSheet.create({
         marginTop: widthScreen * 0.05,
 
         image: {
-            width: 15, 
-            height: 15, 
+            width: 15,
+            height: 15,
             tintColor: COLORS.black,
         },
-        text:{
+        text: {
             marginLeft: SIZES.padding / 2,
             color: COLORS.black,
             ...FONTS.h4,
         },
     },
     header: {
-        flexDirection: "row", 
+        flexDirection: "row",
         marginVertical: SIZES.padding * 2,
 
         sub: {
-            flex: 1, 
-            justifyContent: "center", 
+            flex: 1,
+            justifyContent: "center",
             alignItems: "center",
         },
         text: {
-            ...FONTS.h1, 
+            ...FONTS.h1,
             color: COLORS.blueprim,
         },
     },
     banner: {
-        height: 120, 
+        height: 120,
         borderRadius: 10,
 
-        sub:{
+        sub: {
             marginBottom: SIZES.padding * 2,
         },
-        text:{
+        text: {
             ...FONTS.h3,
-            
-            sub:{
+
+            sub: {
                 ...FONTS.h3, color: COLORS.gray,
             },
         },
     },
     features: {
-        header:{
+        header: {
             marginBottom: SIZES.padding * 2,
             marginTop: SIZES.padding * 1,
         },
@@ -60,21 +60,21 @@ const styles = StyleSheet.create({
             width: 111,
             alignItems: "center",
         },
-        description:{
-            textAlign: "center", 
-            flexWrap: "wrap", 
+        description: {
+            textAlign: "center",
+            flexWrap: "wrap",
             ...FONTS.body4,
         },
-        flatlist:{
+        flatlist: {
             marginTop: SIZES.padding * 2,
 
-            wrapper:{
+            wrapper: {
                 justifyContent: "space-between",
             }
         }
     },
     bank: {
-        header:{
+        header: {
             backgroundColor: COLORS.blueback,
         },
         flatlist: {
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
             wrapper: {
                 justifyContent: "space-between",
             },
-            footer:{
+            footer: {
                 marginBottom: 80,
             }
         },
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: COLORS.blueback,
 
-        sub:{
+        sub: {
             paddingHorizontal: SIZES.padding * 2,
         },
     },

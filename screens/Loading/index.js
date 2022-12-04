@@ -1,12 +1,14 @@
 import React from "react";
-import {View, Text, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform, StatusBar} from "react-native";
+import { View, Text, TouchableOpacity, Image, KeyboardAvoidingView, ScrollView, Platform, StatusBar } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { COLORS, SIZES, FONTS, images } from "../../constants";
 import styles from "./styles";
 import messages from "./messages";
 
-const Loading = ({navigation, route}) => {
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('screen').width;
 
+const Loading = ({ navigation, route }) => {
   setTimeout(() => {
     navigation.navigate("Home", {
       username: route.params.username,
@@ -14,37 +16,41 @@ const Loading = ({navigation, route}) => {
     });
   }, 1000);
 
-  function renderLogo(){
-    return(
-      <View style={{marginTop: SIZES.padding * 33, 
-                    height: 90, 
-                    alignItems: 'center', 
-                    justifyContent: 'center'}}>
-        <Image  source={images.navilogo} 
-                resizeMode="contain" 
-                style={{width: "65%"}}/>
+  function renderLogo() {
+    return (
+      <View style={{
+        marginTop: SIZES.padding * 33,
+        height: 90,
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <Image source={images.navilogo}
+          resizeMode="contain"
+          style={{ width: "65%" }} />
       </View>
     )
   }
-  
-  function renderButton(){
-    return(
+
+  function renderButton() {
+    return (
       <View style={{ margin: SIZES.padding * 10 }}>
-        <TouchableOpacity style={{height: 60,
-                                  width: 180,
-                                  alignSelf: "center",
-                                  alignItems: 'center',
-                                  justifyContent: 'center'}}>
-          <Text style={{color: COLORS.bluesec, ...FONTS.h4}}>Loading...</Text>
+        <TouchableOpacity style={{
+          height: 60,
+          width: 180,
+          alignSelf: "center",
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          <Text style={{ color: COLORS.bluesec, ...FONTS.h4 }}>Loading...</Text>
         </TouchableOpacity>
       </View>
     )
   }
 
-  return(
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{flex: 1}}>
-      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{flex: 1}}>
-        <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
+  return (
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null} style={{ flex: 1 }}>
+      <LinearGradient colors={[COLORS.blueback, COLORS.blueback]} style={{ flex: 1 }}>
+        <StatusBar barStyle="dark-content" hidden={false} translucent={true} />
         <ScrollView>
           {renderLogo()}
           {renderButton()}

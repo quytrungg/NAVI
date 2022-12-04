@@ -1,18 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  Alert,
-  Dimensions,
-} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, ScrollView, Platform, SafeAreaView, StatusBar, Alert, Dimensions} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS, SIZES, FONTS, icons, images } from "../../constants";
 import styles from "./styles";
@@ -22,7 +9,8 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
-const heightScreen = Dimensions.get("window").height;
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('screen').width;
 
 const SignUp = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -176,9 +164,9 @@ const SignUp = ({ navigation }) => {
             onEndEditing={(value) => {
               value.nativeEvent.text.length < 6
                 ? Alert.alert(
-                    "Warning",
-                    "Password must be at least 6 characters"
-                  )
+                  "Warning",
+                  "Password must be at least 6 characters"
+                )
                 : true;
             }}
           />

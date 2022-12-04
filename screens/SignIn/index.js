@@ -1,16 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  KeyboardAvoidingView,
-  Platform,
-  Alert,
-  StatusBar,
-  ScrollView,
-} from "react-native";
+import {View, Text, TouchableOpacity, Image, TextInput, KeyboardAvoidingView, Platform, Alert, StatusBar, ScrollView} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { COLORS, SIZES, FONTS, icons, images } from "../../constants";
 import styles from "./styles";
@@ -19,6 +8,9 @@ import messages from "./messages";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
+
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('screen').width;
 
 const SignIn = ({ navigation }) => {
   const [showPassword, setShowPassword] = useState(false);

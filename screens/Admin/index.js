@@ -5,8 +5,10 @@ import { icons } from "../../constants";
 import defineMesaages from './messages';
 import featuresData from "./data";
 
-const Admin = ({ navigation, route }) => {
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('screen').width;
 
+const Admin = ({ navigation, route }) => {
   function handelNotification() {
     Alert.alert("Notifications", defineMesaages.noNotifications.defaultMessage);
   }

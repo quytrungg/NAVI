@@ -1,5 +1,5 @@
 import React from "react";
-import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, Dimensions, ScrollView} from "react-native";
+import { SafeAreaView, Image, View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, StatusBar, Dimensions, ScrollView } from "react-native";
 import { COLORS, SIZES, FONTS, images } from "../../constants";
 import { StackActions } from '@react-navigation/native';
 import styles from "./styles";
@@ -10,13 +10,13 @@ import "firebase/compat/auth";
 import "firebase/compat/firestore";
 
 const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('screen').width;
 
-const Verification = ({navigation, route}) => {
-
+const Verification = ({ navigation, route }) => {
     function renderImage() {
         return (
-            <View style = {styles.header}>
-                <Image source = {images.lock} style = {styles.image}/>
+            <View style={styles.header}>
+                <Image source={images.lock} style={styles.image} />
             </View>
         );
     }
@@ -42,13 +42,13 @@ const Verification = ({navigation, route}) => {
             [
                 {
                     text: "OK",
-                    style: {...FONTS.body1},
+                    style: { ...FONTS.body1 },
                 }
             ]
         )
     }
 
-    function showOTPTimeout(flag){
+    function showOTPTimeout(flag) {
         setTimeout(() => {
             if (flag == true) {
                 navigation.dispatch(
@@ -62,37 +62,37 @@ const Verification = ({navigation, route}) => {
 
     function OTP() {
         return (
-            <View style = {{flex: 1}}>
-                <View style = {styles.titleBox}>
-                    <Text style = {styles.title}>OTP Verification</Text>
-                    <Text style = {styles.inforText}>Please enter the 4-digit code on the screen</Text>
+            <View style={{ flex: 1 }}>
+                <View style={styles.titleBox}>
+                    <Text style={styles.title}>OTP Verification</Text>
+                    <Text style={styles.inforText}>Please enter the 4-digit code on the screen</Text>
                 </View>
-                <View style = {{flex: 0.6, justifyContent: 'space-evenly', flexDirection: 'row', marginTop: 40}}>
-                    <TextInput keyboardType = "number-pad"
-                        autoFocus = {true}
-                        maxLength = {1}
-                        clearTextOnFocus = {true}
-                        onChangeText = {(pin1) => (digit.pin1 = pin1)}
-                        style = {styles.otpBlock}
-                        />
-                    <TextInput keyboardType = "number-pad"
-                        maxLength = {1}
-                        clearTextOnFocus = {true}
-                        onChangeText = {(pin2) => (digit.pin2 = pin2)}
-                        style = {styles.otpBlock}
-                        />
-                    <TextInput keyboardType = "number-pad"
-                        maxLength = {1}
-                        clearTextOnFocus = {true}
-                        onChangeText = {(pin3) => (digit.pin3 = pin3)}
-                        style = {styles.otpBlock}
-                        />
-                    <TextInput keyboardType = "number-pad"
-                        maxLength = {1}
-                        clearTextOnFocus = {true}
-                        onChangeText = {(pin4) => (digit.pin4 = pin4)}
-                        style = {styles.otpBlock}
-                        />
+                <View style={{ flex: 0.6, justifyContent: 'space-evenly', flexDirection: 'row', marginTop: 40 }}>
+                    <TextInput keyboardType="number-pad"
+                        autoFocus={true}
+                        maxLength={1}
+                        clearTextOnFocus={true}
+                        onChangeText={(pin1) => (digit.pin1 = pin1)}
+                        style={styles.otpBlock}
+                    />
+                    <TextInput keyboardType="number-pad"
+                        maxLength={1}
+                        clearTextOnFocus={true}
+                        onChangeText={(pin2) => (digit.pin2 = pin2)}
+                        style={styles.otpBlock}
+                    />
+                    <TextInput keyboardType="number-pad"
+                        maxLength={1}
+                        clearTextOnFocus={true}
+                        onChangeText={(pin3) => (digit.pin3 = pin3)}
+                        style={styles.otpBlock}
+                    />
+                    <TextInput keyboardType="number-pad"
+                        maxLength={1}
+                        clearTextOnFocus={true}
+                        onChangeText={(pin4) => (digit.pin4 = pin4)}
+                        style={styles.otpBlock}
+                    />
                 </View>
             </View>
         );
@@ -100,17 +100,17 @@ const Verification = ({navigation, route}) => {
 
     function renderButton() {
         return (
-            <View style = {{marginTop: 150}}>
-                <TouchableOpacity style = {styles.confirmButton} onPress={() => handleNavigation()}>
-                    <Text style = {styles.confirmText}>Confirm</Text>
-                </TouchableOpacity> 
+            <View style={{ marginTop: 150 }}>
+                <TouchableOpacity style={styles.confirmButton} onPress={() => handleNavigation()}>
+                    <Text style={styles.confirmText}>Confirm</Text>
+                </TouchableOpacity>
             </View>
         )
     }
 
     function handleNavigation() {
         var flag = false;
-        if(digit.pin1 == randomOTP.num1 && digit.pin2 == randomOTP.num2 && digit.pin3 == randomOTP.num3 && digit.pin4 == randomOTP.num4) {
+        if (digit.pin1 == randomOTP.num1 && digit.pin2 == randomOTP.num2 && digit.pin3 == randomOTP.num3 && digit.pin4 == randomOTP.num4) {
             flag = true;
         }
         if (flag == true) {
@@ -220,8 +220,8 @@ const Verification = ({navigation, route}) => {
                 });
             }
         }
-        
-        else{
+
+        else {
             Alert.alert(
                 "Error",
                 "Your OTP is incorrect. Please try again",
@@ -239,8 +239,8 @@ const Verification = ({navigation, route}) => {
     }
 
     return (
-        <SafeAreaView style={{flexGrow: 1, backgroundColor: COLORS.blueback}}>
-            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
+        <SafeAreaView style={{ flexGrow: 1, backgroundColor: COLORS.blueback }}>
+            <StatusBar barStyle="dark-content" hidden={false} translucent={true} />
             <ScrollView>
                 {renderImage()}
                 {showOTPTimeout(false)}
@@ -251,7 +251,7 @@ const Verification = ({navigation, route}) => {
     )
 }
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
     image: {
         marginBottom: 10,
         justifyContent: 'center',
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
         color: COLORS.gray,
     },
     otpBlock: {
-        backgroundColor: "#F5F4F2", 
+        backgroundColor: "#F5F4F2",
         fontWeight: '600',
         justifyContent: 'center',
         textAlign: 'center',
@@ -303,10 +303,10 @@ const styles = StyleSheet.create({
         borderRadius: SIZES.radius / 1.5,
     },
     confirmText: {
-        ...FONTS.h2, 
+        ...FONTS.h2,
         color: COLORS.white
     }
-    
+
 });
 
 export default Verification;

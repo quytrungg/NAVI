@@ -6,19 +6,21 @@ import { CommonActions } from '@react-navigation/native';
 import styles from "./styles";
 import messages from "./messages";
 
-const Profile = ({navigation, route}) => { 
+const heightScreen = Dimensions.get('window').height;
+const widthScreen = Dimensions.get('screen').width;
 
+const Profile = ({ navigation, route }) => {
     const styles = StyleSheet.create({
         header: {
-            height: 60, 
-            width: '100%', 
-            alignSelf: 'center', 
+            height: 60,
+            width: '100%',
+            alignSelf: 'center',
             marginTop: 10,
         },
         avatar: {
             marginBottom: 10,
             backgroundColor: 'white',
-            justifyContent: 'center', 
+            justifyContent: 'center',
             width: 180,
             height: 180,
             borderWidth: 1,
@@ -44,7 +46,7 @@ const Profile = ({navigation, route}) => {
         },
         editButton: {
             alignItems: 'center',
-            justifyContent:'center',
+            justifyContent: 'center',
             backgroundColor: COLORS.bluesec,
             borderColor: COLORS.blueprim,
             borderWidth: 1,
@@ -55,7 +57,7 @@ const Profile = ({navigation, route}) => {
             margin: 5,
         },
         editText: {
-            color: COLORS.white, 
+            color: COLORS.white,
             ...FONTS.h4
         },
         logoutButton: {
@@ -70,38 +72,38 @@ const Profile = ({navigation, route}) => {
             borderRadius: SIZES.radius / 1.5,
         },
         logoutText: {
-            ...FONTS.h2, 
+            ...FONTS.h2,
             color: COLORS.white
         }
     });
 
     function renderHeader() {
-        
+
         return (
             <View style={styles.header}>
-                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={{...FONTS.h1, color: COLORS.blueprim}}>Profile</Text>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={{ ...FONTS.h1, color: COLORS.blueprim }}>Profile</Text>
                 </View>
             </View>
-      )
+        )
     }
 
     function renderAvatar() {
         return (
             <View style={styles.avatarBox}>
-                <Image source={images.avatar} style = {styles.avatar}/>
-                <Text style = {styles.nameText}>username: {route.params.username}</Text>
-                <Text style = {styles.inforText}>ID: {route.params.phoneNumber}</Text>
-                <View style={{flexDirection: 'row'}}>
-                    <TouchableOpacity style = {styles.editButton}
-                                    onPress={() => navigation.navigate("Password")}>
-                        <Text style = {styles.editText}>Edit Password</Text>
+                <Image source={images.avatar} style={styles.avatar} />
+                <Text style={styles.nameText}>username: {route.params.username}</Text>
+                <Text style={styles.inforText}>ID: {route.params.phoneNumber}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity style={styles.editButton}
+                        onPress={() => navigation.navigate("Password")}>
+                        <Text style={styles.editText}>Edit Password</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style = {styles.editButton}>
-                        <Text style = {styles.editText}>Edit Profile</Text>
+                    <TouchableOpacity style={styles.editButton}>
+                        <Text style={styles.editText}>Edit Profile</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{margin: SIZES.padding * 0.5}}>
+                <View style={{ margin: SIZES.padding * 0.5 }}>
                     <QRCode
                         value={route.params.phoneNumber}
                         logo={images.navilogo}
@@ -114,18 +116,18 @@ const Profile = ({navigation, route}) => {
         );
     }
 
-    function signOut(){
+    function signOut() {
         navigation.dispatch(
             CommonActions.reset({
-              index: 1,
-              routes: [
-                { name: 'SignIn' }
-              ],
+                index: 1,
+                routes: [
+                    { name: 'SignIn' }
+                ],
             })
-          );
+        );
     }
-  
-    function handleSignOut(){
+
+    function handleSignOut() {
         return Alert.alert(
             "Log out",
             "Are you sure you want to sign out?",
@@ -143,18 +145,18 @@ const Profile = ({navigation, route}) => {
 
     function renderButton() {
         return (
-            <View style={{marginTop: SIZES.padding * 2}}>
-                <TouchableOpacity style = {styles.logoutButton} onPress={() => handleSignOut()}>
-                    <Text style = {styles.logoutText}>Logout</Text>
-                </TouchableOpacity>  
-            </View> 
+            <View style={{ marginTop: SIZES.padding * 2 }}>
+                <TouchableOpacity style={styles.logoutButton} onPress={() => handleSignOut()}>
+                    <Text style={styles.logoutText}>Logout</Text>
+                </TouchableOpacity>
+            </View>
         );
     }
 
     return (
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}
-                          style={{flex: 1, backgroundColor: COLORS.blueback}}>
-            <StatusBar barStyle = "dark-content" hidden = {false} translucent = {true}/>
+            style={{ flex: 1, backgroundColor: COLORS.blueback }}>
+            <StatusBar barStyle="dark-content" hidden={false} translucent={true} />
             <SafeAreaView>
                 {renderHeader()}
             </SafeAreaView>
