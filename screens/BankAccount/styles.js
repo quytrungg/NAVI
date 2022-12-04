@@ -67,47 +67,35 @@ const styles = StyleSheet.create({
         },
         flatlist:{
             marginTop: SIZES.padding * 2,
-            
+
             wrapper:{
                 justifyContent: "space-between",
             }
         }
     },
-    homeview: {
-        backgroundColor: COLORS.blueback,
-
+    bank: {
+        header:{
+            backgroundColor: COLORS.blueback,
+        },
         flatlist: {
-            marginBottom: 80,
-
             container: {
                 paddingHorizontal: SIZES.padding * 3,
             },
             wrapper: {
                 justifyContent: "space-between",
-            }
-        },
-    },
-    promo: {
-        header: {
-            flexDirection: "row",
-            marginBottom: SIZES.padding,
-
-            sub: {
-                flex: 1,
             },
-        },
-
-        text: {
-            ...FONTS.h3,
-        },
-        subtext: {
-            color: COLORS.gray,
-            ...FONTS.body4,
+            footer:{
+                marginBottom: 80,
+            }
         },
     },
     safe_area_view: {
         flex: 1,
         backgroundColor: COLORS.blueback,
+
+        sub:{
+            paddingHorizontal: SIZES.padding * 2,
+        },
     },
 
 })

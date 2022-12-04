@@ -3,7 +3,7 @@ import {View, Text, TouchableOpacity, Image, FlatList, Alert, SafeAreaView, Stat
 import { COLORS, SIZES, FONTS, icons } from "../../constants";
 import bankData from "./data";
 import styles from "./styles";
-import messages from "./messages";
+import defineMessages from "./messages";
 
 const widthScreen = Dimensions.get("window").width;
 
@@ -12,13 +12,13 @@ const BankAccount = ({ navigation, route }) => {
   function handleBackToHome() {
     return Alert.alert(
       "Warning",
-      "Are you sure you want to go to Home screen?",
+      defineMessages.warning.defaultMessage,
       [
         {
-          text: "No",
+          text: defineMessages.no.defaultMessage,
         },
         {
-          text: "Yes",
+          text: defineMessages.yes.defaultMessage,
           onPress: () => {
             navigation.navigate("Home", {
               username: route.params.username,
@@ -34,7 +34,7 @@ const BankAccount = ({ navigation, route }) => {
     return (
       <TouchableOpacity style={styles.top} onPress={() => handleBackToHome()}>
         <Image source={icons.back} resizeMode="contain" style={styles.top.image}/>
-        <Text style={styles.top.text}>Home</Text>
+        <Text style={styles.top.text}>{defineMesaages.home.defaultMessage}</Text>
       </TouchableOpacity>
     );
   }
@@ -43,7 +43,7 @@ const BankAccount = ({ navigation, route }) => {
     return (
       <View style={styles.header}>
         <View style={styles.header.sub}>
-          <Text style={styles.header.text}>Bank Linking</Text>
+          <Text style={styles.header.text}>{defineMesaages.bankLinking.defaultMessage}</Text>
         </View>
       </View>
     );
@@ -53,9 +53,9 @@ const BankAccount = ({ navigation, route }) => {
     return (
       <View style={styles.banner}>
         <View style={styles.banner.sub}>
-          <Text style={styles.banner.text}>An account must at least connect to 1 bank account.</Text>
+          <Text style={styles.banner.text}>{defineMessages.bannerTextMain.defaultMessage}</Text>
         </View>
-        <Text style={styles.banner.text.sub}>This is a list of banks that are able to connect to the account.</Text>
+        <Text style={styles.banner.text.sub}>{defineMessages.bannerTextSub.defaultMessage}</Text>
       </View>
     );
   }
@@ -63,7 +63,7 @@ const BankAccount = ({ navigation, route }) => {
   function renderFeatures() {
     const Header = () => (
       <View style={styles.features.header}>
-        <Text style={styles.features.text}>Banks</Text>
+        <Text style={styles.features.text}>{defineMessages.banks.defaultMessage}</Text>
       </View>
     );
 
@@ -122,11 +122,9 @@ const BankAccount = ({ navigation, route }) => {
     );
   }
 
-  debugger
-
   function renderBank() {
     const HeaderComponent = () => (
-      <View style={{ backgroundColor: COLORS.blueback }}>
+      <View style={styles.bank.header}>
         {renderHeader()}
         {renderBanner()}
         {renderFeatures()}
@@ -135,20 +133,20 @@ const BankAccount = ({ navigation, route }) => {
     return (
       <FlatList
         ListHeaderComponent={HeaderComponent}
-        contentContainerStyle={{ paddingHorizontal: SIZES.padding * 3 }}
+        contentContainerStyle={styles.bank.flatlist.container}
         numColumns={2}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
+        columnWrapperStyle={styles.bank.flatlist.wrapper}
         keyExtractor={(item) => `${item.id}`}
         showsVerticalScrollIndicator={false}
-        ListFooterComponent={<View style={{ marginBottom: 80 }}></View>}
+        ListFooterComponent={<View style={styles.bank.flatlist.footer}></View>}
       />
     );
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.blueback }}>
+    <SafeAreaView style={styles.safe_area_view}>
       <StatusBar barStyle="dark-content" hidden={false} translucent={true} />
-      <SafeAreaView style={{ paddingHorizontal: SIZES.padding * 2 }}>
+      <SafeAreaView style={styles.safe_area_view.sub}>
         {renderTop()}
       </SafeAreaView>
       {renderBank()}

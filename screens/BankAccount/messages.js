@@ -1,28 +1,36 @@
 import React from 'react';
 
 export default defineMessages({
-    welcomeBack:{
-        id: 'welcomeBack',
-        defaultMessage: 'Welcome Back!',
+    warning:{
+        id: 'warning',
+        defaultMessage: "Are you sure you want to go to Home screen?",
     },
-    modify:{
-        id: 'modify',
-        defaultMessage: 'Modify',
+    no:{
+        id: 'no',
+        defaultMessage: "No",
     },
-    view:{
-        id: 'view',
-        defaultMessage: 'View',
+    yes:{
+        id: 'yes',
+        defaultMessage: "Yes",
     },
-    features:{
-        id: 'features',
-        defaultMessage: 'Features',
+    home:{
+        id: 'home',
+        defaultMessage: "Home",
     },
-    whatsNew:{
-        id: 'whatsNew',
-        defaultMessage: "What's New",
+    bankLinking:{
+        id: 'bankLinking',
+        defaultMessage: "Bank Linking",
     },
-    viewAll:{
-        id: 'viewAll',
-        defaultMessage: 'View All',
+    bannerTextMain:{
+        id: 'bannerTextMain',
+        defaultMessage: 'An account must at least connect to 1 bank account.',
+    },
+    bannerTextSub:{
+        id: 'bannerTextSub',
+        defaultMessage: 'This is a list of banks that are able to connect to the account.',
+    },
+    banks:{
+        id: 'banks',
+        defaultMessage: 'Banks',
     },
 })
